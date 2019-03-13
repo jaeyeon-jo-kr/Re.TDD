@@ -8,11 +8,7 @@ import java.util.ArrayList;
 
 
 public class BlackJackTest
-{
-    /**
-     * 카드 2장을 각각 딜러와 플레이어에게 주면 딜러와 플레이어는 카드 2장을 가지고 있어야 한다.
-     * 플레이어는 2~8명이다.
-     */
+{   
     @Test
     public void SendTwoCard(){
         List<Player> players = new ArrayList<>(8);
@@ -40,8 +36,39 @@ public class BlackJackTest
         for(Player player:players)
         {
             assertEquals(player.getCardCount(), 2);        
-        }
+        }        
+    }
+
+    @Test
+    public void CardStatus()
+    {
+        CardDeck deck = new CardDeck();
+        deck.initialize();        
         
+        for(int i = 1; i <= 4; i++)
+        {
+            for(int j=1;j<=13;j++)
+            {
+                Card card = deck.popCard();        
+
+                if(j > 10){
+                    assertEquals(card.value(), 10);    
+                }else {
+                    assertEquals(card.value(), j);    
+                }
+
+                if(j==1){
+                    assertEquals(card.nextValue(), 11);
+                }else if(j > 10){
+                    assertEquals(card.nextValue(), 10);    
+                }else {
+                    assertEquals(card.nextValue(), j);    
+                }                
+                
+                assertEquals(card.type(), Card.Type.values()[i-1]);
+            }
+            
+        }
     }
 
 }
