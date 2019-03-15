@@ -44,11 +44,30 @@ public class Card{
     private final Number number;
     private final Type type;
     
-    public Card(Number number, Type type)
+    private Card(Number number, Type type)
     {
         this.number = number;
         this.type = type;
     }
+
+    public static Card spade(Number number){
+        return new Card(number, Type.SPADE);
+    }
+
+    public static Card heart(Number number){
+        return new Card(number, Type.HEART);
+    }
+
+    public static Card diamond(Number number){
+        return new Card(number, Type.DIAMOND);
+    }
+    public static Card clover(Number number){
+        return new Card(number, Type.CLOVER);
+    }
+    public static Card create(Number number, Type type){
+        return new Card(number, type);
+    }
+    
 
     public int value()
     {

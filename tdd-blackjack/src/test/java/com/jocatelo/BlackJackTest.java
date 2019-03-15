@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class BlackJackTest
 {   
     @Test
-    public void SendTwoCard(){
+    public void sendTwoCard(){
         List<Player> players = new ArrayList<>(8);
 
         Dealer dealer = new Dealer();
@@ -28,9 +28,9 @@ public class BlackJackTest
         for(Player player:players)
         {
             Card card = deck.popCard();
-            player.addCard(card);
+            player.draw(card);
             card = deck.popCard();
-            player.addCard(card);
+            player.draw(card);
         }
         
         for(Player player:players)
@@ -40,7 +40,7 @@ public class BlackJackTest
     }
 
     @Test
-    public void CardStatus()
+    public void cardStatus()
     {
         CardDeck deck = new CardDeck();
         deck.initialize();        
@@ -70,5 +70,45 @@ public class BlackJackTest
             
         }
     }
+
+    @Test
+    public void checkBlackJackStatus()
+    {
+        CardDeck deck = new CardDeck();
+        deck.initialize();
+
+        Card card1 = Card.clover(Card.Number.N10);
+        Card card2 = Card.clover(Card.Number.N2);
+
+        Player player = new Player();
+        player.draw(card1);
+        player.draw(card2);
+
+        assertEquals(player.score(), 12);
+
+        Player player2 = new Player();
+        player2.draw(Card.clover(Card.Number.A));
+        player2.draw(Card.clover(Card.Number.N8));
+
+        assertEquals(player2.score(), 19);
+
+        Player player3 = new Player();
+        player3.draw(Card.clover(Card.Number.A));
+        player3.draw(Card.clover(Card.Number.N10));
+
+        assertEquals(player3.score(), 21);
+
+        Player player4 = new Player();
+        player4.draw(Card.clover(Card.Number.N3));
+        player4.draw(Card.clover(Card.Number.K));
+        player4.draw(Card.clover(Card.Number.J));
+
+        assertEquals(player4.score(), 23);
+        
+
+        
+    }
+
+
 
 }

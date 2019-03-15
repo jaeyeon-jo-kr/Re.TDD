@@ -23,7 +23,7 @@ public class CardDeck {
 	public void initialize() {
         for (Card.Type cardType : Card.Type.values()) {
             for(Card.Number cardNumber:Card.Number.values()){
-                Card card = new Card(cardNumber, cardType);
+                Card card = Card.create(cardNumber, cardType);
                 cardQueue.add(card);
             }
         }
