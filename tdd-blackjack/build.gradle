@@ -19,7 +19,7 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
 }
-
+sourceSets.main.resources.srcDirs = []
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
     implementation 'com.google.guava:guava:27.0.1-jre'
