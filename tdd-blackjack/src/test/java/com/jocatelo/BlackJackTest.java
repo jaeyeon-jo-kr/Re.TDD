@@ -3,6 +3,9 @@ package com.jocatelo;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.List;
+
+import com.jocatelo.Player.Status;
+
 import java.util.ArrayList;
 
 
@@ -11,32 +14,27 @@ public class BlackJackTest
 {   
     @Test
     public void sendTwoCard(){
-        List<Player> players = new ArrayList<>(8);
-
-        Dealer dealer = new Dealer();
-        players.add(dealer);
-        for(int i = 1 ; i < 8; i++)
-        {
-            Player player = new Player();
-            players.add(player);
-        }
-
-        CardDeck deck = new CardDeck();
-        deck.initialize();
-
-
-        for(Player player:players)
-        {
-            Card card = deck.popCard();
-            player.draw(card);
-            card = deck.popCard();
-            player.draw(card);
-        }
+        Round round = Round.round().setPlayerNumber(8).shuffle().distribute();
         
-        for(Player player:players)
+        for(Player player:round.getPlayer())
         {
             assertEquals(player.getCardCount(), 2);        
-        }        
+        }
+
+        for(Player player:round.getPlayer()){
+            if(player.status == Status.PLAYING){
+                round.draw(player);
+            }
+        }
+
+        for(Player player:round.getPlayer()){
+            assertTrue((player.score() == 21 && player.status() == Status.BLACKJACK) ||
+                (player.score() > 21 && player.status() == Status.BUST) ||
+                (player.score() < 21 && player.status() == Status.PLAYING)
+            );
+        }
+
+        
     }
 
     @Test

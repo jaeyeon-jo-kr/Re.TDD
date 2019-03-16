@@ -2,18 +2,45 @@ package com.jocatelo;
 
 import java.util.List;
 import java.util.PriorityQueue;
+
+import javax.net.ssl.SSLEngineResult.Status;
+
 import java.util.ArrayList;
+
 
 public class Player {
     protected List<Card> hands;
+    protected Status status;
+    protected int score;
+
+    public enum Status{
+        WIN,
+        LOSE,
+        READY,
+        STAND,
+        BUST,
+        PLAYING,
+        BLACKJACK,
+        FOLD
+    }
 
     public Player(){
         hands = new ArrayList<Card>();
+        status = Status.PLAYING;
     }
-    public void draw(Card card)
-    {
-        hands.add(card);
 
+    public Player add(Card card)
+    {
+        if(status == Status.PLAYING)
+        {
+            hands.add(card);
+            score = calculateScore();
+        }
+        return this;
+    }
+    public Player draw(Card card)
+    {
+        return this.add(card);
     }
 
     public int getCardCount()
@@ -23,8 +50,13 @@ public class Player {
 
     public int score()
     {
-        
-        return calculateScore();
+        return score;
+    }
+
+    public Player stand()
+    {
+        this.status = Status.STAND;
+        return this;
     }
 
     private int calculateScore()
@@ -50,6 +82,16 @@ public class Player {
                 score += 1;
             }
         }
+
+        if(score > 21 )
+            status = Status.BUST;
+        else if (score == 21)
+            status = Status.BLACKJACK;
         return score;
+    }
+
+    public Status status()
+    {
+        return status;
     }
 }
