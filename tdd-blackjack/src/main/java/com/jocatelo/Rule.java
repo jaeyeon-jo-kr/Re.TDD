@@ -1,12 +1,12 @@
 package com.jocatelo;
 
-import com.jocatelo.Player.Status;
+import com.jocatelo.User.Status;
 
 public enum Rule {
     CLASSIC;
 
     public boolean isOver(Round round) {
-        for (Player player : round.players()) {
+        for (Playable player : round.users()) {
             if (player.status() == Status.PLAYING) {
                 return false;
             }
@@ -14,7 +14,7 @@ public enum Rule {
         return true;
     }
 
-    public Player updateScore(Player player) {
+    public Playable updateScore(Playable player) {
         int aceCount = 0;
         int score = 0;
 
@@ -36,7 +36,7 @@ public enum Rule {
         return player;
     }
 
-    public Player updateStatus(Player player) {
+    public Playable updateStatus(Playable player) {
         if (player.score() > 21)
             player.setStatus(Status.BUST);
         else if (player.score() == 21)
@@ -44,28 +44,31 @@ public enum Rule {
         return player;
     }
 
-    public void finalizeStatus(Player[] players) {
+    public void finalizeStatus(Dealer dealer, Playable[] players) {
 
-        int bestScore = bestScore(players);
-        for (Player player : players) {
+        for (Playable player : players) {
             if (player.status() == Status.BUST) {
                 player.setStatus(Status.LOSE);
             } else if (player.status() == Status.BLACKJACK) {
-                player.setStatus(Status.WIN);
+                if(dealer.status() == Status.BLACKJACK)
+                    player.setStatus(Status.DRAW);
+                else
+                    player.setStatus(Status.WIN);                                
             } else {
-                if (player.score() == bestScore) {
+                if (player.score() > dealer.score()) 
                     player.setStatus(Status.WIN);
-                } else {
+                else if (player.score() < dealer.score()) 
                     player.setStatus(Status.LOSE);
-                }
+                else 
+                    player.setStatus(Status.DRAW);                
             }
         }
 
     }
 
-    public int bestScore(Player[] players) {
+    public int bestScore(Playable[] players) {
         int bestScore = 0;
-        for (Player player : players) {
+        for (Playable player : players) {
             if (player.score() <= 21)
                 bestScore = Math.max(bestScore, player.score());
         }

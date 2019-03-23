@@ -1,15 +1,18 @@
 package com.jocatelo;
 
-import com.jocatelo.Player.Status;
+import com.jocatelo.User.Status;
 
 public enum Command {
-    NONE, DRAW, FOLD;
+    NONE, DRAW, FOLD, HOLD;
 
-    public void execute(Round round, Player player) {
+    public void execute(Round round, Playable user) {
         if (this == DRAW) {
-            round.draw(player);
+            round.draw(user);
         } else if (this == FOLD) {
-            player.setStatus(Status.FOLD);
+            user.setStatus(Status.FOLD);
+        } else if(this == HOLD)
+        {
+            
         }
     }
 }

@@ -4,43 +4,69 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.List;
 
-import com.jocatelo.Player.Status;
+import com.jocatelo.User.Status;
 
 import java.util.ArrayList;
 
 public class BlackJackTest {
     @Test
-    public void sendTwoCard() {
+    public void playing1Round() {
         Round round = Round.round().setPlayerNumber(8).shuffle().distribute().start();
 
-        for (Player player : round.players()) {
-            assertEquals(player.getCardCount(), 2);
+        for (Playable user : round.users()) {
+            assertEquals(2, user.getCardCount() );
         }
 
         while (!round.isOver()) {
-            for (Player player : round.players()) {
-                if (player.status == Status.PLAYING) {
-                    player.command(Command.DRAW);
+            for (Playable user : round.users()) {
+                if (user.status() == Status.PLAYING && user.score() < 21) {
+                    user.command(Command.DRAW);
+                } else {
+                    user.command(Command.FOLD);
                 }
             }
-            for (Player player : round.players()) {
-                if (player.score() == 21) {
-                    assertEquals(Status.BLACKJACK, player.status());
-                } else if (player.score() > 21) {
-                    assertEquals(Status.BUST, player.status());
+            for (Playable user : round.users()) {
+                if (user.score() == 21) {
+                    assertEquals(Status.BLACKJACK, user.status());
+                } else if (user.score() > 21) {
+                    assertEquals(Status.BUST, user.status());
                 } else {
-                    assertEquals(Status.PLAYING, player.status());
+                    assertEquals(Status.PLAYING, user.status());
                 }
             }
             round.endTurn();
         }
         assertTrue(round.bestScore() <= 21);
-        for (Player player : round.players()) {
-            if (player.score == round.bestScore())
-                assertEquals(Status.WIN, player.status());
-            else
-                assertEquals(Status.LOSE, player.status());
+        Dealer dealer = round.dealer();
+
+        assertNotEquals(Status.WIN, dealer.status());
+        assertNotEquals(Status.LOSE, dealer.status());
+
+        for (Playable player : round.players()) {
+
+            if(player.status() != Status.FOLD){
+                if(player.score() > 21)
+                {
+                    assertEquals(Status.LOSE, player.status());
+                }else if(dealer.score() > 21 && player.score() <= 21)
+                {
+                    assertEquals(Status.WIN, player.status());
+                }else if(dealer.score() == 21 && player.score() == 21)
+                {
+                    assertEquals(Status.DRAW, player.status());                            
+                }else if(dealer.score() > player.score() ){
+                    assertEquals(Status.LOSE, player.status());
+                }else if(dealer.score() < player.score()){
+                    assertEquals(Status.WIN, player.status());
+                }else if(dealer.score() == player.score()){
+                    assertEquals(Status.DRAW, player.status());
+                }
+            }
+
+            
         }
+
+        
 
     }
 
@@ -79,28 +105,28 @@ public class BlackJackTest {
         deck.initialize();
         Round mock = Round.round().setPlayerNumber(4).start();
 
-        Player player = mock.players()[0];
-        player.draw(Card.diamond(Card.Number.A));
-        player.draw(Card.diamond(Card.Number.A));
+        Playable user = mock.players()[0];
+        user.draw(Card.diamond(Card.Number.A));
+        user.draw(Card.diamond(Card.Number.A));
 
-        Player player2 = mock.players()[1];
-        player2.draw(Card.clover(Card.Number.A));
-        player2.draw(Card.clover(Card.Number.N8));
+        Playable user2 = mock.players()[1];
+        user2.draw(Card.clover(Card.Number.A));
+        user2.draw(Card.clover(Card.Number.N8));
 
-        Player player3 = mock.players()[2];
-        player3.draw(Card.clover(Card.Number.A));
-        player3.draw(Card.clover(Card.Number.N10));
+        Playable user3 = mock.players()[2];
+        user3.draw(Card.clover(Card.Number.A));
+        user3.draw(Card.clover(Card.Number.N10));
 
-        Player player4 = mock.players()[3];
-        player4.draw(Card.clover(Card.Number.N3));
-        player4.draw(Card.clover(Card.Number.K));
-        player4.draw(Card.clover(Card.Number.J));
+        Playable user4 = mock.players()[3];
+        user4.draw(Card.clover(Card.Number.N3));
+        user4.draw(Card.clover(Card.Number.K));
+        user4.draw(Card.clover(Card.Number.J));
 
         mock.endTurn();
-        assertEquals(player.score(), 12);
-        assertEquals(player2.score(), 19);
-        assertEquals(player3.score(), 21);
-        assertEquals(player4.score(), 23);
+        assertEquals(12, user.score());
+        assertEquals(19, user2.score());
+        assertEquals(21, user3.score());
+        assertEquals(23, user4.score());
 
     }
 

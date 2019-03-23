@@ -3,19 +3,28 @@ package com.jocatelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.DelayQueue;
 
 public class Round {
     private List<Player> players;
+    private Dealer dealer;
+    private List<Playable> users;
     private List<Turn> turns;
     private CardDeck deck;
     private Rule rule;
     private Turn current;
     private int bestScore;
+    
 
     private Round() {
         players = new ArrayList<>(8);
+        users = new ArrayList<>(8);
         deck = new CardDeck();
         turns = new ArrayList<>();
+        this.dealer = User.dealer(this);            
+        users.add(dealer);
+        dealer.setIndex(0);
         deck.initialize();
         rule = Rule.CLASSIC;
     }
@@ -24,17 +33,24 @@ public class Round {
         return new Round();
     }
 
-    public Round setPlayerNumber(int number) {
-        if (number >= 2 && number <= 8) {
-            Dealer dealer = new Dealer(this);
-            players.add(dealer);
+    public Dealer dealer()
+    {
+        return this.dealer;
+    }
 
-            for (int i = 1; i < number; i++) {
-                Player player = new Player(this);
-                players.add(player);
+    public Round setPlayerNumber(int number) {
+        
+        if (number >= 1 && number <= 8) {
+            for (int i = 1; i <= number; i++) {
+                String name = "player " + i;
+                Optional<Player> player = User.player(this, name);
+                if(player.isPresent()){
+                    players.add(player.get());
+                    users.add(player.get());
+                    player.get().setIndex(i);
+                }
             }
         }
-
         return this;
     }
 
@@ -47,11 +63,11 @@ public class Round {
      * At the round of initial, players must have two cards.
      */
     public Round distribute() {
-        for (Player player : players) {
+        for (Playable user : users) {
             Card card = deck.popCard();
-            player.add(card);
+            user.add(card);
             card = deck.popCard();
-            player.add(card);
+            user.add(card);
         }
         return this;
     }
@@ -60,14 +76,14 @@ public class Round {
         return current;
     }
 
-    public Round draw(Player player) {
+    public Round draw(Playable user) {
         Card card = deck.popCard();
-        player.draw(card);
+        user.draw(card);
         return this;
     }
 
-    public Player[] players() {
-        return players.toArray(new Player[players.size()]);
+    public Playable[] users() {
+        return users.toArray(new Playable[users.size()]);
     }
 
     public boolean isOver() {
@@ -75,36 +91,35 @@ public class Round {
     }
 
     public Round start() {
-        current = Turn.create(1);
+        current = Turn.create(1).initialize(users());
         turns.add(current);
         return this;
     }
 
     public Round endTurn() {
-        for (Player player : players) {
-            Command command = current.what(player);
-            execute(player, command);
-            rule.updateScore(player);
-            rule.updateStatus(player);
+        for (Playable user : users) {
+            Command command = current.what(user);
+            command.execute(this, user);
+            rule.updateScore(user);
+            rule.updateStatus(user);
         }
         if (isOver()) {
-            rule.finalizeStatus(players.toArray(new Player[players.size()]));
+            rule.finalizeStatus(dealer, players());
         } else {
-            Turn newTurn = Turn.create(current.number() + 1);
+            Turn newTurn = Turn.create(current.number() + 1).initialize(users());
             turns.add(newTurn);
             current = newTurn;
-        }
+        }        
         return this;
-
-    }
-
-    public Round execute(Player player, Command command) {
-        command.execute(this, player);
-        return this;
-    }
+    }    
 
     public int bestScore() {
-        return rule.bestScore(this.players());
+        return rule.bestScore(this.users());
+    }
+
+    public Player[] players()
+    {
+        return players.toArray(new Player[players.size()]);
     }
 
 }
