@@ -3,6 +3,7 @@ package com.jocatelo;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Queue;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -24,6 +25,7 @@ public class CardDeck {
     }
 
     public void initialize() {
+
         for (Card.Type cardType : Card.Type.values()) {
             for (Card.Number cardNumber : Card.Number.values()) {
                 Card card = Card.create(cardNumber, cardType);
@@ -35,13 +37,12 @@ public class CardDeck {
     public void shuffle(){
         Card array[] = cardQueue.toArray(new Card[cardQueue.size()]);
         final long COUNT = 200;
-        Random random = new Random();
-        
+        Random random = new Random();        
         
         for(int i=0;i<COUNT;i++){
-            int firstArray = Math.abs(random.nextInt()) % cardQueue.size();
-            int secondArray = Math.abs(random.nextInt()) % cardQueue.size();
-            swapCard(array[firstArray], array[secondArray]);
+            int firstIndex = Math.abs(random.nextInt()) % cardQueue.size();
+            int secondIndex = Math.abs(random.nextInt()) % cardQueue.size();
+            swapCard(array[firstIndex], array[secondIndex]);
         }
         cardQueue.clear();
         cardQueue.addAll(Arrays.asList(array));

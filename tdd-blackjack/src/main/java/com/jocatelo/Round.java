@@ -29,7 +29,7 @@ public class Round {
         rule = Rule.CLASSIC;
     }
 
-    public static Round round() {
+    public static Round create() {
         return new Round();
     }
 

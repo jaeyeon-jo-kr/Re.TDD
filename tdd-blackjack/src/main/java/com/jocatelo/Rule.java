@@ -45,7 +45,7 @@ public enum Rule {
     }
 
     public void finalizeStatus(Dealer dealer, Playable[] players) {
-
+        
         for (Playable player : players) {
             if (player.status() == Status.BUST) {
                 player.setStatus(Status.LOSE);

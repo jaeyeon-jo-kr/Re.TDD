@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class BlackJackTest {
     @Test
     public void playing1Round() {
-        Round round = Round.round().setPlayerNumber(8).shuffle().distribute().start();
+        Round round = Round.create().setPlayerNumber(8).shuffle().distribute().start();        
 
         for (Playable user : round.users()) {
             assertEquals(2, user.getCardCount() );
@@ -103,7 +103,7 @@ public class BlackJackTest {
     public void checkBlackJackStatus() {
         CardDeck deck = new CardDeck();
         deck.initialize();
-        Round mock = Round.round().setPlayerNumber(4).start();
+        Round mock = Round.create().setPlayerNumber(4).start();
 
         Playable user = mock.players()[0];
         user.draw(Card.diamond(Card.Number.A));
