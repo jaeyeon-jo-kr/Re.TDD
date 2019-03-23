@@ -7,91 +7,73 @@ import javax.net.ssl.SSLEngineResult.Status;
 
 import java.util.ArrayList;
 
-
-public class Player {
+public class Player implements Commandable {
     protected List<Card> hands;
     protected Status status;
     protected int score;
+    protected Round round;
 
-    public enum Status{
-        WIN,
-        LOSE,
-        READY,
-        STAND,
-        BUST,
-        PLAYING,
-        BLACKJACK,
-        FOLD
+    public enum Status {
+        WIN, LOSE, READY, STAND, BUST, PLAYING, BLACKJACK, FOLD
     }
 
-    public Player(){
+    public Player(Round round) {
         hands = new ArrayList<Card>();
         status = Status.PLAYING;
+        this.round = round;
     }
 
-    public Player add(Card card)
-    {
-        if(status == Status.PLAYING)
-        {
+    public Player add(Card card) {
+        if (status == Status.PLAYING) {
             hands.add(card);
-            score = calculateScore();
         }
         return this;
     }
-    public Player draw(Card card)
-    {
+
+    public Player draw(Card card) {
         return this.add(card);
     }
 
-    public int getCardCount()
-    {
+    public int getCardCount() {
         return hands.size();
     }
 
-    public int score()
-    {
+    public int score() {
         return score;
     }
 
-    public Player stand()
-    {
+    public Player setScore(int score) {
+        this.score = score;
+        return this;
+    }
+
+    public List<Card> hands() {
+        return hands;
+    }
+
+    public Player stand() {
         this.status = Status.STAND;
         return this;
     }
 
-    private int calculateScore()
-    {
-        int aceCount = 0;
+    public Player end(int score) {
 
-        int score = 0;
-
-        for(Card card:hands){
-            if(card.value() == 1){
-                aceCount += 1;
-            }else{
-                score += card.value();
-            }
-        }
-
-        for(int i=0;i<aceCount;i++)
-        {
-            if(score + 11 <=21)
-            {
-                score += 11;
-            }else{
-                score += 1;
-            }
-        }
-
-        if(score > 21 )
-            status = Status.BUST;
-        else if (score == 21)
-            status = Status.BLACKJACK;
-        return score;
+        return this;
     }
 
-    public Status status()
-    {
+    public Status status() {
         return status;
     }
+
+    public Player setStatus(Status status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public Player command(Command command) {
+        round.turn().command(this, command);
+        return this;
+    }
+
 }
