@@ -19,11 +19,11 @@ public class Card{
         K(10,10);
 
         private final int value;
-        private final int nextValue;
+        private final int specialValue;
         
-        Number(int value, int nextValue){
+        Number(int value, int specialValue){
             this.value = value;
-            this.nextValue = nextValue;
+            this.specialValue = specialValue;
         }
 
         public int value()
@@ -31,14 +31,25 @@ public class Card{
             return this.value;
         }
 
-        public int nextValue()
+        public int specialValue()
         {
-            return this.nextValue;
+            return this.specialValue;
         }
     }
 
     public enum Type{
-        DIAMOND, SPADE, HEART, CLOVER;
+        DIAMOND("◆"), SPADE("♠"), HEART("♥"), CLOVER("♣");
+        private String symbol;
+        Type(String symbol)
+        {
+            this.symbol = symbol;
+        }
+        @Override
+        public String toString()
+        {
+            return symbol;
+        }
+
     }
 
     private final Number number;
@@ -74,9 +85,9 @@ public class Card{
         return this.number.value();
     }
 
-    public int nextValue()
+    public int specialValue()
     {
-        return this.number.nextValue();
+        return this.number.specialValue();
     }
 
     public Type type()

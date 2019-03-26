@@ -6,6 +6,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.DelayQueue;
 
+import com.jocatelo.character.Dealer;
+import com.jocatelo.character.Playable;
+import com.jocatelo.character.Player;
+import com.jocatelo.character.User;
+import com.jocatelo.rule.Command;
+import com.jocatelo.rule.Rule;
+
 public class Round {
     private List<Player> players;
     private Dealer dealer;
@@ -22,7 +29,7 @@ public class Round {
         users = new ArrayList<>(8);
         deck = new CardDeck();
         turns = new ArrayList<>();
-        this.dealer = User.dealer(this);            
+        this.dealer = User.createDealer(this);            
         users.add(dealer);
         dealer.setIndex(0);
         deck.initialize();
@@ -38,17 +45,16 @@ public class Round {
         return this.dealer;
     }
 
-    public Round setPlayerNumber(int number) {
+    public Round setPlayerNumber(int number) throws InvalidValueException {
         
         if (number >= 1 && number <= 8) {
             for (int i = 1; i <= number; i++) {
                 String name = "player " + i;
-                Optional<Player> player = User.player(this, name);
-                if(player.isPresent()){
-                    players.add(player.get());
-                    users.add(player.get());
-                    player.get().setIndex(i);
-                }
+                Player player = User.createPlayer(this, name);                
+                players.add(player);
+                users.add(player);
+                player.setIndex(i);
+                
             }
         }
         return this;

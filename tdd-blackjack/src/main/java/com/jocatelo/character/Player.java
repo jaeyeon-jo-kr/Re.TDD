@@ -1,8 +1,10 @@
-package com.jocatelo;
+package com.jocatelo.character;
 
 import java.util.List;
 
-import com.jocatelo.User.Status;
+import com.jocatelo.Card;
+import com.jocatelo.rule.Command;
+import com.jocatelo.rule.Status;
 
 public class Player implements Playable {
 
@@ -15,13 +17,13 @@ public class Player implements Playable {
     }
 
     @Override
-    public Playable add(Card card) {
-        return user.add(card);
+    public void add(Card card) {
+        user.add(card);
     }
 
     @Override
-    public Playable draw(Card card) {
-        return user.draw(card);
+    public void draw(Card card) {
+        user.draw(card);
     }
 
     @Override
@@ -35,8 +37,8 @@ public class Player implements Playable {
     }
 
     @Override
-    public Playable setScore(int score) {
-        return user.setScore(score);
+    public void setScore(int score) {
+        user.setScore(score);
     }
 
     @Override
@@ -45,14 +47,9 @@ public class Player implements Playable {
     }
 
     @Override
-    public Playable stand() {
-        return user.stand();
-    }
-
-    @Override
-    public Playable end(int score) {
-        return user.end(score);
-    }
+    public void stand() {
+        user.stand();
+    }    
 
     @Override
     public Status status() {
@@ -60,13 +57,13 @@ public class Player implements Playable {
     }
 
     @Override
-    public Playable setStatus(Status status) {
-        return user.setStatus(status);
+    public void setStatus(Status status) {
+        user.setStatus(status);
     }
 
     @Override
-    public User command(Command command) {
-        return user.command(command);
+    public void command(Command command) {
+        user.command(command);
     }
 
     @Override

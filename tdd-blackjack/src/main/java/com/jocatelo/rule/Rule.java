@@ -1,6 +1,9 @@
-package com.jocatelo;
+package com.jocatelo.rule;
 
-import com.jocatelo.User.Status;
+import com.jocatelo.Card;
+import com.jocatelo.Round;
+import com.jocatelo.character.Dealer;
+import com.jocatelo.character.Playable;
 
 public enum Rule {
     CLASSIC;

@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Map.Entry;
 
+import com.jocatelo.character.Playable;
+import com.jocatelo.rule.Command;
+
 public class Turn {
     private Command list[];
     private int number;

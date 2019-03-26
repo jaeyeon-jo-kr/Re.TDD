@@ -1,10 +1,14 @@
-package com.jocatelo;
+package com.jocatelo.character;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.PriorityQueue;
 
-import javax.net.ssl.SSLEngineResult.Status;
+import com.jocatelo.Card;
+import com.jocatelo.InvalidValueException;
+import com.jocatelo.Round;
+import com.jocatelo.rule.Command;
+import com.jocatelo.rule.Status;
 
 import java.util.ArrayList;
 
@@ -15,10 +19,6 @@ public final class User implements Playable {
     private Round round;
     private int index;
 
-    public enum Status {
-        WIN, LOSE, DRAW, READY, STAND, BUST, PLAYING, BLACKJACK, FOLD, PUSH
-    }
-
     private User(Round round) {
         hands = new ArrayList<Card>();
         status = Status.PLAYING;
@@ -28,32 +28,33 @@ public final class User implements Playable {
     /**
      * create Dealer
      */
-    public static Dealer dealer(Round round){
+    public static Dealer createDealer(Round round){
         return new Dealer(new User(round));
     }
 
     /**
      * create player
+     * 
+     * @throws InvalidValueException
      */
-    public static Optional<Player> player(Round round, String name){                
-        Player player = null;
-        if(name != null || name != Dealer.NAME){
-            player = new Player(new User(round), name);
+    public static Player createPlayer(Round round, String name) throws InvalidValueException {
+        
+        if(name == null || name == Dealer.NAME){
+            throw new InvalidValueException();
         }
-        return Optional.ofNullable(player);
+        return new Player(new User(round), name);
     }
 
     @Override
-    public Playable add(Card card) {
+    public void add(Card card) {
         if (status == Status.PLAYING) {
             hands.add(card);
         }
-        return this;
     }
 
     @Override
-    public Playable draw(Card card) {
-        return this.add(card);
+    public void draw(Card card) {
+        add(card);
     }
     @Override
     public int getCardCount() {
@@ -66,9 +67,8 @@ public final class User implements Playable {
     }
 
     @Override
-    public Playable setScore(int score) {
+    public void setScore(int score) {
         this.score = score;
-        return this;
     }
     @Override
     public Card[] hands() {
@@ -76,15 +76,10 @@ public final class User implements Playable {
     }
 
     @Override
-    public Playable stand() {
+    public void stand() {
         this.status = Status.STAND;
-        return this;
     }
-
-    @Override
-    public Playable end(int score) {
-        return this;
-    }
+    
 
     @Override
     public Status status() {
@@ -92,21 +87,19 @@ public final class User implements Playable {
     }
 
     @Override
-    public Playable setStatus(Status status) {
-        this.status = status;
-        return this;
+    public void setStatus(Status status) {
+        this.status = status;        
     }
 
     @Override
-    public User command(Command command) {
+    public void command(Command command) {
         round.turn().command(this, command);
-        return this;
     }
 
     @Override
     public String name()
     {
-        return "";
+        return "user";
     }
 
     @Override
@@ -118,8 +111,5 @@ public final class User implements Playable {
     public int getIndex() {
         return this.index;
     }
-   
-
-
 
 }

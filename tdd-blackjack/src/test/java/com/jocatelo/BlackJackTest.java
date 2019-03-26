@@ -1,16 +1,19 @@
 package com.jocatelo;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import com.jocatelo.character.Dealer;
+import com.jocatelo.character.Playable;
+import com.jocatelo.rule.Command;
+import com.jocatelo.rule.Status;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
-import java.util.List;
-
-import com.jocatelo.User.Status;
-
-import java.util.ArrayList;
 
 public class BlackJackTest {
     @Test
-    public void playing1Round() {
+    public void playing1Round() throws InvalidValueException {
         Round round = Round.create().setPlayerNumber(8).shuffle().distribute().start();        
 
         for (Playable user : round.users()) {
@@ -62,13 +65,8 @@ public class BlackJackTest {
                     assertEquals(Status.DRAW, player.status());
                 }
             }
-
-            
         }
-
-        
-
-    }
+    }    
 
     @Test
     public void cardStatus() {
@@ -86,11 +84,11 @@ public class BlackJackTest {
                 }
 
                 if (j == 1) {
-                    assertEquals(card.nextValue(), 11);
+                    assertEquals(card.specialValue(), 11);
                 } else if (j > 10) {
-                    assertEquals(card.nextValue(), 10);
+                    assertEquals(card.specialValue(), 10);
                 } else {
-                    assertEquals(card.nextValue(), j);
+                    assertEquals(card.specialValue(), j);
                 }
 
                 assertEquals(card.type(), Card.Type.values()[i - 1]);
@@ -100,7 +98,7 @@ public class BlackJackTest {
     }
 
     @Test
-    public void checkBlackJackStatus() {
+    public void checkBlackJackStatus() throws InvalidValueException {
         CardDeck deck = new CardDeck();
         deck.initialize();
         Round mock = Round.create().setPlayerNumber(4).start();
