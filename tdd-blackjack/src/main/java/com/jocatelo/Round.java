@@ -12,16 +12,18 @@ import com.jocatelo.character.Player;
 import com.jocatelo.character.User;
 import com.jocatelo.rule.Command;
 import com.jocatelo.rule.Rule;
+import com.jocatelo.rule.Status;
 
 public class Round {
-    private List<Player> players;
+    private final List<Player> players;
     private Dealer dealer;
     private List<Playable> users;
     private List<Turn> turns;
     private CardDeck deck;
     private Rule rule;
     private Turn current;
-    private int bestScore;
+    private int playerNumber;
+
     
 
     private Round() {
@@ -29,14 +31,14 @@ public class Round {
         users = new ArrayList<>(8);
         deck = new CardDeck();
         turns = new ArrayList<>();
-        this.dealer = User.createDealer(this);            
+        this.dealer = User.createDealer();            
         users.add(dealer);
         dealer.setIndex(0);
         deck.initialize();
         rule = Rule.CLASSIC;
     }
 
-    public static Round create() {
+    public static Round of() {
         return new Round();
     }
 
@@ -46,19 +48,32 @@ public class Round {
     }
 
     public Round setPlayerNumber(int number) throws InvalidValueException {
-        
-        if (number >= 1 && number <= 8) {
-            for (int i = 1; i <= number; i++) {
+        this.playerNumber = number;        
+        return this;
+    }
+
+    public void initialize() throws Exception
+    {
+        createPlayers();
+        distribute();
+        shuffle();
+    }
+
+    private void createPlayers() throws InvalidValueException
+    {
+        if (playerNumber >= 1 && playerNumber <= 8) {
+            for (int i = 1; i <= playerNumber; i++) {
                 String name = "player " + i;
-                Player player = User.createPlayer(this, name);                
-                players.add(player);
+                Player player = User.createPlayer(name);                
+                players.add(i-1, player);
                 users.add(player);
                 player.setIndex(i);
                 
             }
         }
-        return this;
+
     }
+
 
     public Round shuffle() {
         deck.shuffle();
@@ -106,26 +121,27 @@ public class Round {
         for (Playable user : users) {
             Command command = current.what(user);
             command.execute(this, user);
-            rule.updateScore(user);
-            rule.updateStatus(user);
+            user.updateScore();
+            user.updateStatus();
         }
+
+        Turn newTurn = Turn.create(current.number() + 1).initialize(users());
+        turns.add(newTurn);
+        current = newTurn;
+                
+        return this;
+    } 
+
+    public void endGame()
+    {
         if (isOver()) {
             rule.finalizeStatus(dealer, players());
-        } else {
-            Turn newTurn = Turn.create(current.number() + 1).initialize(users());
-            turns.add(newTurn);
-            current = newTurn;
-        }        
-        return this;
-    }    
+        } 
 
-    public int bestScore() {
-        return rule.bestScore(this.users());
     }
-
-    public Player[] players()
+    public List<Player> players()
     {
-        return players.toArray(new Player[players.size()]);
+        return players;
     }
 
 }

@@ -1,9 +1,13 @@
 package com.jocatelo.rule;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.jocatelo.Card;
 import com.jocatelo.Round;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Playable;
+import com.jocatelo.character.Player;
 
 public enum Rule {
     CLASSIC;
@@ -47,7 +51,7 @@ public enum Rule {
         return player;
     }
 
-    public void finalizeStatus(Dealer dealer, Playable[] players) {
+    public void finalizeStatus(Dealer dealer, List<Player> players) {
         
         for (Playable player : players) {
             if (player.status() == Status.BUST) {
@@ -77,6 +81,35 @@ public enum Rule {
         }
         return bestScore;
 
+    }
+
+    public List<Command> getDealerCommand(Dealer dealer)
+    {
+        List<Command> commands = new ArrayList<Command>();
+        if(dealer.score()<=16){
+            commands.add(Command.DRAW);
+        }else if(dealer.score() >= 17){
+            commands.add(Command.STAND);
+        }
+
+        return commands;
+    }
+
+    public List<Command> getPlayerCommand(Player player, Dealer dealer)
+    {
+        List<Command> commands = new ArrayList<Command>();
+        if(player.score() < 21){
+            commands.add(Command.HIT);
+            commands.add(Command.DOUBLEDOWN);
+            commands.add(Command.SPLIT);
+            if(dealer.score()>=17){
+                commands.add(Command.STAND);    
+            }
+        }
+        else if(player.score()>=21){
+            commands.add(Command.STAND);
+        }
+        return commands;
     }
 
 }

@@ -7,7 +7,9 @@ import java.util.PriorityQueue;
 import com.jocatelo.Card;
 import com.jocatelo.InvalidValueException;
 import com.jocatelo.Round;
+import com.jocatelo.Turn;
 import com.jocatelo.rule.Command;
+import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
 import java.util.ArrayList;
@@ -16,20 +18,21 @@ public final class User implements Playable {
     private List<Card> hands;
     private Status status;
     private int score;
-    private Round round;
     private int index;
+    private Command command;
+    private Rule rule;
 
-    private User(Round round) {
+    private User() {
         hands = new ArrayList<Card>();
         status = Status.PLAYING;
-        this.round = round;
+        rule = Rule.CLASSIC;
     }
 
     /**
      * create Dealer
      */
-    public static Dealer createDealer(Round round){
-        return new Dealer(new User(round));
+    public static Dealer createDealer() {
+        return new Dealer(new User());
     }
 
     /**
@@ -37,12 +40,12 @@ public final class User implements Playable {
      * 
      * @throws InvalidValueException
      */
-    public static Player createPlayer(Round round, String name) throws InvalidValueException {
-        
-        if(name == null || name == Dealer.NAME){
+    public static Player createPlayer(String name) throws InvalidValueException {
+
+        if (name == null || name == Dealer.NAME) {
             throw new InvalidValueException();
         }
-        return new Player(new User(round), name);
+        return new Player(new User(), name);
     }
 
     @Override
@@ -56,6 +59,7 @@ public final class User implements Playable {
     public void draw(Card card) {
         add(card);
     }
+
     @Override
     public int getCardCount() {
         return hands.size();
@@ -70,6 +74,7 @@ public final class User implements Playable {
     public void setScore(int score) {
         this.score = score;
     }
+
     @Override
     public Card[] hands() {
         return hands.toArray(new Card[hands.size()]);
@@ -79,7 +84,6 @@ public final class User implements Playable {
     public void stand() {
         this.status = Status.STAND;
     }
-    
 
     @Override
     public Status status() {
@@ -88,17 +92,16 @@ public final class User implements Playable {
 
     @Override
     public void setStatus(Status status) {
-        this.status = status;        
+        this.status = status;
     }
 
     @Override
-    public void command(Command command) {
-        round.turn().command(this, command);
+    public void setCommand(Command command) {
+        this.command = command;
     }
 
     @Override
-    public String name()
-    {
+    public String name() {
         return "user";
     }
 
@@ -109,7 +112,32 @@ public final class User implements Playable {
 
     @Override
     public int getIndex() {
-        return this.index;
+        return index;
     }
 
+    @Override
+    public Command getCommand() {
+        return command;
+    }
+
+    @Override
+    public Rule getRule() {
+        return rule;
+    }
+
+    @Override
+    public void setRule(Rule rule) {
+        this.rule =rule;
+    }
+
+    @Override
+    public void updateScore() {
+        rule.updateScore(this);
+    }
+
+    @Override
+    public void updateStatus()
+    {
+        rule.updateStatus(this);
+    }
 }

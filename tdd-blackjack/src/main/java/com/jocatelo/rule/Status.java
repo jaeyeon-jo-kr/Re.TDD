@@ -9,7 +9,7 @@ public enum Status {
     BUST("BUST"),
     PLAYING("PLAYING"),
     BLACKJACK("BLACKJACK"),
-    FOLD("FOLD"), 
+    SURRENDER("SURRENDER"), 
     PUSH("PUSH");
 
     private String symbol;

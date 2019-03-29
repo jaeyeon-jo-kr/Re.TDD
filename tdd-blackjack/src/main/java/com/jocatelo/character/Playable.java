@@ -1,7 +1,9 @@
 package com.jocatelo.character;
 
 import com.jocatelo.Card;
+import com.jocatelo.Turn;
 import com.jocatelo.rule.Command;
+import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
 
@@ -11,16 +13,15 @@ public interface Playable extends Commandable {
     public int getCardCount();
     public int score();
     public void setScore(int score);
+    public void updateScore();
     public Card[] hands();
     public void stand();    
     public Status status();
     public void setStatus(Status status);
+    public void updateStatus();
     public String name();
     public void setIndex(int index);
     public int getIndex();
-
-
-    @Override
-    public void command(Command command);
-
+    public Rule getRule();
+    public void setRule(Rule rule);    
 }
