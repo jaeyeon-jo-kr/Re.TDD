@@ -166,7 +166,37 @@ public class BlackJackTest {
         assertTrue(commands.contains(Command.DOUBLEDOWN));
         assertTrue(commands.contains(Command.STAND));
         assertTrue(commands.contains(Command.SPLIT));
+    }
 
+
+    @Test
+    public void availablePlayerCommandsAfterBlackJack() throws Exception
+    {
+        Player player = User.createPlayer("PLAYER 1");
+        Dealer dealer = User.createDealer();
+
+        player.setScore(21);
+        dealer.setScore(17);
+
+        List<Command> commands = player.getAvailableCommands(dealer);
+        
+        assertTrue(commands.contains(Command.STAND));
+        assertTrue(commands.size() == 1);
+    }
+
+    @Test
+    public void availablePlayerCommandsAfterBlackBurst() throws Exception
+    {
+        Player player = User.createPlayer("PLAYER 1");
+        Dealer dealer = User.createDealer();
+
+        player.setScore(22);
+        dealer.setScore(17);
+
+        List<Command> commands = player.getAvailableCommands(dealer);
+        
+        assertTrue(commands.contains(Command.STAND));
+        assertTrue(commands.size() == 1);
     }
 
 
