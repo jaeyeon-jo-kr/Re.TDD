@@ -6,15 +6,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.DelayQueue;
 
+import com.jocatelo.character.Commandable;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.User;
-import com.jocatelo.rule.Command;
+import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
-public class Round {
+public class Round implements Drawable, Commandable {
     private final List<Player> players;
     private Dealer dealer;
     private List<Playable> users;
@@ -23,8 +24,6 @@ public class Round {
     private Rule rule;
     private Turn current;
     private int playerNumber;
-
-    
 
     private Round() {
         players = new ArrayList<>(8);
@@ -55,8 +54,8 @@ public class Round {
     public void initialize() throws Exception
     {
         createPlayers();
-        distribute();
         shuffle();
+        distribute();
     }
 
     private void createPlayers() throws InvalidValueException
@@ -85,23 +84,15 @@ public class Round {
      */
     public Round distribute() {
         for (Playable user : users) {
-            Card card = deck.popCard();
-            user.add(card);
-            card = deck.popCard();
-            user.add(card);
+            drawCard(user);
+            drawCard(user);
         }
         return this;
     }
 
     public Turn turn() {
         return current;
-    }
-
-    public Round draw(Playable user) {
-        Card card = deck.popCard();
-        user.draw(card);
-        return this;
-    }
+    }   
 
     public Playable[] users() {
         return users.toArray(new Playable[users.size()]);
@@ -112,20 +103,21 @@ public class Round {
     }
 
     public Round start() {
-        current = Turn.create(1).initialize(users());
+        current = Turn.create(1).initialize(players());
         turns.add(current);
         return this;
     }
 
     public Round endTurn() {
-        for (Playable user : users) {
-            Command command = current.what(user);
-            command.execute(this, user);
-            user.updateScore();
-            user.updateStatus();
+        
+        for (Player player : players) {
+            PlayerCommand command = current.what(player);
+            command.execute(this, player);
+            player.updateScore();
+            player.updateStatus();
         }
 
-        Turn newTurn = Turn.create(current.number() + 1).initialize(users());
+        Turn newTurn = Turn.create(current.number() + 1).initialize(players());
         turns.add(newTurn);
         current = newTurn;
                 
@@ -143,5 +135,24 @@ public class Round {
     {
         return players;
     }
+
+    
+    @Override
+    public void drawCard(Playable user) {
+        Card card = deck.popCard();
+        user.add(card);
+    }
+
+    @Override
+    public void setCommand(Player player, PlayerCommand command) {
+        current.add(player, command);
+    }
+
+    @Override
+    public PlayerCommand getCommand(Player player) {
+        return current.what(player);
+    }
+
+    
 
 }

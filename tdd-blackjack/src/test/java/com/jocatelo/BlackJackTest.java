@@ -12,7 +12,7 @@ import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.User;
-import com.jocatelo.rule.Command;
+import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Status;
 
 import org.junit.Test;
@@ -37,9 +37,9 @@ public class BlackJackTest {
         Player player = User.createPlayer("Player");
         player.setStatus(Status.PLAYING);
 
-        player.add(Card.clover(Card.Number.N10));
-        player.add(Card.clover(Card.Number.N10));
-        player.add(Card.clover(Card.Number.N3));
+        player.add(Card.clover(10));
+        player.add(Card.clover(10));
+        player.add(Card.clover(3));
 
         player.updateScore();
         player.updateStatus();
@@ -58,8 +58,8 @@ public class BlackJackTest {
         player.bet(10);
 
         player.setStatus(Status.PLAYING);
-        player.add(Card.clover(Card.Number.A));
-        player.add(Card.clover(Card.Number.K));
+        player.add(Card.clover(1));
+        player.add(Card.clover(10));
         player.updateScore();
         player.updateStatus();
 
@@ -107,21 +107,21 @@ public class BlackJackTest {
     public void checkScore() throws Exception {
 
         Playable user = User.createPlayer("user1");
-        user.draw(Card.diamond(Card.Number.A));
-        user.draw(Card.diamond(Card.Number.A));
+        user.add(Card.diamond(1));
+        user.add(Card.diamond(1));
 
         Playable user2 = User.createPlayer("user2");
-        user2.draw(Card.clover(Card.Number.A));
-        user2.draw(Card.clover(Card.Number.N8));
+        user2.add(Card.clover(1));
+        user2.add(Card.clover(8));
 
         Playable user3 = User.createPlayer("user3");
-        user3.draw(Card.clover(Card.Number.A));
-        user3.draw(Card.clover(Card.Number.N10));
+        user3.add(Card.clover(1));
+        user3.add(Card.clover(10));
 
         Playable user4 = User.createPlayer("user4");
-        user4.draw(Card.clover(Card.Number.N3));
-        user4.draw(Card.clover(Card.Number.K));
-        user4.draw(Card.clover(Card.Number.J));
+        user4.add(Card.clover(3));
+        user4.add(Card.clover(10));
+        user4.add(Card.clover(10));
 
         user.updateScore();
         user2.updateScore();
@@ -130,7 +130,6 @@ public class BlackJackTest {
         assertEquals(12, user.score());
         assertEquals(19, user2.score());
         assertEquals(21, user3.score());
-        assertEquals(23, user4.score());
 
     }
 

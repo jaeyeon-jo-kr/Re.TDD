@@ -2,14 +2,13 @@ package com.jocatelo.character;
 
 import com.jocatelo.Card;
 import com.jocatelo.Turn;
-import com.jocatelo.rule.Command;
+import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
 
-public interface Playable extends Commandable {
-    public void add(Card card);
-    public void draw(Card card) ;
+public interface Playable {
+    public void add(Card card);    
     public int getCardCount();
     public int score();
     public void setScore(int score);

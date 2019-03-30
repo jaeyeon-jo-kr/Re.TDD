@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.jocatelo.Card;
 import com.jocatelo.Turn;
-import com.jocatelo.rule.Command;
+import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
@@ -37,12 +37,7 @@ public class Player implements Playable {
     @Override
     public void add(Card card) {
         user.add(card);
-    }
-
-    @Override
-    public void draw(Card card) {
-        user.draw(card);
-    }
+    }    
 
     @Override
     public int getCardCount() {
@@ -80,11 +75,6 @@ public class Player implements Playable {
     }
 
     @Override
-    public void setCommand(Command command) {
-        user.setCommand(command);
-    }
-
-    @Override
     public int hashCode() {
         return name.hashCode();
     }
@@ -113,11 +103,6 @@ public class Player implements Playable {
         user.getRule().updateStatus(this);
     }
 
-    @Override
-    public Command getCommand() {
-        return user.getCommand();
-    }
-
     public int getWinningCredit(Dealer dealer) {
         if (dealer.status() != Status.BLACKJACK && status() == Status.BLACKJACK)
             return bet * 3 / 2;
@@ -135,7 +120,7 @@ public class Player implements Playable {
     }
 
     
-    public List<Command> getAvailableCommands(Dealer dealer) {
+    public List<PlayerCommand> getAvailableCommands(Dealer dealer) {
         return getRule().getPlayerCommand(this, dealer);
     }
 

@@ -83,31 +83,32 @@ public enum Rule {
 
     }
 
-    public List<Command> getDealerCommand(Dealer dealer)
+    public DealerCommand getDealerCommand(Dealer dealer)
     {
-        List<Command> commands = new ArrayList<Command>();
+        DealerCommand command = DealerCommand.NONE;
+
         if(dealer.score()<=16){
-            commands.add(Command.DRAW);
+            command = DealerCommand.DRAW;
         }else if(dealer.score() >= 17){
-            commands.add(Command.STAND);
+            command = DealerCommand.STAND;
         }
 
-        return commands;
+        return command;
     }
 
-    public List<Command> getPlayerCommand(Player player, Dealer dealer)
+    public List<PlayerCommand> getPlayerCommand(Player player, Dealer dealer)
     {
-        List<Command> commands = new ArrayList<Command>();
+        List<PlayerCommand> commands = new ArrayList<PlayerCommand>();
         if(player.score() < 21){
-            commands.add(Command.HIT);
-            commands.add(Command.DOUBLEDOWN);
-            commands.add(Command.SPLIT);
+            commands.add(PlayerCommand.HIT);
+            commands.add(PlayerCommand.DOUBLEDOWN);
+            commands.add(PlayerCommand.SPLIT);
             if(dealer.score()>=17){
-                commands.add(Command.STAND);    
+                commands.add(PlayerCommand.STAND);    
             }
         }
         else if(player.score()>=21){
-            commands.add(Command.STAND);
+            commands.add(PlayerCommand.STAND);
         }
         return commands;
     }

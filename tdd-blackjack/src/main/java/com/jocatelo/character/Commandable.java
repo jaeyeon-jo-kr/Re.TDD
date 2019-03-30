@@ -3,9 +3,9 @@ package com.jocatelo.character;
 import java.util.List;
 
 import com.jocatelo.Turn;
-import com.jocatelo.rule.Command;
+import com.jocatelo.rule.PlayerCommand;
 
 public interface Commandable {
-    public void setCommand(Command command);
-    public Command getCommand();
+    public void setCommand(Player player, PlayerCommand command);
+    public PlayerCommand getCommand(Player player);
 }

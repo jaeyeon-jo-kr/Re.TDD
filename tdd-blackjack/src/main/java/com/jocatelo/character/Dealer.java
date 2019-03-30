@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.jocatelo.Card;
 import com.jocatelo.Turn;
-import com.jocatelo.rule.Command;
+import com.jocatelo.rule.DealerCommand;
+import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
@@ -20,12 +21,7 @@ public class Dealer implements Playable {
     public void add(Card card) {
         user.add(card);
     }
-
-    @Override
-    public void draw(Card card) {
-        user.draw(card);
-    }
-
+   
     @Override
     public int getCardCount() {
         return user.getCardCount();
@@ -59,12 +55,8 @@ public class Dealer implements Playable {
     @Override
     public void setStatus(Status status) {
         user.setStatus(status);
-    }
-
-    @Override
-    public void setCommand(Command command) {
-        user.setCommand(command);
-    }
+    }   
+    
 
     @Override
     public int hashCode() {
@@ -85,12 +77,7 @@ public class Dealer implements Playable {
     public int getIndex() {
         return user.getIndex();
     }
-
-    @Override
-    public Command getCommand() {
-        return user.getCommand();
-    }
-
+   
     @Override
     public Rule getRule() {
         return user.getRule();
@@ -102,15 +89,15 @@ public class Dealer implements Playable {
     }
 
     public void updateScore() {
-        user.getRule().updateScore(this);
+        getRule().updateScore(this);
     }
 
     public void updateStatus() {
-        user.getRule().updateStatus(this);
+        getRule().updateStatus(this);
     }
 
     
-    public List<Command> getAvailableCommands() {
-        return user.getRule().getDealerCommand(this);
+    public DealerCommand getNextCommand() {
+        return getRule().getDealerCommand(this);
     }
 }

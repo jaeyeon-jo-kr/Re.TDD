@@ -8,7 +8,7 @@ import com.jocatelo.Card;
 import com.jocatelo.InvalidValueException;
 import com.jocatelo.Round;
 import com.jocatelo.Turn;
-import com.jocatelo.rule.Command;
+import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
@@ -19,7 +19,7 @@ public final class User implements Playable {
     private Status status;
     private int score;
     private int index;
-    private Command command;
+    private PlayerCommand command;
     private Rule rule;
 
     private User() {
@@ -53,12 +53,7 @@ public final class User implements Playable {
         if (status == Status.PLAYING) {
             hands.add(card);
         }
-    }
-
-    @Override
-    public void draw(Card card) {
-        add(card);
-    }
+    }    
 
     @Override
     public int getCardCount() {
@@ -94,12 +89,6 @@ public final class User implements Playable {
     public void setStatus(Status status) {
         this.status = status;
     }
-
-    @Override
-    public void setCommand(Command command) {
-        this.command = command;
-    }
-
     @Override
     public String name() {
         return "user";
@@ -114,12 +103,7 @@ public final class User implements Playable {
     public int getIndex() {
         return index;
     }
-
-    @Override
-    public Command getCommand() {
-        return command;
-    }
-
+    
     @Override
     public Rule getRule() {
         return rule;
