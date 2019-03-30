@@ -1,60 +1,43 @@
-@startuml
+@startuml classDiagram
 Interface Playable {
-    Playable add(Card card)
-    Playable draw(Card card)
-    Playable getCardCount()
-    int score()
-    Playable setScore(int score)
-    Card[] hands()
-    Playable stand()
-    Playable end(int score)
-    Status status()
-    Playable setStatus(Status status)
-    String name()
-    void setIndex(int index)
-    int getIndex()    
+
 }
 Interface Commandable
 {
-    Playable command(Command command)
+    
 }
 
-class Round
+Interface Drawable 
 {
-    Round create()    
-    Round setPlayerNumber(int number)
-    Round shuffle()
-    Round distribute()
-    Turn turn()
-    Round draw(Playable user)    
-    boolean isOver()
-    Round start()
-    Round endTurn()
-    int bestScore()
-    Dealer dealer()
-    Playable[] users()
-    Player[] players()
-}
 
+}
+class DealerCommand
+{
+    public void execute(Round round, Dealer dealer)   
+}
+class PlayerCommand
+{
+    public void execute(Round round, Player player)
+}
 class Rule
 {
-    Boolean isOver(Round round)
-    Playable updateScore(Playable player)
-    Playable updateStatus(Playable player)
-    void finalizeStatus(Dealer dealer, Playable[] players)
-    int bestScore(Playable[] players)
+    
 }
 class Turn
 Player --|> Playable
 User --|> Playable
 Dealer --|> Playable
 Round o-- Playable
-Round o-- Turn
-Round o-- Rule
-Round o-- CardDeck
 
-Playable --|> Commandable
 Player --* User
 Dealer --* User
+
+Round --|> Drawable
+Round --|> Commandable
+
+Player --> PlayerCommand
+Dealer --> DealerCommand
+
+
 
 @enduml
