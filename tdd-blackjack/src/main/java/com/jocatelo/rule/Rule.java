@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -28,27 +29,32 @@ public enum Rule {
         }
         return isplaying;
     }
+    
+    private List<Integer> plusSpecialScore(int score, Optional<Integer> specialValue){
+        List<Integer> plus = new ArrayList<>();
+        if (specialValue.isPresent()) {
+            plus.add(score + specialValue.get());
+        }
+        return plus;
+    }
 
-    public boolean isOver21(int sum, int card) {
-        return sum + card > BLACKJACK_SCORE;
+    private List<Integer> addScore(List<Integer> candidates, Card card) {
+        List<Integer> result = new ArrayList<>();
+        for (int score : candidates) {
+            result.add(score + card.value());
+            result.addAll(plusSpecialScore(score, card.specialValue()));
+        }
+        return result;
     }
 
     private List<Integer> generateScoreCandidates(Playable player) {
-        List<Integer> scoreCandidate = new ArrayList<Integer>();
-
-        scoreCandidate.add(0);
+        List<Integer> candidates = new ArrayList<Integer>();
+        candidates.add(0);
 
         for (Card card : player.hands()) {
-            List<Integer> result = new ArrayList<>();
-            for (int score : scoreCandidate) {
-                result.add(score + card.value());
-                if (card.specialValue().isPresent()) {
-                    result.add(score + card.specialValue().get());
-                }
-            }
-            scoreCandidate = result;
+            candidates = addScore(candidates, card);
         }
-        return scoreCandidate;
+        return candidates;
     }
 
     private int getMaxScore(List<Integer> candidates) {
@@ -58,8 +64,10 @@ public enum Rule {
     public void updateScore(Playable player) {
         final boolean BUST = false;
         final boolean NORMAL = true;
+
         List<Integer> candidates = generateScoreCandidates(player);
-        Map<Boolean, List<Integer>> groups = candidates.stream().collect(Collectors.partitioningBy(x -> x <= 21));
+        Map<Boolean, List<Integer>> groups = candidates.stream()
+                .collect(Collectors.partitioningBy(x -> x <= BLACKJACK_SCORE));
 
         if (!groups.get(NORMAL).isEmpty()) {
             candidates = groups.get(NORMAL);
