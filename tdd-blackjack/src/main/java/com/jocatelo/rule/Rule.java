@@ -1,7 +1,10 @@
 package com.jocatelo.rule;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.stream.IntStream;
 
 import com.jocatelo.Card;
 import com.jocatelo.Round;
@@ -12,41 +15,65 @@ import com.jocatelo.character.Player;
 public enum Rule {
     CLASSIC;
 
+    private static final int BLACKJACK_SCORE = 21;
+
     public boolean isOver(Round round) {
+        boolean isplaying = false;
+        
         for (Playable player : round.users()) {
-            if (player.status() == Status.PLAYING) {
-                return false;
-            }
+            isplaying = (player.status() == Status.PLAYING);
         }
-        return true;
+        return isplaying;
+    }
+
+    public boolean isOver21(int sum, int card)
+    {
+        return sum + card > BLACKJACK_SCORE;
     }
 
     public Playable updateScore(Playable player) {
-        int aceCount = 0;
-        int score = 0;
-
+        List<Integer> scoreCandidate = new ArrayList<Integer>();
+        
+        scoreCandidate.add(0);
+        
         for (Card card : player.hands()) {
-            if (card.value() == 1) {
-                aceCount += 1;
-            } else {
-                score += card.value();
+            List<Integer> result  = new ArrayList<>();
+            for(int score : scoreCandidate){
+                result.add(score + card.value());
+                if(card.specialValue().isPresent()){                    
+                    result.add(score + card.specialValue().get());                    
+                }
+            }
+            scoreCandidate = result;            
+        }
+
+        int maxScore = -1;
+        int bustScore = -1;
+
+        for (Integer score : scoreCandidate) {
+            if(score <= BLACKJACK_SCORE){
+                maxScore = Math.max(score, maxScore);
+            }else{
+                bustScore = Math.max(score, bustScore);
             }
         }
-        for (int i = 0; i < aceCount; i++) {
-            if (score + 11 <= 21) {
-                score += 11;
-            } else {
-                score += 1;
-            }
-        }
-        player.setScore(score);
+        if(maxScore > -1)
+            player.setScore(maxScore);
+        else
+            player.setScore(bustScore);
+        
         return player;
+    }
+    public void setMaxScore(Integer maxScore, int score)
+    {
+        maxScore = Math.max(maxScore, score);
+
     }
 
     public Playable updateStatus(Playable player) {
-        if (player.score() > 21)
+        if (player.score() > BLACKJACK_SCORE)
             player.setStatus(Status.BUST);
-        else if (player.score() == 21)
+        else if (player.score() == BLACKJACK_SCORE)
             player.setStatus(Status.BLACKJACK);
         return player;
     }

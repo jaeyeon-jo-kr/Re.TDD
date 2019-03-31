@@ -1,15 +1,9 @@
 package com.jocatelo;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Queue;
 import java.util.Random;
-import java.util.stream.IntStream;
-
-import com.jocatelo.Card.Number;
-import com.jocatelo.Card.Type;
 
 public class CardDeck {
     final private Queue<Card> cardQueue;
