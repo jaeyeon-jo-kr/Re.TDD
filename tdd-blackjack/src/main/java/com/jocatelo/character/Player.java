@@ -2,19 +2,19 @@ package com.jocatelo.character;
 
 import java.util.List;
 
-import com.jocatelo.Card;
 import com.jocatelo.InvalidValueException;
-import com.jocatelo.Turn;
 import com.jocatelo.rule.PlayerCommand;
-import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
-public class Player extends User implements Playable {
+import lombok.Getter;
+import lombok.Setter;
 
+public class Player extends User implements Playable,Commandable {
 
+    @Setter
     private int credit;
+    @Getter
     private int bet;
-    private PlayerCommand command;
 
     private Player(String name) {
         super();        
@@ -35,13 +35,6 @@ public class Player extends User implements Playable {
         return new Player(name);
     }
 
-    /**
-     * @param credit the credit to set
-     */
-    public void setCredit(int credit) {
-        this.credit = credit;
-    }
-
     public void bet(int bet) {
         this.bet = bet;
         this.credit = credit - bet;
@@ -51,11 +44,6 @@ public class Player extends User implements Playable {
     @Override
     public int hashCode() {
         return name.hashCode();
-    }
-
-
-    public String name() {
-        return name;
     }
 
     @Override
@@ -75,7 +63,7 @@ public class Player extends User implements Playable {
     }
 
     public List<PlayerCommand> getAvailableCommands(Dealer dealer) {
-        return getRule().getPlayerCommand(this, dealer);
+        return rule.getPlayerCommand(this, dealer);
     }
 
 }

@@ -17,7 +17,7 @@ import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
-public class Round implements Drawable, Commandable {
+public class Round implements Drawable {
     private PlayerGroup players;
     private Dealer dealer;
     private List<Turn> turns;
@@ -138,12 +138,12 @@ public class Round implements Drawable, Commandable {
         hands.add(card);
     }
 
-    @Override
+    
     public void setCommand(Player player, PlayerCommand command) {
-        current.add(player, command);
+        current.setPlayerCommand(player, command);
     }
 
-    @Override
+    
     public PlayerCommand getCommand(Player player) {
         return current.what(player);
     }

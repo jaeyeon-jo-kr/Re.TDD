@@ -11,14 +11,15 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Map.Entry;
 
+import com.jocatelo.character.Commandable;
 import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
 import com.jocatelo.rule.DealerCommand;
 import com.jocatelo.rule.PlayerCommand;
 
 public class Turn {
-    private final Map<Playable, PlayerCommand> userCommands;
-    private DealerCommand dealerCommands;
+    private final Map<Commandable, PlayerCommand> userCommands;
+    private DealerCommand dealerCommand;
     
     private int number;
     private final int MAX_PLAYER_NUMBER = 9;
@@ -40,11 +41,20 @@ public class Turn {
         return this;
     }
 
-    public void add(Playable who, PlayerCommand what) {        
+    public void setDealerCommand(DealerCommand what){
+        dealerCommand = what;
+    }
+    public DealerCommand getDealerCommand()
+    {
+        return dealerCommand;
+    }
+
+
+    public void setPlayerCommand(Player who, PlayerCommand what) {        
         userCommands.put(who,what);
     }
 
-    public PlayerCommand what(Playable who) {
+    public PlayerCommand what(Commandable who) {
         return userCommands.get(who);
     }
 
