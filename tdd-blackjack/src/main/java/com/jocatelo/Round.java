@@ -10,15 +10,15 @@ import com.jocatelo.character.Commandable;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
+import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.character.User;
 import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
 public class Round implements Drawable, Commandable {
-    private final List<Player> players;
+    private PlayerGroup players;
     private Dealer dealer;
-    private List<Playable> users;
     private List<Turn> turns;
     private CardDeck deck;
     private Rule rule;
@@ -26,12 +26,10 @@ public class Round implements Drawable, Commandable {
     private int playerNumber;
 
     private Round() {
-        players = new ArrayList<>(8);
-        users = new ArrayList<>(8);
+        players = new PlayerGroup(8);
         deck = new CardDeck();
         turns = new ArrayList<>();
         this.dealer = User.createDealer();            
-        users.add(dealer);
         dealer.setIndex(0);
         deck.initialize();
         rule = Rule.CLASSIC;
@@ -64,8 +62,7 @@ public class Round implements Drawable, Commandable {
             for (int i = 1; i <= playerNumber; i++) {
                 String name = "player " + i;
                 Player player = User.createPlayer(name);                
-                players.add(i-1, player);
-                users.add(player);
+                players.add(player);
                 player.setIndex(i);
                 
             }
@@ -83,7 +80,7 @@ public class Round implements Drawable, Commandable {
      * At the round of initial, players must have two cards.
      */
     public Round distribute() {
-        for (Playable user : users) {
+        for (Playable user : players.getPlayers()) {
             drawCard(user);
             drawCard(user);
         }
@@ -94,10 +91,7 @@ public class Round implements Drawable, Commandable {
         return current;
     }   
 
-    public Playable[] users() {
-        return users.toArray(new Playable[users.size()]);
-    }
-
+    
     public boolean isOver() {
         return rule.isOver(this);
     }
@@ -110,7 +104,7 @@ public class Round implements Drawable, Commandable {
 
     public Round endTurn() {
         
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             PlayerCommand command = current.what(player);
             command.execute(this, player);
             player.updateScore();
@@ -133,7 +127,7 @@ public class Round implements Drawable, Commandable {
     }
     public List<Player> players()
     {
-        return players;
+        return players.getPlayers();
     }
 
     

@@ -23,8 +23,9 @@ public enum Rule {
 
     public boolean isOver(Round round) {
         boolean isplaying = false;
-
-        for (Playable player : round.users()) {
+        Dealer dealer = round.dealer();
+        isplaying = dealer.status() == Status.PLAYING;
+        for (Playable player : round.players()) {
             isplaying = (player.status() == Status.PLAYING);
         }
         return isplaying;

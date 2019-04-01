@@ -25,7 +25,7 @@ public class BlackJackTest {
         round.initialize();
         round.start();        
 
-        for (Playable user : round.users()) {
+        for (Playable user : round.players()) {
             assertEquals(2, user.getCardCount() );
         }
     }
