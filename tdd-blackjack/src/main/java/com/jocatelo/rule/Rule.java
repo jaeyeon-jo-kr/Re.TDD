@@ -33,8 +33,6 @@ public enum Rule {
         return isplaying;
     }
     
-    
-    
     public void updateStatus(User user) {
         if (user.getScore() > BLACKJACK_SCORE){
             user.setStatus(Status.BUST);

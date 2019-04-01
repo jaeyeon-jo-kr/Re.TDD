@@ -69,10 +69,11 @@ public class BlackJackTest {
 
         Dealer dealer = Dealer.of();
         dealer.setStatus(Status.PLAYING);
+        player.setDealer(dealer);
 
         assertEquals(21, player.getScore());
         assertEquals(Status.BLACKJACK, player.getStatus());
-        assertEquals(15, player.getWinningCredit(dealer));
+        assertEquals(15, player.getWinningCredit());
 
     }
 

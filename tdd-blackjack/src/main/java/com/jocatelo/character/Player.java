@@ -16,6 +16,8 @@ public class Player extends User implements Playable,Commandable {
     private int credit;
     @Getter
     private int bet;
+    @Setter
+    private Dealer dealer;
 
     private Player(String name) {
         super();        
@@ -35,6 +37,8 @@ public class Player extends User implements Playable,Commandable {
         }
         return new Player(name);
     }
+
+    
 
     public void bet(int bet) {
         this.bet = bet;
@@ -56,15 +60,20 @@ public class Player extends User implements Playable,Commandable {
         rule.updateStatus(this);
     }
 
-    public int getWinningCredit(Dealer dealer) {
+    public int getWinningCredit() {
         if (dealer.getStatus() != Status.BLACKJACK 
             && getStatus() == Status.BLACKJACK)
             return bet * 3 / 2;
         return 0;
     }
 
-    public List<PlayerCommand> getAvailableCommands(Dealer dealer) {
+    public List<PlayerCommand> getAvailableCommands() {
         return rule.getPlayerCommand(this, dealer);
+    }
+
+    @Override
+    public void finalizeStatus() {
+
     }
 
 }

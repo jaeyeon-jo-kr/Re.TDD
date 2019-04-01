@@ -22,10 +22,11 @@ public class CommandTest
     {        
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();
+        player.setDealer(dealer);
 
         player.setScore(20);
         dealer.setScore(16);
-        List<PlayerCommand> commands = player.getAvailableCommands(dealer);
+        List<PlayerCommand> commands = player.getAvailableCommands();
         assertArrayEquals(new PlayerCommand[]{PlayerCommand.HIT, PlayerCommand.DOUBLEDOWN, PlayerCommand.SPLIT}, commands.toArray(new PlayerCommand[commands.size()]));
 
         
@@ -36,10 +37,11 @@ public class CommandTest
     {
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();
+        player.setDealer(dealer);
 
         player.setScore(20);
         dealer.setScore(17);
-        List<PlayerCommand> commands = player.getAvailableCommands(dealer);
+        List<PlayerCommand> commands = player.getAvailableCommands();
         
         // assertEquals(Arrays.asList(Command.HIT, Command.DOUBLEDOWN, Command.STAND, Command.SPLIT), commands);
         assertTrue(commands.contains(PlayerCommand.HIT));
@@ -55,11 +57,11 @@ public class CommandTest
     {
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();
-
+        player.setDealer(dealer);
         player.setScore(21);
         dealer.setScore(17);
 
-        List<PlayerCommand> commands = player.getAvailableCommands(dealer);
+        List<PlayerCommand> commands = player.getAvailableCommands();
         
         assertTrue(commands.contains(PlayerCommand.STAND));
         assertTrue(commands.size() == 1);
@@ -70,11 +72,12 @@ public class CommandTest
     {
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();
+        player.setDealer(dealer);
 
         player.setScore(22);
         dealer.setScore(17);
 
-        List<PlayerCommand> commands = player.getAvailableCommands(dealer);
+        List<PlayerCommand> commands = player.getAvailableCommands();
         
         assertTrue(commands.contains(PlayerCommand.STAND));
         assertTrue(commands.size() == 1);

@@ -8,7 +8,9 @@ public class Dealer extends User implements Playable, Commandable {
     
     public static final String NAME = "dealer";
 
-    private Dealer() {}
+    private Dealer() {
+        name = NAME;
+    }
 
     /**
      * create Dealer
@@ -21,13 +23,8 @@ public class Dealer extends User implements Playable, Commandable {
     public int hashCode() {
         return NAME.hashCode();
     }
-
     
-    public String name() {
-        return NAME;
-    }
-    
-   
+    @Override
     public void updateScore() {        
         score = ScoreCalculator.calculate(this);
     }
@@ -40,5 +37,10 @@ public class Dealer extends User implements Playable, Commandable {
     
     public DealerCommand getNextCommand() {
         return getRule().getDealerCommand(this);
+    }
+
+    @Override
+    public void finalizeStatus() {
+
     }
 }
