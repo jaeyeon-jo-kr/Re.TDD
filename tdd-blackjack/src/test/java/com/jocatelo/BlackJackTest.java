@@ -14,7 +14,7 @@ import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.User;
 import com.jocatelo.rule.PlayerCommand;
-import com.jocatelo.rule.Status;
+import com.jocatelo.rule.PlayerStatus;
 
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ public class BlackJackTest {
     public void bustStatus() throws Exception
     {
         Player player = Player.of("Player");
-        player.setStatus(Status.PLAYING);
+        player.setStatus(PlayerStatus.PLAYING);
 
         Hands hands = player.getHands();
         hands.add(Card.clover(10));
@@ -47,7 +47,7 @@ public class BlackJackTest {
         player.updateScore();
         player.updateStatus();
 
-        assertEquals(Status.BUST, player.getStatus());        
+        assertEquals(PlayerStatus.BUST, player.getStatus());        
 
     }
 
@@ -61,18 +61,18 @@ public class BlackJackTest {
         player.bet(10);
 
         Hands hands = player.getHands();
-        player.setStatus(Status.PLAYING);
+        player.setStatus(PlayerStatus.PLAYING);
         hands.add(Card.clover(1));
         hands.add(Card.clover(10));
         player.updateScore();
         player.updateStatus();
 
         Dealer dealer = Dealer.of();
-        dealer.setStatus(Status.PLAYING);
+        
         player.setDealer(dealer);
 
         assertEquals(21, player.getScore());
-        assertEquals(Status.BLACKJACK, player.getStatus());
+        assertEquals(PlayerStatus.BLACKJACK, player.getStatus());
         assertEquals(15, player.getWinningCredit());
 
     }

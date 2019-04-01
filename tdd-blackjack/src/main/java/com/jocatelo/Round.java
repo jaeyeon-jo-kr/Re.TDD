@@ -15,7 +15,7 @@ import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.character.User;
 import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Rule;
-import com.jocatelo.rule.Status;
+import com.jocatelo.rule.PlayerStatus;
 
 public class Round implements Drawable {
     private PlayerGroup players;

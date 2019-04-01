@@ -1,13 +1,18 @@
 package com.jocatelo.character;
 
 import com.jocatelo.rule.DealerCommand;
+import com.jocatelo.rule.DealerStatus;
 import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.ScoreCalculator;
+
+import lombok.Getter;
+import lombok.Setter;
 
 public class Dealer extends User implements Playable, Commandable {
     
     public static final String NAME = "dealer";
-
+    @Getter    
+    private DealerStatus status;
     private Dealer() {
         name = NAME;
     }
@@ -29,14 +34,13 @@ public class Dealer extends User implements Playable, Commandable {
         score = ScoreCalculator.calculate(this);
     }
 
-    public void updateStatus() {
-        Rule rule = getRule();
-        rule.updateStatus(this);
+    public void updateStatus() throws Exception {
+        status = status.next(this);
     }
 
     
     public DealerCommand getNextCommand() {
-        return getRule().getDealerCommand(this);
+        return DealerCommand.getAvailable(this);
     }
 
     @Override

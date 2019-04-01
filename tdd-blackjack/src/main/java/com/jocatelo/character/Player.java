@@ -3,9 +3,11 @@ package com.jocatelo.character;
 import java.util.List;
 
 import com.jocatelo.InvalidValueException;
+import com.jocatelo.rule.DealerStatus;
 import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.ScoreCalculator;
-import com.jocatelo.rule.Status;
+import com.jocatelo.rule.PlayerStatus;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,14 +18,20 @@ public class Player extends User implements Playable,Commandable {
     private int credit;
     @Getter
     private int bet;
+    @Getter
     @Setter
     private Dealer dealer;
+
+    @Getter
+    @Setter
+    private PlayerStatus status;
 
     private Player(String name) {
         super();        
         this.name = name;
         this.credit = 0;
         this.bet = 0;
+        this.status = PlayerStatus.PLAYING;
     }
 
     /**
@@ -36,9 +44,7 @@ public class Player extends User implements Playable,Commandable {
             throw new InvalidValueException();
         }
         return new Player(name);
-    }
-
-    
+    }    
 
     public void bet(int bet) {
         this.bet = bet;
@@ -57,18 +63,18 @@ public class Player extends User implements Playable,Commandable {
     }
 
     public void updateStatus() {
-        rule.updateStatus(this);
+        status = status.next(this);
     }
 
     public int getWinningCredit() {
-        if (dealer.getStatus() != Status.BLACKJACK 
-            && getStatus() == Status.BLACKJACK)
+        if (dealer.getStatus() != DealerStatus.BLACKJACK 
+            && status == PlayerStatus.BLACKJACK)
             return bet * 3 / 2;
         return 0;
     }
 
     public List<PlayerCommand> getAvailableCommands() {
-        return rule.getPlayerCommand(this, dealer);
+        return PlayerCommand.getAvailable(this);
     }
 
     @Override

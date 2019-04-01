@@ -24,6 +24,16 @@ public enum DealerCommand {
     }
 
     public abstract void execute(Round round, Dealer dealer);
-    
+    public static DealerCommand getAvailable(Dealer dealer){
+        DealerCommand command = DealerCommand.NONE;
+
+        if (dealer.getScore() <= 16) {
+            command = DealerCommand.DRAW;
+        } else if (dealer.getScore() >= 17) {
+            command = DealerCommand.STAND;
+        }
+
+        return command;
+    }
 
 }

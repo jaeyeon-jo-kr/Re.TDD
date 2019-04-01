@@ -2,6 +2,7 @@ package com.jocatelo;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -13,28 +14,13 @@ import com.jocatelo.character.User;
 import com.jocatelo.rule.DealerCommand;
 import com.jocatelo.rule.PlayerCommand;
 
+import org.hamcrest.core.IsCollectionContaining;
 import org.junit.Test;
 
-public class CommandTest
-{
+public class CommandTest {
+    
     @Test
-    public void availablePlayerCommandsBefore16() throws Exception
-    {        
-        Player player = Player.of("PLAYER 1");
-        Dealer dealer = Dealer.of();
-        player.setDealer(dealer);
-
-        player.setScore(20);
-        dealer.setScore(16);
-        List<PlayerCommand> commands = player.getAvailableCommands();
-        assertArrayEquals(new PlayerCommand[]{PlayerCommand.HIT, PlayerCommand.DOUBLEDOWN, PlayerCommand.SPLIT}, commands.toArray(new PlayerCommand[commands.size()]));
-
-        
-    }
-
-    @Test
-    public void availablePlayerCommandsAfter17() throws Exception
-    {
+    public void availablePlayerCommands() throws Exception {
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();
         player.setDealer(dealer);
@@ -42,13 +28,10 @@ public class CommandTest
         player.setScore(20);
         dealer.setScore(17);
         List<PlayerCommand> commands = player.getAvailableCommands();
-        
-        // assertEquals(Arrays.asList(Command.HIT, Command.DOUBLEDOWN, Command.STAND, Command.SPLIT), commands);
-        assertTrue(commands.contains(PlayerCommand.HIT));
-        assertTrue(commands.contains(PlayerCommand.DOUBLEDOWN));
-        assertTrue(commands.contains(PlayerCommand.STAND));
-        assertTrue(commands.contains(PlayerCommand.SPLIT));
-        assertTrue(commands.size()==4);
+
+        assertThat("Player can be HIT, SPLIT, DOUBLEDOWN", commands,
+                IsCollectionContaining.hasItems(PlayerCommand.HIT,
+        PlayerCommand.DOUBLEDOWN, PlayerCommand.SPLIT));
     }
 
 
@@ -61,14 +44,14 @@ public class CommandTest
         player.setScore(21);
         dealer.setScore(17);
 
-        List<PlayerCommand> commands = player.getAvailableCommands();
+        List<PlayerCommand> commands = player.getAvailableCommands();        
         
         assertTrue(commands.contains(PlayerCommand.STAND));
         assertTrue(commands.size() == 1);
     }
 
     @Test
-    public void availablePlayerCommandsAfterBlackBurst() throws Exception
+    public void availablePlayerCommandsAfterBurst() throws Exception
     {
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();
