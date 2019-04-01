@@ -10,7 +10,9 @@ import com.jocatelo.character.Player;
 
 public enum DealerCommand {    
     NONE("NONE"){public void execute(Round round, Dealer dealer){}},            
-    DRAW("DRAW"){public void execute(Round round, Dealer dealer){}},            
+    DRAW("DRAW"){public void execute(Round round, Dealer dealer){
+        round.drawCard(dealer);
+    }},            
     STAND("STAND"){public void execute(Round round, Dealer dealer){}};
     private String symbol;
     DealerCommand(String symbol){

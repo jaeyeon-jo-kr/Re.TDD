@@ -81,12 +81,7 @@ public enum Rule {
         candidates = groups.get(BUST);
         player.setScore(getMaxScore(candidates));
     }
-
-    public void setMaxScore(Integer maxScore, int score) {
-        maxScore = Math.max(maxScore, score);
-
-    }
-
+    
     public void updateStatus(User user) {
         if (user.getScore() > BLACKJACK_SCORE){
             user.setStatus(Status.BUST);
