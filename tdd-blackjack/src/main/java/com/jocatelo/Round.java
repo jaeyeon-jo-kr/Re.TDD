@@ -8,6 +8,7 @@ import java.util.concurrent.DelayQueue;
 
 import com.jocatelo.character.Commandable;
 import com.jocatelo.character.Dealer;
+import com.jocatelo.character.Hands;
 import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.PlayerGroup;
@@ -29,8 +30,7 @@ public class Round implements Drawable, Commandable {
         players = new PlayerGroup(8);
         deck = new CardDeck();
         turns = new ArrayList<>();
-        this.dealer = User.createDealer();            
-        dealer.setIndex(0);
+        this.dealer = Dealer.of();         
         deck.initialize();
         rule = Rule.CLASSIC;
     }
@@ -61,10 +61,8 @@ public class Round implements Drawable, Commandable {
         if (playerNumber >= 1 && playerNumber <= 8) {
             for (int i = 1; i <= playerNumber; i++) {
                 String name = "player " + i;
-                Player player = User.createPlayer(name);                
+                Player player = Player.of(name);                
                 players.add(player);
-                player.setIndex(i);
-                
             }
         }
 
@@ -80,10 +78,12 @@ public class Round implements Drawable, Commandable {
      * At the round of initial, players must have two cards.
      */
     public Round distribute() {
-        for (Playable user : players.getPlayers()) {
+        for (User user : players.getPlayers()) {
             drawCard(user);
             drawCard(user);
         }
+        drawCard(dealer);
+        drawCard(dealer);
         return this;
     }
 
@@ -132,9 +132,10 @@ public class Round implements Drawable, Commandable {
 
     
     @Override
-    public void drawCard(Playable user) {
+    public void drawCard(User user) {
         Card card = deck.popCard();
-        user.add(card);
+        Hands hands = user.getHands();
+        hands.add(card);
     }
 
     @Override

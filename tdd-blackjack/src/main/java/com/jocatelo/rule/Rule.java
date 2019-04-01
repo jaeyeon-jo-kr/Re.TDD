@@ -13,8 +13,10 @@ import java.util.stream.IntStream;
 import com.jocatelo.Card;
 import com.jocatelo.Round;
 import com.jocatelo.character.Dealer;
+import com.jocatelo.character.Hands;
 import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
+import com.jocatelo.character.User;
 
 public enum Rule {
     CLASSIC;
@@ -24,9 +26,9 @@ public enum Rule {
     public boolean isOver(Round round) {
         boolean isplaying = false;
         Dealer dealer = round.dealer();
-        isplaying = dealer.status() == Status.PLAYING;
-        for (Playable player : round.players()) {
-            isplaying = (player.status() == Status.PLAYING);
+        isplaying = dealer.getStatus() == Status.PLAYING;
+        for (Player player : round.players()) {
+            isplaying = (player.getStatus() == Status.PLAYING);
         }
         return isplaying;
     }
@@ -48,11 +50,11 @@ public enum Rule {
         return result;
     }
 
-    private List<Integer> generateScoreCandidates(Playable player) {
+    private List<Integer> generateScoreCandidates(Hands hands) {
         List<Integer> candidates = new ArrayList<Integer>();
         candidates.add(0);
 
-        for (Card card : player.hands()) {
+        for (Card card : hands.getHands()) {
             candidates = addScore(candidates, card);
         }
         return candidates;
@@ -62,11 +64,11 @@ public enum Rule {
         return candidates.stream().max(Comparator.comparing(Integer::valueOf)).get();
     }
 
-    public void updateScore(Playable player) {
+    public void updateScore(User player) {
         final boolean BUST = false;
         final boolean NORMAL = true;
 
-        List<Integer> candidates = generateScoreCandidates(player);
+        List<Integer> candidates = generateScoreCandidates(player.getHands());
         Map<Boolean, List<Integer>> groups = candidates.stream()
                 .collect(Collectors.partitioningBy(x -> x <= BLACKJACK_SCORE));
 
@@ -85,28 +87,28 @@ public enum Rule {
 
     }
 
-    public void updateStatus(Playable player) {
-        if (player.score() > BLACKJACK_SCORE){
-            player.setStatus(Status.BUST);
+    public void updateStatus(User user) {
+        if (user.getScore() > BLACKJACK_SCORE){
+            user.setStatus(Status.BUST);
             return;
         }        
-        player.setStatus(Status.BLACKJACK);
+        user.setStatus(Status.BLACKJACK);
     }
 
     public void finalizeStatus(Dealer dealer, List<Player> players) {
 
-        for (Playable player : players) {
-            if (player.status() == Status.BUST) {
+        for (Player player : players) {
+            if (player.getStatus() == Status.BUST) {
                 player.setStatus(Status.LOSE);
-            } else if (player.status() == Status.BLACKJACK) {
-                if (dealer.status() == Status.BLACKJACK)
+            } else if (player.getStatus() == Status.BLACKJACK) {
+                if (dealer.getStatus() == Status.BLACKJACK)
                     player.setStatus(Status.DRAW);
                 else
                     player.setStatus(Status.WIN);
             } else {
-                if (player.score() > dealer.score())
+                if (player.getScore() > dealer.getScore())
                     player.setStatus(Status.WIN);
-                else if (player.score() < dealer.score())
+                else if (player.getScore() < dealer.getScore())
                     player.setStatus(Status.LOSE);
                 else
                     player.setStatus(Status.DRAW);
@@ -115,22 +117,14 @@ public enum Rule {
 
     }
 
-    public int bestScore(Playable[] players) {
-        int bestScore = 0;
-        for (Playable player : players) {
-            if (player.score() <= 21)
-                bestScore = Math.max(bestScore, player.score());
-        }
-        return bestScore;
-
-    }
+    
 
     public DealerCommand getDealerCommand(Dealer dealer) {
         DealerCommand command = DealerCommand.NONE;
 
-        if (dealer.score() <= 16) {
+        if (dealer.getScore() <= 16) {
             command = DealerCommand.DRAW;
-        } else if (dealer.score() >= 17) {
+        } else if (dealer.getScore() >= 17) {
             command = DealerCommand.STAND;
         }
 
@@ -139,14 +133,14 @@ public enum Rule {
 
     public List<PlayerCommand> getPlayerCommand(Player player, Dealer dealer) {
         List<PlayerCommand> commands = new ArrayList<PlayerCommand>();
-        if (player.score() < 21) {
+        if (player.getScore() < 21) {
             commands.add(PlayerCommand.HIT);
             commands.add(PlayerCommand.DOUBLEDOWN);
             commands.add(PlayerCommand.SPLIT);
-            if (dealer.score() >= 17) {
+            if (dealer.getScore() >= 17) {
                 commands.add(PlayerCommand.STAND);
             }
-        } else if (player.score() >= 21) {
+        } else if (player.getScore() >= 21) {
             commands.add(PlayerCommand.STAND);
         }
         return commands;

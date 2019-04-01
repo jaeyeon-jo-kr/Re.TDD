@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.jocatelo.character.Dealer;
+import com.jocatelo.character.Hands;
 import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.User;
@@ -25,8 +26,9 @@ public class BlackJackTest {
         round.initialize();
         round.start();        
 
-        for (Playable user : round.players()) {
-            assertEquals(2, user.getCardCount() );
+        for (Player user : round.players()) {
+            Hands hands = user.getHands();
+            assertEquals(2, hands.getCardCount() );
         }
     }
 
@@ -34,17 +36,18 @@ public class BlackJackTest {
     @Test
     public void bustStatus() throws Exception
     {
-        Player player = User.createPlayer("Player");
+        Player player = Player.of("Player");
         player.setStatus(Status.PLAYING);
 
-        player.add(Card.clover(10));
-        player.add(Card.clover(10));
-        player.add(Card.clover(3));
+        Hands hands = player.getHands();
+        hands.add(Card.clover(10));
+        hands.add(Card.clover(10));
+        hands.add(Card.clover(3));
 
         player.updateScore();
         player.updateStatus();
 
-        assertEquals(Status.BUST, player.status());        
+        assertEquals(Status.BUST, player.getStatus());        
 
     }
 
@@ -53,21 +56,22 @@ public class BlackJackTest {
     
     public void blackJackStatus() throws Exception
     {
-        Player player = User.createPlayer("Player");
+        Player player = Player.of("Player");
         player.setCredit(100);
         player.bet(10);
 
+        Hands hands = player.getHands();
         player.setStatus(Status.PLAYING);
-        player.add(Card.clover(1));
-        player.add(Card.clover(10));
+        hands.add(Card.clover(1));
+        hands.add(Card.clover(10));
         player.updateScore();
         player.updateStatus();
 
-        Dealer dealer = User.createDealer();
+        Dealer dealer = Dealer.of();
         dealer.setStatus(Status.PLAYING);
 
-        assertEquals(21, player.score());
-        assertEquals(Status.BLACKJACK, player.status());
+        assertEquals(21, player.getScore());
+        assertEquals(Status.BLACKJACK, player.getStatus());
         assertEquals(15, player.getWinningCredit(dealer));
 
     }

@@ -9,91 +9,38 @@ import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
-public class Dealer implements Playable {
-    private User user;
+public class Dealer extends User implements Playable {
+    
     public static final String NAME = "dealer";
 
-    public Dealer(User user) {
-        this.user = user;
-    }
+    private Dealer() {}
 
-    @Override
-    public void add(Card card) {
-        user.add(card);
+    /**
+     * create Dealer
+     */
+    public static Dealer of() {
+        return new Dealer();
     }
-   
-    @Override
-    public int getCardCount() {
-        return user.getCardCount();
-    }
-
-    @Override
-    public int score() {
-        return user.score();
-    }
-
-    @Override
-    public void setScore(int score) {
-        user.setScore(score);
-    }
-
-    @Override
-    public Card[] hands() {
-        return user.hands();
-    }
-
-    @Override
-    public void stand() {
-        user.stand();
-    }
-
-    @Override
-    public Status status() {
-        return user.status();
-    }
-
-    @Override
-    public void setStatus(Status status) {
-        user.setStatus(status);
-    }   
-    
 
     @Override
     public int hashCode() {
         return NAME.hashCode();
     }
 
-    @Override
+    
     public String name() {
         return NAME;
     }
-
-    @Override
-    public void setIndex(int index) {
-        user.setIndex(index);
-    }
-
-    @Override
-    public int getIndex() {
-        return user.getIndex();
-    }
+    
    
-    @Override
-    public Rule getRule() {
-        return user.getRule();
-    }
-
-    @Override
-    public void setRule(Rule rule) {
-        user.setRule(rule);
-    }
-
     public void updateScore() {
-        getRule().updateScore(this);
+        Rule rule = getRule();
+        rule.updateScore(this);
     }
 
     public void updateStatus() {
-        getRule().updateStatus(this);
+        Rule rule = getRule();
+        rule.updateStatus(this);
     }
 
     

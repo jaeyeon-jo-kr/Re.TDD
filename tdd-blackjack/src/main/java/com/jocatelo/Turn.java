@@ -13,16 +13,18 @@ import java.util.Map.Entry;
 
 import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
+import com.jocatelo.rule.DealerCommand;
 import com.jocatelo.rule.PlayerCommand;
 
 public class Turn {
-    private List<PlayerCommand> playerCommands;
+    private final Map<Playable, PlayerCommand> userCommands;
+    private DealerCommand dealerCommands;
     
     private int number;
     private final int MAX_PLAYER_NUMBER = 9;
 
     private Turn() {
-        playerCommands = new ArrayList<>(MAX_PLAYER_NUMBER);
+        userCommands = new HashMap<>();
     }    
 
 
@@ -33,17 +35,17 @@ public class Turn {
     public Turn initialize(List<Player> players)
     {        
         for(Player player:players){
-            playerCommands.add(player.getIndex()-1, PlayerCommand.NONE);
+            userCommands.put(player, PlayerCommand.NONE);
         }
         return this;
     }
 
     public void add(Playable who, PlayerCommand what) {        
-        playerCommands.add(who.getIndex()-1,what);
+        userCommands.put(who,what);
     }
 
     public PlayerCommand what(Playable who) {
-        return playerCommands.get(who.getIndex()-1);
+        return userCommands.get(who);
     }
 
     public int number() {

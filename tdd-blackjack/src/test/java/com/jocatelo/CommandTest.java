@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import com.jocatelo.character.Dealer;
+import com.jocatelo.character.Hands;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.User;
 import com.jocatelo.rule.DealerCommand;
@@ -19,8 +20,8 @@ public class CommandTest
     @Test
     public void availablePlayerCommandsBefore16() throws Exception
     {        
-        Player player = User.createPlayer("PLAYER 1");
-        Dealer dealer = User.createDealer();
+        Player player = Player.of("PLAYER 1");
+        Dealer dealer = Dealer.of();
 
         player.setScore(20);
         dealer.setScore(16);
@@ -33,8 +34,8 @@ public class CommandTest
     @Test
     public void availablePlayerCommandsAfter17() throws Exception
     {
-        Player player = User.createPlayer("PLAYER 1");
-        Dealer dealer = User.createDealer();
+        Player player = Player.of("PLAYER 1");
+        Dealer dealer = Dealer.of();
 
         player.setScore(20);
         dealer.setScore(17);
@@ -52,8 +53,8 @@ public class CommandTest
     @Test
     public void availablePlayerCommandsAfterBlackJack() throws Exception
     {
-        Player player = User.createPlayer("PLAYER 1");
-        Dealer dealer = User.createDealer();
+        Player player = Player.of("PLAYER 1");
+        Dealer dealer = Dealer.of();
 
         player.setScore(21);
         dealer.setScore(17);
@@ -67,8 +68,8 @@ public class CommandTest
     @Test
     public void availablePlayerCommandsAfterBlackBurst() throws Exception
     {
-        Player player = User.createPlayer("PLAYER 1");
-        Dealer dealer = User.createDealer();
+        Player player = Player.of("PLAYER 1");
+        Dealer dealer = Dealer.of();
 
         player.setScore(22);
         dealer.setScore(17);
@@ -83,7 +84,7 @@ public class CommandTest
     @Test
     public void availableDealerCommand() throws Exception
     {
-        Dealer dealer = User.createDealer();
+        Dealer dealer = Dealer.of();
         DealerCommand command = dealer.getNextCommand();
         dealer.setScore(16);
         assertTrue(command == DealerCommand.DRAW);
@@ -117,10 +118,11 @@ public class CommandTest
         
         round.setCommand(player, PlayerCommand.HIT);
 
-        assertEquals(2, player.getCardCount());
+        Hands hands = player.getHands();
+        assertEquals(2, hands.getCardCount());
 
         round.endTurn();
 
-        assertEquals(3, player.getCardCount());
+        assertEquals(3, hands.getCardCount());
     }
 }

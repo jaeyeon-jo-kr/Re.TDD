@@ -3,23 +3,36 @@ package com.jocatelo.character;
 import java.util.List;
 
 import com.jocatelo.Card;
+import com.jocatelo.InvalidValueException;
 import com.jocatelo.Turn;
 import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.Status;
 
-public class Player implements Playable {
+public class Player extends User implements Playable {
 
-    private User user;
-    private String name;
+
     private int credit;
     private int bet;
+    private PlayerCommand command;
 
-    public Player(User user, String name) {
-        this.user = user;
+    private Player(String name) {
+        super();        
         this.name = name;
         this.credit = 0;
         this.bet = 0;
+    }
+
+    /**
+     * create player
+     * 
+     * @throws InvalidValueException
+     */
+    public static Player of(String name) throws InvalidValueException {
+        if (name == null || name == Dealer.NAME) {
+            throw new InvalidValueException();
+        }
+        return new Player(name);
     }
 
     /**
@@ -34,92 +47,33 @@ public class Player implements Playable {
         this.credit = credit - bet;
     }
 
-    @Override
-    public void add(Card card) {
-        user.add(card);
-    }    
-
-    @Override
-    public int getCardCount() {
-        return user.getCardCount();
-    }
-
-    @Override
-    public int score() {
-        return user.score();
-    }
-
-    @Override
-    public void setScore(int score) {
-        user.setScore(score);
-    }
-
-    @Override
-    public Card[] hands() {
-        return user.hands();
-    }
-
-    @Override
-    public void stand() {
-        user.stand();
-    }
-
-    @Override
-    public Status status() {
-        return user.status();
-    }
-
-    @Override
-    public void setStatus(Status status) {
-        user.setStatus(status);
-    }
 
     @Override
     public int hashCode() {
         return name.hashCode();
     }
 
-    @Override
+
     public String name() {
         return name;
     }
 
     @Override
-    public void setIndex(int index) {
-        user.setIndex(index);
-    }
-
-    @Override
-    public int getIndex() {
-        return user.getIndex();
-    }
-
-    @Override
     public void updateScore() {
-        user.updateScore();
+        rule.updateScore(this);
     }
 
     public void updateStatus() {
-        user.getRule().updateStatus(this);
+        rule.updateStatus(this);
     }
 
     public int getWinningCredit(Dealer dealer) {
-        if (dealer.status() != Status.BLACKJACK && status() == Status.BLACKJACK)
+        if (dealer.getStatus() != Status.BLACKJACK 
+            && getStatus() == Status.BLACKJACK)
             return bet * 3 / 2;
         return 0;
     }
 
-    @Override
-    public Rule getRule() {
-        return user.getRule();
-    }
-
-    @Override
-    public void setRule(Rule rule) {
-        user.setRule(rule);
-    }
-
-    
     public List<PlayerCommand> getAvailableCommands(Dealer dealer) {
         return getRule().getPlayerCommand(this, dealer);
     }
