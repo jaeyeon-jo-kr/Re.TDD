@@ -84,12 +84,12 @@ public enum Rule {
 
     }
 
-    public Playable updateStatus(Playable player) {
-        if (player.score() > BLACKJACK_SCORE)
+    public void updateStatus(Playable player) {
+        if (player.score() > BLACKJACK_SCORE){
             player.setStatus(Status.BUST);
-        else if (player.score() == BLACKJACK_SCORE)
-            player.setStatus(Status.BLACKJACK);
-        return player;
+            return;
+        }        
+        player.setStatus(Status.BLACKJACK);
     }
 
     public void finalizeStatus(Dealer dealer, List<Player> players) {
