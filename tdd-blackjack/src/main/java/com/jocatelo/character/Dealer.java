@@ -2,6 +2,7 @@ package com.jocatelo.character;
 
 import com.jocatelo.rule.DealerCommand;
 import com.jocatelo.rule.Rule;
+import com.jocatelo.rule.ScoreCalculator;
 
 public class Dealer extends User implements Playable, Commandable {
     
@@ -27,9 +28,8 @@ public class Dealer extends User implements Playable, Commandable {
     }
     
    
-    public void updateScore() {
-        Rule rule = getRule();
-        rule.updateScore(this);
+    public void updateScore() {        
+        score = ScoreCalculator.calculate(this);
     }
 
     public void updateStatus() {

@@ -33,54 +33,7 @@ public enum Rule {
         return isplaying;
     }
     
-    private List<Integer> plusSpecialScore(int score, Optional<Integer> specialValue){
-        List<Integer> plus = new ArrayList<>();
-        if (specialValue.isPresent()) {
-            plus.add(score + specialValue.get());
-        }
-        return plus;
-    }
-
-    private List<Integer> addScore(List<Integer> candidates, Card card) {
-        List<Integer> result = new ArrayList<>();
-        for (int score : candidates) {
-            result.add(score + card.value());
-            result.addAll(plusSpecialScore(score, card.specialValue()));
-        }
-        return result;
-    }
-
-    private List<Integer> generateScoreCandidates(Hands hands) {
-        List<Integer> candidates = new ArrayList<Integer>();
-        candidates.add(0);
-
-        for (Card card : hands.getHands()) {
-            candidates = addScore(candidates, card);
-        }
-        return candidates;
-    }
-
-    private int getMaxScore(List<Integer> candidates) {
-        return candidates.stream().max(Comparator.comparing(Integer::valueOf)).get();
-    }
-
-    public void updateScore(User player) {
-        final boolean BUST = false;
-        final boolean NORMAL = true;
-
-        List<Integer> candidates = generateScoreCandidates(player.getHands());
-        Map<Boolean, List<Integer>> groups = candidates.stream()
-                .collect(Collectors.partitioningBy(x -> x <= BLACKJACK_SCORE));
-
-        if (!groups.get(NORMAL).isEmpty()) {
-            candidates = groups.get(NORMAL);
-            player.setScore(getMaxScore(candidates));
-            return;
-        }
-
-        candidates = groups.get(BUST);
-        player.setScore(getMaxScore(candidates));
-    }
+    
     
     public void updateStatus(User user) {
         if (user.getScore() > BLACKJACK_SCORE){

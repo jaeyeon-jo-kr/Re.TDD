@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jocatelo.InvalidValueException;
 import com.jocatelo.rule.PlayerCommand;
+import com.jocatelo.rule.ScoreCalculator;
 import com.jocatelo.rule.Status;
 
 import lombok.Getter;
@@ -48,7 +49,7 @@ public class Player extends User implements Playable,Commandable {
 
     @Override
     public void updateScore() {
-        rule.updateScore(this);
+        score = ScoreCalculator.calculate(this);
     }
 
     public void updateStatus() {
