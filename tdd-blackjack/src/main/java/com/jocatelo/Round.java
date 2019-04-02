@@ -25,6 +25,7 @@ public class Round implements Drawable {
     private Rule rule;
     private Turn current;
     private int playerNumber;
+    private Option option;
 
     private Round() {
         players = new PlayerGroup(8);
@@ -33,6 +34,7 @@ public class Round implements Drawable {
         this.dealer = Dealer.of();         
         deck.initialize();
         rule = Rule.CLASSIC;
+        option = Option.of();
     }
 
     public static Round of() {
@@ -44,6 +46,16 @@ public class Round implements Drawable {
         return this.dealer;
     }
 
+    public Round setPlayerGeneration(boolean ok){
+        option.setAutomaticGeneratePlayer(ok);
+        return this;
+    }
+
+    public Round setAutomaticDistribute(boolean ok){
+        option.setAutomaticDistribute(ok);
+        return this;
+    }
+
     public Round setPlayerNumber(int number) throws InvalidValueException {
         this.playerNumber = number;        
         return this;
@@ -51,9 +63,14 @@ public class Round implements Drawable {
 
     public void initialize() throws Exception
     {
-        createPlayers();
-        shuffle();
-        distribute();
+        if(option.isAutomaticGeneratePlayer())  
+            createPlayers();
+
+        if(option.isShuffle())
+            shuffle();
+            
+        if(option.isAutomaticDistribute())
+            distribute();
     }
 
     private void createPlayers() throws InvalidValueException
@@ -61,7 +78,8 @@ public class Round implements Drawable {
         if (playerNumber >= 1 && playerNumber <= 8) {
             for (int i = 1; i <= playerNumber; i++) {
                 String name = "player " + i;
-                Player player = Player.of(name);                
+                Player player = Player.of(name);
+                player.setDealer(dealer);
                 players.add(player);
             }
         }
@@ -120,10 +138,7 @@ public class Round implements Drawable {
 
     public void endGame()
     {
-        if (isOver()) {
-            rule.finalizeStatus(dealer, players());
-        } 
-
+        players.getPlayers().stream().forEach(player -> player.finalizeStatus());
     }
     public List<Player> players()
     {

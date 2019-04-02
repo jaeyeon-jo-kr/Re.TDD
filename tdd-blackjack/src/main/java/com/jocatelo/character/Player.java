@@ -32,9 +32,10 @@ public class Player extends User implements Playable,Commandable {
     private Player(String name) {
         super();        
         this.name = name;
-        this.credit = 0;
-        this.bet = 0;
-        this.status = PlayerStatus.PLAYING;
+        credit = 0;
+        bet = 0;
+        winningRate = 0;
+        status = PlayerStatus.PLAYING;
     }
 
     /**
@@ -70,10 +71,7 @@ public class Player extends User implements Playable,Commandable {
     }
 
     public int getWinningCredit() {
-        if (dealer.getStatus() != DealerStatus.BLACKJACK 
-            && status == PlayerStatus.BLACKJACK)
-            return bet * 3 / 2;
-        return 0;
+        return (int)(bet * winningRate);        
     }
 
     public List<PlayerCommand> getAvailableCommands() {
@@ -82,7 +80,7 @@ public class Player extends User implements Playable,Commandable {
 
     @Override
     public void finalizeStatus() {
-
+        status = status.finalize(this);
     }
 
 }

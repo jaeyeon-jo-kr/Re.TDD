@@ -40,15 +40,38 @@ public enum PlayerStatus {
             return this;
         }
     },    
+    PUSH("PUSH") {
+        @Override
+        public PlayerStatus next(Player player) {
+            return this;
+        }
+        @Override
+        public PlayerStatus finalize(Player player) {
+            return this;
+        }
+    },
     STAND("STAND") {
         @Override
         public PlayerStatus next(Player player) {
             return this;
         }
-
         @Override
         public PlayerStatus finalize(Player player) {
-            return this;
+            Dealer dealer = player.getDealer();
+            if(dealer.getStatus() == DealerStatus.BLACKJACK || 
+            player.getScore() < dealer.getScore()){
+                player.setWinningRate(0.0f);
+                return LOSE;
+            }
+
+            if(dealer.getScore() < player.getScore())
+            {
+                player.setWinningRate(2.0f);
+                return WIN;
+            }
+
+            player.setWinningRate(1.0f);
+            return DRAW;
         }
 
     },
@@ -60,14 +83,16 @@ public enum PlayerStatus {
 
         @Override
         public PlayerStatus finalize(Player player) {
+            player.setWinningRate(0.0f);
             return LOSE;
         }
     },
     PLAYING("PLAYING") {
         @Override
         public PlayerStatus next(Player player) {
-            if(player.getScore() == BLACKJACK_SCORE && player.getHands().getCardCount() == 2)
+            if(player.getScore() == BLACKJACK_SCORE && player.getHands().getCardCount() == 2){                
                 return BLACKJACK;
+            }
 
             if(player.getScore() == BLACKJACK_SCORE)
                 return STAND;
@@ -89,7 +114,15 @@ public enum PlayerStatus {
         }
         @Override
         public PlayerStatus finalize(Player player) {
-            return this;
+            Dealer dealer = player.getDealer();
+            if(dealer.getStatus() == DealerStatus.BLACKJACK)
+            {
+                player.setWinningRate(1.0f);
+                return PUSH;
+            }
+
+            player.setWinningRate(2.5f);
+            return WIN;
         }
     },
     SURRENDER("SURRENDER") {
@@ -98,21 +131,11 @@ public enum PlayerStatus {
             return this;
         }
         @Override
-        public PlayerStatus finalize(Player player) {            
-            return this;
-        }
-    },
-    PUSH("PUSH") {
-        @Override
-        public PlayerStatus next(Player player) {
-            return this;
-        }
-        @Override
         public PlayerStatus finalize(Player player) {
-            return this;
+            player.setWinningRate(0.0f);
+            return LOSE;
         }
     };
-
     
     private static final int BLACKJACK_SCORE = 21;
 

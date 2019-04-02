@@ -12,7 +12,7 @@ public class ResultTest {
 
     @Test
     public void winningTest() throws Exception {
-        Round round = Round.of().setPlayerNumber(1);
+        Round round = Round.of().setPlayerNumber(1).setAutomaticDistribute(false);
         round.initialize();
         round.start();
 
@@ -29,7 +29,7 @@ public class ResultTest {
         round.endTurn();
         round.endGame();
 
-        assertThat(player.getStatus()).isEqualTo(PlayerStatus.WIN);
+        assertThat(PlayerStatus.WIN).isEqualTo(player.getStatus());
 
         
         

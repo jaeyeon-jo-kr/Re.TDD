@@ -19,27 +19,4 @@ public enum Rule {
         }
         return isplaying;
     }
-
-    public void finalizeStatus(Dealer dealer, List<Player> players) {
-
-        for (Player player : players) {
-            if (player.getStatus() == PlayerStatus.BUST) {
-                player.setStatus(PlayerStatus.LOSE);
-            } else if (player.getStatus() == PlayerStatus.BLACKJACK) {
-                if (dealer.getStatus() == DealerStatus.BLACKJACK)
-                    player.setStatus(PlayerStatus.DRAW);
-                else
-                    player.setStatus(PlayerStatus.WIN);
-            } else {
-                if (player.getScore() > dealer.getScore())
-                    player.setStatus(PlayerStatus.WIN);
-                else if (player.getScore() < dealer.getScore())
-                    player.setStatus(PlayerStatus.LOSE);
-                else
-                    player.setStatus(PlayerStatus.DRAW);
-            }
-        }
-
-    }
-
 }
