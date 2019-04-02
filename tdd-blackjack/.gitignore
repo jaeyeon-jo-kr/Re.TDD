@@ -9,3 +9,8 @@ build
 .vscode/launch.json
 .classpath
 .settings
+target/
+bin/
+gradle/
+gradlew
+gradlew.bat

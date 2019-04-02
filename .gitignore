@@ -33,3 +33,6 @@ tdd-blackjack/.settings/org.eclipse.buildship.core.prefs
 tdd-blackjack/gradle/wrapper/gradle-wrapper.properties
 tdd-blackjack/.settings/org.eclipse.buildship.core.prefs
 tdd-blackjack/gradle/wrapper/gradle-wrapper.properties
+tdd-blackjack/.project
+.gradle/
+.vscode/
