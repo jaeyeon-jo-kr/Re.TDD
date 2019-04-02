@@ -11,10 +11,21 @@ public enum PlayerStatus {
         public PlayerStatus next(Player player) {
             return this;
         }
+
+        @Override
+        public PlayerStatus finalize(Player player) {
+            return this;
+        }
+        
     },
     LOSE("LOSE") {
         @Override
         public PlayerStatus next(Player player) {
+            return this;
+        }
+
+        @Override
+        public PlayerStatus finalize(Player player) {
             return this;
         }
     },
@@ -23,23 +34,33 @@ public enum PlayerStatus {
         public PlayerStatus next(Player player) {
             return this;
         }
-    },
-    READY("READY") {
+
         @Override
-        public PlayerStatus next(Player player) {
+        public PlayerStatus finalize(Player player) {
             return this;
         }
-    },
+    },    
     STAND("STAND") {
         @Override
         public PlayerStatus next(Player player) {
             return this;
         }
+
+        @Override
+        public PlayerStatus finalize(Player player) {
+            return this;
+        }
+
     },
     BUST("BUST") {
         @Override
         public PlayerStatus next(Player player) {
-            return null;
+            return this;
+        }
+
+        @Override
+        public PlayerStatus finalize(Player player) {
+            return LOSE;
         }
     },
     PLAYING("PLAYING") {
@@ -56,10 +77,18 @@ public enum PlayerStatus {
 
             return this;
         }
+        @Override
+        public PlayerStatus finalize(Player player) {
+            return this;
+        }
     },
     BLACKJACK("BLACKJACK") {
         @Override
         public PlayerStatus next(Player player) {
+            return this;
+        }
+        @Override
+        public PlayerStatus finalize(Player player) {
             return this;
         }
     },
@@ -68,10 +97,18 @@ public enum PlayerStatus {
         public PlayerStatus next(Player player) {
             return this;
         }
+        @Override
+        public PlayerStatus finalize(Player player) {            
+            return this;
+        }
     },
     PUSH("PUSH") {
         @Override
         public PlayerStatus next(Player player) {
+            return this;
+        }
+        @Override
+        public PlayerStatus finalize(Player player) {
             return this;
         }
     };
@@ -86,6 +123,7 @@ public enum PlayerStatus {
     }
 
     public abstract PlayerStatus next (Player player);
+    public abstract PlayerStatus finalize (Player player);
 
 	@Override
 	public String toString() {

@@ -18,9 +18,9 @@ public enum DealerStatus {
 
             if(dealer.getScore() == BLACKJACK_SCORE
                 && dealer.getHands().getCardCount() == 2)
-                return DealerStatus.BLACKJACK;
+                return BLACKJACK;
 
-            return DealerStatus.STANDING;
+            return STANDING;
         }
     },
 
@@ -32,23 +32,31 @@ public enum DealerStatus {
 
             if(dealer.getScore() == BLACKJACK_SCORE
                 && dealer.getHands().getCardCount() == 2)
-                return DealerStatus.BLACKJACK;
+                return BLACKJACK;
+            
+            if(dealer.getScore() > BLACKJACK_SCORE)
+                return BUST;
+                
             return this;
         }
     },
     BLACKJACK("BLACKJACK"){
-        public DealerStatus next(Dealer dealer) throws Exception {
+        public DealerStatus next(Dealer dealer) throws Exception {            
             
-            if(dealer.getScore() < STAND_MIN_SCORE)
-                throw new IllegalStatusException();
-
             if(!(dealer.getScore() == BLACKJACK_SCORE
                 && dealer.getHands().getCardCount() == 2))
                 throw new IllegalStatusException();
                 
-            return DealerStatus.STANDING;
+            return BLACKJACK;
         }
-
+    }, 
+    BUST("BUST"){
+        public DealerStatus next(Dealer dealer) throws Exception {
+            if(dealer.getScore() <= BLACKJACK_SCORE)
+                throw new IllegalStatusException();
+                
+            return BUST;
+        }
     };
 
     private final static int BLACKJACK_SCORE = 21;

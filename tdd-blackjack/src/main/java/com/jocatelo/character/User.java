@@ -18,8 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 @Data
 public abstract class User {
-    protected Hands hands;
-    
+    protected Hands hands;    
     protected int score;        
     protected Rule rule;
     protected String name;

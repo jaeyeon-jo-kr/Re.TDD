@@ -1,22 +1,10 @@
 package com.jocatelo.rule;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Queue;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-import com.jocatelo.Card;
 import com.jocatelo.Round;
 import com.jocatelo.character.Dealer;
-import com.jocatelo.character.Hands;
-import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
-import com.jocatelo.character.User;
 
 public enum Rule {
     CLASSIC;
@@ -24,9 +12,8 @@ public enum Rule {
     private static final int BLACKJACK_SCORE = 21;
 
     public boolean isOver(Round round) {
-        boolean isplaying = false;
         Dealer dealer = round.dealer();
-        isplaying = dealer.getStatus() == DealerStatus.PLAYING;
+        boolean isplaying = dealer.getStatus() == DealerStatus.PLAYING;
         for (Player player : round.players()) {
             isplaying = (player.getStatus() == PlayerStatus.PLAYING);
         }

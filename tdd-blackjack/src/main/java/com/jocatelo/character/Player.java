@@ -16,15 +16,18 @@ public class Player extends User implements Playable,Commandable {
 
     @Setter
     private int credit;
+    
     @Getter
     private int bet;
-    @Getter
-    @Setter
+
+    @Getter @Setter
     private Dealer dealer;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private PlayerStatus status;
+
+    @Getter @Setter
+    private float winningRate;
 
     private Player(String name) {
         super();        
