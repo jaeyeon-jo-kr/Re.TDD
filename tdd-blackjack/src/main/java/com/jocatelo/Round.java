@@ -130,6 +130,11 @@ public class Round implements Drawable {
         return players.getPlayers();
     }
 
+    public Player getPlayer(int index)
+    {
+        return players.getPlayers().get(index);
+    }
+
     
     @Override
     public void drawCard(User user) {
