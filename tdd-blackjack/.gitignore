@@ -4,10 +4,8 @@
 # Ignore Gradle build output directory
 build
 
-<<<<<<< HEAD
 .vscode
-=======
 
 .vscode/launch.json
 .classpath
->>>>>>> ca0f397241af3ebd25ea3273e57b32c4362a9559
+.settings
