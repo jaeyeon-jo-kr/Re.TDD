@@ -1,42 +1,31 @@
 @startuml classDiagram
-Interface Playable {
 
+abstract class User{
+    #Hands hands;    
+    #int score;        
+    #Rule rule;
+    #String name;
 }
-Interface Commandable
-{
-    
+class Dealer
+class Player
+interface Commandable
+interface Playable {
+    + updateScore()
+    + updateStatus()
+    + finalizeStatus()   
 }
+class Round
+interface Drawable
+class PlayerGroup
 
-Interface Drawable 
-{
-
-}
-class DealerCommand
-{
-    public void execute(Round round, Dealer dealer)   
-}
-class PlayerCommand
-{
-    public void execute(Round round, Player player)
-}
-class Rule
-{
-    
-}
-class Turn
-Player --|> Playable
-User --|> Playable
-Dealer --|> Playable
-Round o-- Playable
-
-Player --* User
-Dealer --* User
-
-Round --|> Drawable
-Round --|> Commandable
-
-Player --> PlayerCommand
-Dealer --> DealerCommand
+Dealer --|> User
+Player --|> User
+Dealer .. Playable
+Player .. Playable
+Dealer .. Commandable
+Player .. Commandable
+Round .. Drawable
+PlayerGroup --o Player
 
 
 

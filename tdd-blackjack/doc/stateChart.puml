@@ -1,0 +1,9 @@
+@startuml stateChart
+[*] --> PLAYING
+PLAYING --> BLACKJACK
+PLAYING --> STANDING
+PLAYING --> BUST
+STANDING --> [*]
+BLACKJACK --> [*]
+BUST --> [*]
+@enduml
