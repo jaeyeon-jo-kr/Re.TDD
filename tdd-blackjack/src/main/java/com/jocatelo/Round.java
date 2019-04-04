@@ -16,15 +16,13 @@ import com.jocatelo.character.User;
 import com.jocatelo.rule.DealerCommand;
 import com.jocatelo.rule.DealerStatus;
 import com.jocatelo.rule.PlayerCommand;
-import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.PlayerStatus;
 
 public class Round {
     private PlayerGroup players;
     private Dealer dealer;
     private List<Turn> turns;
-    private CardDeck deck;
-    private Rule rule;
+    private CardDeck deck;    
     private Turn current;    
     private Option option;
 
@@ -33,7 +31,6 @@ public class Round {
         turns = new ArrayList<>();
         this.dealer = Dealer.of();         
         deck.initialize();
-        rule = Rule.CLASSIC;
         option = Option.of();
         players = PlayerGroup.of();
     }
