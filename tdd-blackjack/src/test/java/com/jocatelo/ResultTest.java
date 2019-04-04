@@ -14,7 +14,7 @@ public class ResultTest {
     public void winningTest() throws Exception {
         Round round = Round.of().setPlayerNumber(1).setAutomaticDistribute(false);
         round.initialize();
-        round.start();
+        round.startTurn();
 
         Player player = round.getPlayer(0);
         Dealer dealer = round.dealer();
@@ -25,7 +25,11 @@ public class ResultTest {
         player.addCard(Card.clover(10));
         player.addCard(Card.clover(1));
         
-        round.setCommand(player, PlayerCommand.STAND);
+        player.setCommand(PlayerCommand.STAND);
+        player.execute();
+
+        round.updateAllStatus();
+        round.updateAllScore();
         round.endTurn();
         round.endGame();
 

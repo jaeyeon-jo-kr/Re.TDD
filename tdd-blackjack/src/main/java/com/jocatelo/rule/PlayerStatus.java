@@ -104,7 +104,7 @@ public enum PlayerStatus {
         }
         @Override
         public PlayerStatus finalize(Player player) {
-            return this;
+            return STAND.finalize(player);
         }
     },
     BLACKJACK("BLACKJACK") {

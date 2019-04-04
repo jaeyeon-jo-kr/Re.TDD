@@ -15,7 +15,7 @@ public class BlackJackTest {
         Round round = Round.of().setPlayerNumber(8);
         
         round.initialize();
-        round.start();        
+        round.startTurn();        
 
         for (Player user : round.players()) {
             Hands hands = user.getHands();

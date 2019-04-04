@@ -33,6 +33,7 @@ public class Round {
         deck.initialize();
         option = Option.of();
         players = PlayerGroup.of();
+        current = null;
     }
 
     public static Round of() {
@@ -107,16 +108,19 @@ public class Round {
     }   
 
     
-    public Round start() {
-        current = Turn.create(1).initialize(players());
-        turns.add(current);
-        return this;
-    }
+    
     public void startTurn()
     {
-        Turn newTurn = Turn.create(current.number() + 1).initialize(players());
-        turns.add(newTurn);
-        current = newTurn;
+        if(current == null)
+        {
+            current = Turn.first(dealer, players);
+            turns.add(current);
+            return;
+        }
+        
+        current = Turn.nextTurn(current);
+        turns.add(current);
+        
     }
 
     public void executeAll()
@@ -125,29 +129,24 @@ public class Round {
         dealer.execute();
     }
 
-    public void updateScoreAll()
+    public void updateAllScore()
     {
         players.getPlayers().forEach(player -> player.updateScore());
         dealer.updateScore();
     }
 
-    public void endTurn() throws Exception{
-        
-
-        for (Player player : players.getPlayers()) {
-            PlayerCommand command = current.what(player);
-            command.execute(deck, player);
-            player.updateScore();
-            player.updateStatus();
-        }
-        DealerCommand command = DealerCommand.getAvailable(dealer);
-        command.execute(deck, dealer);
-        dealer.updateScore();
+    public void updateAllStatus() throws Exception
+    {
+        players.getPlayers().forEach(player -> player.updateStatus());
         dealer.updateStatus();
+    }
+
+    public void endTurn(){
+        current.end();        
     } 
     public void endGame()
     {
-        players.getPlayers().stream().forEach(player -> player.finalizeStatus());
+        players.getPlayers().forEach(player -> player.finalizeStatus());
     }
     public List<Player> players()
     {
@@ -162,12 +161,12 @@ public class Round {
     
 
     public void setCommand(Player player, PlayerCommand command) {
-        current.setPlayerCommand(player, command);
+        player.setCommand(command);
     }
 
     
     public PlayerCommand getCommand(Player player) {
-        return current.what(player);
+        return player.getCommand();
     }
 
     public boolean isOver() {

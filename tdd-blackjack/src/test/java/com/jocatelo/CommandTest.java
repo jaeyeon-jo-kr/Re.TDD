@@ -95,7 +95,8 @@ public class CommandTest {
         
         Round round = Round.of().setPlayerNumber(1);
         round.initialize();
-        round.start();
+        
+        round.startTurn();
 
         Player player = round.players().get(0);
 
@@ -107,6 +108,9 @@ public class CommandTest {
         Hands hands = player.getHands();
         assertEquals(2, hands.getCardCount());
 
+        round.executeAll();
+        round.updateAllStatus();
+        round.updateAllScore();
         round.endTurn();
 
         assertEquals(3, hands.getCardCount());

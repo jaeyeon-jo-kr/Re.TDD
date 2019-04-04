@@ -12,6 +12,7 @@ public class Dealer extends User implements Playable, Commandable {
     public static final String NAME = "dealer";
     @Getter    
     private DealerStatus status;
+    @Getter @Setter
     private DealerCommand command;
     private Dealer() {
         name = NAME;

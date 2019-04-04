@@ -29,7 +29,7 @@ public class Player extends User implements Playable,Commandable {
     @Getter @Setter
     private float winningRate;
 
-    @Setter
+    @Getter @Setter
     private PlayerCommand command;
 
     private Player(String name) {
