@@ -29,6 +29,9 @@ public class Player extends User implements Playable,Commandable {
     @Getter @Setter
     private float winningRate;
 
+    @Setter
+    private PlayerCommand command;
+
     private Player(String name) {
         super();        
         this.name = name;
@@ -72,6 +75,12 @@ public class Player extends User implements Playable,Commandable {
 
     public int getWinningCredit() {
         return (int)(bet * winningRate);        
+    }
+
+    public void execute(){
+        command.execute(null, this);
+        updateScore();
+        updateStatus();
     }
 
     public List<PlayerCommand> getAvailableCommands() {

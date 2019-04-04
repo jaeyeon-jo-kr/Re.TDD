@@ -15,6 +15,7 @@ public class Dealer extends User implements Playable, Commandable {
     private DealerStatus status;
     private Dealer() {
         name = NAME;
+        status = DealerStatus.PLAYING;
     }
 
     /**

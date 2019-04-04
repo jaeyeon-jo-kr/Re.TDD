@@ -1,19 +1,10 @@
 package com.jocatelo;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-import java.util.List;
 
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Hands;
-import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
-import com.jocatelo.character.User;
-import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.PlayerStatus;
 
 import org.junit.Test;
@@ -70,10 +61,12 @@ public class BlackJackTest {
         Dealer dealer = Dealer.of();
         
         player.setDealer(dealer);
+    
 
         assertEquals(21, player.getScore());
         assertEquals(PlayerStatus.BLACKJACK, player.getStatus());
-        assertEquals(15, player.getWinningCredit());
+        player.finalizeStatus();
+        assertEquals(25, player.getWinningCredit());
 
     }
 

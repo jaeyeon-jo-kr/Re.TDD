@@ -3,17 +3,20 @@ package com.jocatelo.rule;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jocatelo.Card;
+import com.jocatelo.Drawable;
 import com.jocatelo.Round;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
 
 public enum DealerCommand {    
-    NONE("NONE"){public void execute(Round round, Dealer dealer){}},            
-    DRAW("DRAW"){public void execute(Round round, Dealer dealer){
-        round.drawCard(dealer);
+    NONE("NONE"){public void execute(Drawable drawable, Dealer dealer){}},            
+    DRAW("DRAW"){public void execute(Drawable drawable, Dealer dealer){
+        Card card = drawable.popCard();
+        dealer.addCard(card);;
     }},            
-    STAND("STAND"){public void execute(Round round, Dealer dealer){}};
+    STAND("STAND"){public void execute(Drawable drawable, Dealer dealer){}};
     private String symbol;
     DealerCommand(String symbol){
         this.symbol = symbol;
@@ -23,7 +26,7 @@ public enum DealerCommand {
         return symbol;
     }
 
-    public abstract void execute(Round round, Dealer dealer);
+    public abstract void execute(Drawable drawable, Dealer dealer);
     public static DealerCommand getAvailable(Dealer dealer){
         DealerCommand command = DealerCommand.NONE;
 

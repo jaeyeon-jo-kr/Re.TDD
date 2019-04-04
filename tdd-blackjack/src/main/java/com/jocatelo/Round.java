@@ -13,28 +13,29 @@ import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.character.User;
+import com.jocatelo.rule.DealerCommand;
+import com.jocatelo.rule.DealerStatus;
 import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.Rule;
 import com.jocatelo.rule.PlayerStatus;
 
-public class Round implements Drawable {
+public class Round {
     private PlayerGroup players;
     private Dealer dealer;
     private List<Turn> turns;
     private CardDeck deck;
     private Rule rule;
-    private Turn current;
-    private int playerNumber;
+    private Turn current;    
     private Option option;
 
     private Round() {
-        players = new PlayerGroup(8);
         deck = new CardDeck();
         turns = new ArrayList<>();
         this.dealer = Dealer.of();         
         deck.initialize();
         rule = Rule.CLASSIC;
         option = Option.of();
+        players = PlayerGroup.of();
     }
 
     public static Round of() {
@@ -55,37 +56,25 @@ public class Round implements Drawable {
         option.setAutomaticDistribute(ok);
         return this;
     }
-
-    public Round setPlayerNumber(int number) throws InvalidValueException {
-        this.playerNumber = number;        
+    public Round setPlayerNumber(int number)
+    {
+        players = PlayerGroup.of(number);
         return this;
     }
 
     public void initialize() throws Exception
     {
         if(option.isAutomaticGeneratePlayer())  
-            createPlayers();
+            players.createPlayers();
 
         if(option.isShuffle())
             shuffle();
             
         if(option.isAutomaticDistribute())
             distribute();
+
+        players.getPlayers().forEach(player -> player.setDealer(dealer));
     }
-
-    private void createPlayers() throws InvalidValueException
-    {
-        if (playerNumber >= 1 && playerNumber <= 8) {
-            for (int i = 1; i <= playerNumber; i++) {
-                String name = "player " + i;
-                Player player = Player.of(name);
-                player.setDealer(dealer);
-                players.add(player);
-            }
-        }
-
-    }
-
 
     public Round shuffle() {
         deck.shuffle();
@@ -97,11 +86,11 @@ public class Round implements Drawable {
      */
     public Round distribute() {
         for (User user : players.getPlayers()) {
-            drawCard(user);
-            drawCard(user);
+            user.addCard(deck.popCard());
+            user.addCard(deck.popCard());
         }
-        drawCard(dealer);
-        drawCard(dealer);
+        dealer.addCard(deck.popCard());
+        dealer.addCard(deck.popCard());
         return this;
     }
 
@@ -110,32 +99,31 @@ public class Round implements Drawable {
     }   
 
     
-    public boolean isOver() {
-        return rule.isOver(this);
-    }
-
     public Round start() {
         current = Turn.create(1).initialize(players());
         turns.add(current);
         return this;
     }
-
-    public Round endTurn() {
-        
-        for (Player player : players.getPlayers()) {
-            PlayerCommand command = current.what(player);
-            command.execute(this, player);
-            player.updateScore();
-            player.updateStatus();
-        }
-
+    public void startTurn()
+    {
         Turn newTurn = Turn.create(current.number() + 1).initialize(players());
         turns.add(newTurn);
         current = newTurn;
-                
-        return this;
-    } 
+    }
 
+    public void endTurn() throws Exception{
+        
+        for (Player player : players.getPlayers()) {
+            PlayerCommand command = current.what(player);
+            command.execute(deck, player);
+            player.updateScore();
+            player.updateStatus();
+        }
+        DealerCommand command = DealerCommand.getAvailable(dealer);
+        command.execute(deck, dealer);
+        dealer.updateScore();
+        dealer.updateStatus();
+    } 
     public void endGame()
     {
         players.getPlayers().stream().forEach(player -> player.finalizeStatus());
@@ -149,16 +137,9 @@ public class Round implements Drawable {
     {
         return players.getPlayers().get(index);
     }
-
     
-    @Override
-    public void drawCard(User user) {
-        Card card = deck.popCard();
-        Hands hands = user.getHands();
-        hands.add(card);
-    }
-
     
+
     public void setCommand(Player player, PlayerCommand command) {
         current.setPlayerCommand(player, command);
     }
@@ -166,6 +147,15 @@ public class Round implements Drawable {
     
     public PlayerCommand getCommand(Player player) {
         return current.what(player);
+    }
+
+    public boolean isOver() {
+        
+        boolean isplaying = dealer.getStatus() == DealerStatus.PLAYING;
+        for (Player player : players()) {
+            isplaying = (player.getStatus() == PlayerStatus.PLAYING);
+        }
+        return isplaying;
     }
 
     

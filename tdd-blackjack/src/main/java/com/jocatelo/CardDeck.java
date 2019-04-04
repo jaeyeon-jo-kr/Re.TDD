@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Queue;
 import java.util.Random;
 
-public class CardDeck {
+public class CardDeck implements Drawable {
     final private Queue<Card> cardQueue;
     final private int TOTAL_COUNT = 13 * 4;
 
@@ -14,6 +14,7 @@ public class CardDeck {
 
     }
 
+    @Override
     public Card popCard() {
         return cardQueue.poll();
     }

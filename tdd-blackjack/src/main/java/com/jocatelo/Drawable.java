@@ -6,5 +6,5 @@ import com.jocatelo.character.Playable;
 import com.jocatelo.character.User;
 
 public interface Drawable {
-    public void drawCard(User user);
+    public Card popCard();
 }
