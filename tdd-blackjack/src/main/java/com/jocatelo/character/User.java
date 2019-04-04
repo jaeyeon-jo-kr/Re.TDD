@@ -3,6 +3,7 @@ package com.jocatelo.character;
 import java.util.ArrayList;
 
 import com.jocatelo.Card;
+import com.jocatelo.Drawable;
 import com.jocatelo.Round;
 
 import lombok.Data;
@@ -10,7 +11,8 @@ import lombok.Data;
 public abstract class User {
     protected Hands hands;    
     protected int score;
-    protected String name;    
+    protected String name;
+    protected Drawable drawer; 
 
     protected User() {
         hands = new Hands(new ArrayList<Card>());

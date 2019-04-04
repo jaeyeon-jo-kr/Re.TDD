@@ -12,7 +12,6 @@ import com.jocatelo.character.Player;
 public enum PlayerCommand {
     NONE("NONE"){
         public void execute(Drawable drawable, Player player) {
-
         }
     },
     
@@ -69,7 +68,7 @@ public enum PlayerCommand {
             commands.add(PlayerCommand.DOUBLEDOWN);
             commands.add(PlayerCommand.SPLIT);
             return commands;
-        } 
+        }
         
         commands.add(PlayerCommand.STAND);
         

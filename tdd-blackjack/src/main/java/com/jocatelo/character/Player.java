@@ -69,6 +69,7 @@ public class Player extends User implements Playable,Commandable {
         score = ScoreCalculator.calculate(this);
     }
 
+    @Override
     public void updateStatus() {
         status = status.next(this);
     }
@@ -78,16 +79,14 @@ public class Player extends User implements Playable,Commandable {
     }
 
     public void execute(){
-        command.execute(null, this);
-        updateScore();
-        updateStatus();
+        command.execute(drawer, this);
     }
 
     public List<PlayerCommand> getAvailableCommands() {
         return PlayerCommand.getAvailable(this);
     }
 
-    @Override
+    
     public void finalizeStatus() {
         status = status.finalize(this);
     }

@@ -12,6 +12,7 @@ public class Dealer extends User implements Playable, Commandable {
     public static final String NAME = "dealer";
     @Getter    
     private DealerStatus status;
+    private DealerCommand command;
     private Dealer() {
         name = NAME;
         status = DealerStatus.PLAYING;
@@ -44,7 +45,8 @@ public class Dealer extends User implements Playable, Commandable {
     }
 
     @Override
-    public void finalizeStatus() {
-
+    public void execute() {
+        DealerCommand command = DealerCommand.getAvailable(this);
+        command.execute(drawer, this);
     }
 }

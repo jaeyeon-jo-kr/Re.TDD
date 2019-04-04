@@ -14,7 +14,7 @@ public enum DealerCommand {
     NONE("NONE"){public void execute(Drawable drawable, Dealer dealer){}},            
     DRAW("DRAW"){public void execute(Drawable drawable, Dealer dealer){
         Card card = drawable.popCard();
-        dealer.addCard(card);;
+        dealer.addCard(card);
     }},            
     STAND("STAND"){public void execute(Drawable drawable, Dealer dealer){}};
     private String symbol;
@@ -32,10 +32,10 @@ public enum DealerCommand {
 
         if (dealer.getScore() <= 16) {
             command = DealerCommand.DRAW;
-        } else if (dealer.getScore() >= 17) {
-            command = DealerCommand.STAND;
+            return command;
         }
-
+        
+        command = DealerCommand.STAND;
         return command;
     }
 

@@ -59,18 +59,28 @@ public class Round {
         return this;
     }
 
+    private void initializeDeck()
+    {
+        if(option.isShuffle())
+            shuffle();
+
+        players.getPlayers().forEach(player -> player.setDrawer(deck));
+        dealer.setDrawer(deck);
+    }    
+
     public void initialize() throws Exception
     {
         if(option.isAutomaticGeneratePlayer())  
             players.createPlayers();
 
-        if(option.isShuffle())
-            shuffle();
+        initializeDeck();
             
         if(option.isAutomaticDistribute())
             distribute();
 
         players.getPlayers().forEach(player -> player.setDealer(dealer));
+        
+
     }
 
     public Round shuffle() {
@@ -82,10 +92,11 @@ public class Round {
      * At the round of initial, players must have two cards.
      */
     public Round distribute() {
-        for (User user : players.getPlayers()) {
-            user.addCard(deck.popCard());
-            user.addCard(deck.popCard());
-        }
+        players.getPlayers().stream().forEach(player -> {
+            player.addCard(deck.popCard());
+            player.addCard(deck.popCard());
+        });        
+        
         dealer.addCard(deck.popCard());
         dealer.addCard(deck.popCard());
         return this;
@@ -108,8 +119,21 @@ public class Round {
         current = newTurn;
     }
 
+    public void executeAll()
+    {
+        players.getPlayers().forEach(player -> player.execute());
+        dealer.execute();
+    }
+
+    public void updateScoreAll()
+    {
+        players.getPlayers().forEach(player -> player.updateScore());
+        dealer.updateScore();
+    }
+
     public void endTurn() throws Exception{
         
+
         for (Player player : players.getPlayers()) {
             PlayerCommand command = current.what(player);
             command.execute(deck, player);
