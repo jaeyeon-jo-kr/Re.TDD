@@ -88,16 +88,30 @@ public enum PlayerStatus {
         }
     },
     PLAYING("PLAYING") {
+
+        private boolean isBlackJack(Player player){
+            return player.getScore() == BLACKJACK_SCORE && player.getHands().getCardCount() == 2;
+        }
+
+        private boolean isBust(Player player)
+        {
+            return player.getScore() > BLACKJACK_SCORE;
+        }
+        
+        private boolean isMaxScore(Player player)
+        {
+            return player.getScore() == BLACKJACK_SCORE && player.getHands().getCardCount() != 2;
+        }
         @Override
         public PlayerStatus next(Player player) {
-            if(player.getScore() == BLACKJACK_SCORE && player.getHands().getCardCount() == 2){                
+            if(isBlackJack(player)){                
                 return BLACKJACK;
             }
-
-            if(player.getScore() == BLACKJACK_SCORE)
+            
+            if(isMaxScore(player))
                 return STAND;
             
-            if(player.getScore() > BLACKJACK_SCORE)
+            if(isBust(player))
                 return BUST;
 
             return this;

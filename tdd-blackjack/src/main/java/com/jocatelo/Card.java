@@ -94,7 +94,7 @@ public class Card{
     public static Card create(int id, Type type){        
         return new Card(id, type);
     }
-    public static Card create(Number number, Type type){
+    public static Card of(Number number, Type type){
         return new Card(number, type);
     }
     

@@ -2,6 +2,7 @@ package com.jocatelo;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Queue;
 import java.util.Random;
 
@@ -11,7 +12,6 @@ public class CardDeck implements Drawable {
 
     public CardDeck() {
         cardQueue = new ArrayDeque<>(TOTAL_COUNT);
-
     }
 
     @Override
@@ -23,7 +23,7 @@ public class CardDeck implements Drawable {
 
         for (Card.Type cardType : Card.Type.values()) {
             for (Card.Number cardNumber : Card.Number.values()) {
-                Card card = Card.create(cardNumber, cardType);
+                Card card = Card.of(cardNumber, cardType);
                 cardQueue.add(card);
             }
         }        
@@ -31,13 +31,11 @@ public class CardDeck implements Drawable {
 
     public void shuffle(){
         Card array[] = cardQueue.toArray(new Card[cardQueue.size()]);
-        final long COUNT = 200;
-        Random random = new Random();        
+        Random random = new Random(Calendar.getInstance().getTimeInMillis());                
         
-        for(int i=0;i<COUNT;i++){
-            int firstIndex = Math.abs(random.nextInt()) % cardQueue.size();
-            int secondIndex = Math.abs(random.nextInt()) % cardQueue.size();
-            swapCard(array[firstIndex], array[secondIndex]);
+        for(int i=0;i<TOTAL_COUNT;i++){
+            int randomIndex = Math.abs(random.nextInt()) % cardQueue.size();            
+            swapCard(array[i], array[randomIndex]);
         }
         cardQueue.clear();
         cardQueue.addAll(Arrays.asList(array));
