@@ -37,7 +37,7 @@ public class PlayerGroup {
     }
 
     public void createPlayers(){
-        IntStream.range(1, number+1).forEach(i -> {
+        IntStream.rangeClosed(1, number).forEach(i -> {
             try {
                 players.add(Player.of("player " + i));
             } catch (Exception e) {
