@@ -6,7 +6,7 @@ import static org.junit.Assert.assertThat;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Hands;
 import com.jocatelo.character.Player;
-import com.jocatelo.rule.PlayerStatus;
+import com.jocatelo.rule.PlayingStatus;
 import static org.hamcrest.core.IsEqual.equalTo;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class BlackJackTest {
     public void bustStatus() throws Exception
     {
         Player player = Player.of("Player");
-        player.setStatus(PlayerStatus.PLAYING);
+        player.setStatus(PlayingStatus.PLAYING);
 
         Hands hands = player.getHands();
         hands.add(Card.clover(10));
@@ -38,7 +38,7 @@ public class BlackJackTest {
         
         player.updateStatus();
 
-        assertThat("Player must be bust.", player.getStatus(),equalTo(PlayerStatus.BUST));
+        assertThat("Player must be bust.", player.getStatus(),equalTo(PlayingStatus.BUST));
 
     }
 
@@ -57,7 +57,7 @@ public class BlackJackTest {
         player.bet(10);
 
         Hands hands = player.getHands();
-        player.setStatus(PlayerStatus.PLAYING);
+        player.setStatus(PlayingStatus.PLAYING);
         hands.add(Card.clover(1));
         hands.add(Card.clover(10));
         
@@ -66,9 +66,9 @@ public class BlackJackTest {
         round.endTurn();
 
         assertThat("Player의 점수는 21이어야 한다.", player.getScore(), equalTo(21));
-        assertThat("Player의 상태는 21이어야 한다.", player.getStatus(), equalTo(PlayerStatus.BLACKJACK));        
-        player.finalizeStatus();
-        assertThat("Player가 되돌려받는 돈은 25이어야 한다.", player.getWinningCredit(), equalTo(25));
+        assertThat("Player의 상태는 21이어야 한다.", player.getStatus(), equalTo(PlayingStatus.BLACKJACK));        
+        round.endGame();
+        assertThat("Player가 되돌려받는 돈은 25이어야 한다.", round.getWinningCredit(player), equalTo(25));
 
     }
 

@@ -3,7 +3,8 @@ package com.jocatelo;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Player;
 import com.jocatelo.rule.PlayerCommand;
-import com.jocatelo.rule.PlayerStatus;
+import com.jocatelo.rule.PlayingStatus;
+import com.jocatelo.rule.WinStatus;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.*;
@@ -32,7 +33,7 @@ public class ResultTest {
         round.endTurn();
         round.endGame();
 
-        assertThat(PlayerStatus.WIN).isEqualTo(player.getStatus());
+        assertThat(WinStatus.WIN).isEqualTo(round.getWinStatus(player));
 
         
         

@@ -8,8 +8,11 @@ import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.rule.DealerStatus;
+import com.jocatelo.rule.Finalyzable;
+import com.jocatelo.rule.FinalyzerFactory;
 import com.jocatelo.rule.PlayerCommand;
-import com.jocatelo.rule.PlayerStatus;
+import com.jocatelo.rule.PlayingStatus;
+import com.jocatelo.rule.WinStatus;
 
 public class Round {
     private PlayerGroup players;
@@ -72,8 +75,7 @@ public class Round {
         if(option.isAutomaticDistribute())
             distribute();
 
-        players.getPlayers().forEach(player -> player.setDealer(dealer));
-        
+        players.getPlayers().forEach(player -> player.setDealer(dealer));        
 
     }
 
@@ -99,8 +101,6 @@ public class Round {
     public Turn turn() {
         return current;
     }   
-
-    
     
     public void startTurn()
     {
@@ -109,11 +109,9 @@ public class Round {
             current = Turn.first(dealer, players);
             turns.add(current);
             return;
-        }
-        
+        }        
         current = Turn.nextTurn(current);
-        turns.add(current);
-        
+        turns.add(current);        
     }
 
     public void executeAll()
@@ -133,7 +131,13 @@ public class Round {
     } 
     public void endGame()
     {
-        players.getPlayers().forEach(player -> player.finalizeStatus());
+        players.getPlayers().forEach((Player player) -> {
+            PlayingStatus status = player.getStatus();
+            Finalyzable finalyzable = FinalyzerFactory.create(status);
+            WinStatus winStatus = finalyzable.finalize(dealer, player);
+            player.setWinStatus(winStatus);
+        }
+        );
     }
     public List<Player> players()
     {
@@ -152,14 +156,22 @@ public class Round {
     public PlayerCommand getCommand(Player player) {
         return player.getCommand();
     }
-    public boolean isOver() {
-        
+    public boolean isOver() {        
         boolean isplaying = dealer.getStatus() == DealerStatus.PLAYING;
         for (Player player : players()) {
-            isplaying = (player.getStatus() == PlayerStatus.PLAYING);
+            isplaying = (player.getStatus() == PlayingStatus.PLAYING);
         }
         return isplaying;
     }
+
+    public WinStatus getWinStatus(Player player)
+    {
+        return player.getWinStatus();
+    }
+
+	public Object getWinningCredit(Player player) {
+        return player.getWinningCredit();
+	}
 
     
 

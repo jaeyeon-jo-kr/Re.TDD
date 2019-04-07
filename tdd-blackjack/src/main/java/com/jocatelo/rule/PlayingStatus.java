@@ -4,87 +4,43 @@ import com.jocatelo.Round;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Player;
 
-public enum PlayerStatus {
+public enum PlayingStatus {
 
-    WIN("WIN"){
-        @Override
-        public PlayerStatus next(Player player) {
-            return this;
-        }
-
-        @Override
-        public PlayerStatus finalize(Player player) {
-            return this;
-        }
-        
-    },
-    LOSE("LOSE") {
-        @Override
-        public PlayerStatus next(Player player) {
-            return this;
-        }
-
-        @Override
-        public PlayerStatus finalize(Player player) {
-            return this;
-        }
-    },
-    DRAW("DRAW") {
-        @Override
-        public PlayerStatus next(Player player) {
-            return this;
-        }
-
-        @Override
-        public PlayerStatus finalize(Player player) {
-            return this;
-        }
-    },    
-    PUSH("PUSH") {
-        @Override
-        public PlayerStatus next(Player player) {
-            return this;
-        }
-        @Override
-        public PlayerStatus finalize(Player player) {
-            return this;
-        }
-    },
     STAND("STAND") {
         @Override
-        public PlayerStatus next(Player player) {
+        public PlayingStatus next(Player player) {
             return this;
         }
         @Override
-        public PlayerStatus finalize(Player player) {
+        public WinStatus finalize(Player player) {
             Dealer dealer = player.getDealer();
             if(dealer.getStatus() == DealerStatus.BLACKJACK || 
             player.getScore() < dealer.getScore()){
                 player.setWinningRate(0.0f);
-                return LOSE;
+                return WinStatus.LOSE;
             }
 
             if(dealer.getScore() < player.getScore())
             {
                 player.setWinningRate(2.0f);
-                return WIN;
+                return WinStatus.WIN;
             }
 
             player.setWinningRate(1.0f);
-            return DRAW;
+            return WinStatus.DRAW;
         }
 
     },
     BUST("BUST") {
         @Override
-        public PlayerStatus next(Player player) {
+        public PlayingStatus next(Player player) {
             return this;
         }
 
         @Override
-        public PlayerStatus finalize(Player player) {
+        public WinStatus finalize(Player player) {
             player.setWinningRate(0.0f);
-            return LOSE;
+            return WinStatus.LOSE;
         }
     },
     PLAYING("PLAYING") {
@@ -103,64 +59,60 @@ public enum PlayerStatus {
             return player.getScore() == BLACKJACK_SCORE && player.getHands().getCardCount() != 2;
         }
         @Override
-        public PlayerStatus next(Player player) {
-            if(isBlackJack(player)){                
-                return BLACKJACK;
-            }
-            
+        public PlayingStatus next(Player player) {
+            if(isBlackJack(player))
+                return BLACKJACK;            
             if(isMaxScore(player))
-                return STAND;
-            
+                return STAND;            
             if(isBust(player))
                 return BUST;
-
             return this;
         }
         @Override
-        public PlayerStatus finalize(Player player) {
+        public WinStatus finalize(Player player) {
             return STAND.finalize(player);
         }
     },
     BLACKJACK("BLACKJACK") {
         @Override
-        public PlayerStatus next(Player player) {
+        public PlayingStatus next(Player player) {
             return this;
         }
         @Override
-        public PlayerStatus finalize(Player player) {
+        public WinStatus finalize(Player player) {
             Dealer dealer = player.getDealer();
             if(dealer.getStatus() == DealerStatus.BLACKJACK)
             {
                 player.setWinningRate(1.0f);
-                return PUSH;
+                return WinStatus.PUSH;
             }
 
             player.setWinningRate(2.5f);
-            return WIN;
+            return WinStatus.WIN;
         }
     },
     SURRENDER("SURRENDER") {
         @Override
-        public PlayerStatus next(Player player) {
+        public PlayingStatus next(Player player) {
             return this;
         }
         @Override
-        public PlayerStatus finalize(Player player) {
+        public WinStatus finalize(Player player) {
             player.setWinningRate(0.0f);
-            return LOSE;
+            return WinStatus.LOSE;
         }
     };
     
     private static final int BLACKJACK_SCORE = 21;
 
     private String symbol;
-    PlayerStatus(String symbol)
+    PlayingStatus(String symbol)
     {
         this.symbol = symbol;
     }
 
-    public abstract PlayerStatus next (Player player);
-    public abstract PlayerStatus finalize (Player player);
+    public abstract PlayingStatus next (Player player);
+    public abstract WinStatus finalize (Player player);
 
 	@Override
 	public String toString() {

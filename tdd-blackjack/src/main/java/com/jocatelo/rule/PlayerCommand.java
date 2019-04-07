@@ -17,7 +17,7 @@ public enum PlayerCommand {
     
     SURRENDER("SURRENDER"){
         public void execute(Drawable drawable, Player player) {
-            player.setStatus(PlayerStatus.SURRENDER);
+            player.setStatus(PlayingStatus.SURRENDER);
         }
     },    
     HIT("HIT"){
