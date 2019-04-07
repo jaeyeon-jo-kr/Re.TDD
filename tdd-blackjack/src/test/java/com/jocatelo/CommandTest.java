@@ -25,8 +25,13 @@ public class CommandTest {
         Dealer dealer = Dealer.of();
         player.setDealer(dealer);
 
-        player.setScore(20);
-        dealer.setScore(17);
+        player.addCard(Card.heart(10));
+        player.addCard(Card.heart(10));
+        player.updateScore();
+
+        dealer.addCard(Card.clover(10));
+        dealer.addCard(Card.clover(7));
+        dealer.updateScore();
         List<PlayerCommand> commands = player.getAvailableCommands();
 
         assertThat("Player can be HIT, SPLIT, DOUBLEDOWN", commands,
@@ -41,8 +46,15 @@ public class CommandTest {
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();
         player.setDealer(dealer);
-        player.setScore(21);
+        
+        player.addCard(Card.heart(10));
+        player.addCard(Card.heart(1));
+        player.updateScore();
         dealer.setScore(17);
+
+        dealer.addCard(Card.clover(10));
+        dealer.addCard(Card.clover(7));
+        dealer.updateScore();
 
         List<PlayerCommand> commands = player.getAvailableCommands();        
         
@@ -57,8 +69,14 @@ public class CommandTest {
         Dealer dealer = Dealer.of();
         player.setDealer(dealer);
 
-        player.setScore(22);
-        dealer.setScore(17);
+        player.addCard(Card.heart(10));
+        player.addCard(Card.heart(10));
+        player.addCard(Card.heart(2));
+        player.updateScore();
+
+        dealer.addCard(Card.heart(10));        
+        dealer.addCard(Card.heart(7));
+        dealer.updateScore();
 
         List<PlayerCommand> commands = player.getAvailableCommands();
         
@@ -66,28 +84,16 @@ public class CommandTest {
         assertTrue(commands.size() == 1);
     }
 
-
     @Test
-    public void availableDealerCommand() throws Exception
+    public void DealerStandCommand() throws Exception
     {
         Dealer dealer = Dealer.of();
         DealerCommand command = dealer.getNextCommand();
-        dealer.setScore(16);
-        assertTrue(command == DealerCommand.DRAW);
-
-        dealer.setScore(17);
-        command = dealer.getNextCommand();
-        assertTrue(command == DealerCommand.STAND);
-
-        dealer.setScore(21);        
-        command = dealer.getNextCommand();
-        assertTrue(command == DealerCommand.STAND);
-
-        dealer.setScore(22);
+        dealer.addCard(Card.heart(10));        
+        dealer.addCard(Card.heart(7));
         command = dealer.getNextCommand();
         assertTrue(command == DealerCommand.STAND);
     }
-
     
     @Test
     public void executeHit() throws Exception
