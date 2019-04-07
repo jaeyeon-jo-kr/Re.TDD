@@ -15,8 +15,16 @@ public class ScoreCalculator {
 
     private static final int BLACKJACK_SCORE = 21;
 
-    private ScoreCalculator()
+    private Hands hands;
+
+    private ScoreCalculator(Hands hands)
     {
+        this.hands = hands;
+    }
+
+    public static ScoreCalculator of(Hands hands)
+    {
+        return new ScoreCalculator(hands);
 
     }
     private List<Integer> plusSpecialScore(int score, Optional<Integer> specialValue){
@@ -50,22 +58,20 @@ public class ScoreCalculator {
         return candidates.stream().max(Comparator.comparing(Integer::valueOf)).get();
     }
 
-    public static int calculate(User player) {
+    public int calculate() {
         final boolean BUST = false;
         final boolean NORMAL = true;
 
-        ScoreCalculator calculator = new ScoreCalculator();
-
-        List<Integer> candidates = calculator.generateScoreCandidates(player.getHands());
+        List<Integer> candidates = generateScoreCandidates(hands);
         Map<Boolean, List<Integer>> groups = candidates.stream()
                 .collect(Collectors.partitioningBy(x -> x <= BLACKJACK_SCORE));
 
         if (!groups.get(NORMAL).isEmpty()) {
             candidates = groups.get(NORMAL);
-            return calculator.getMaxScore(candidates);            
+            return getMaxScore(candidates);            
         }
 
         candidates = groups.get(BUST);
-        return calculator.getMaxScore(candidates);
+        return getMaxScore(candidates);
     }
 }

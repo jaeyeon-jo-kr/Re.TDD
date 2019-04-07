@@ -33,7 +33,7 @@ public class Dealer extends User implements Playable, Commandable {
     
     @Override
     public void updateScore() {        
-        score = ScoreCalculator.calculate(this);
+        score = hands.getScore();
     }
 
     public void updateStatus() throws Exception {

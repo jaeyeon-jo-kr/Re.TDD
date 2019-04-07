@@ -31,7 +31,7 @@ public class Player extends User implements Playable,Commandable {
 
     @Getter @Setter
     private PlayerCommand command;
-
+    
     private Player(String name) {
         super();        
         this.name = name;
@@ -66,7 +66,7 @@ public class Player extends User implements Playable,Commandable {
 
     @Override
     public void updateScore() {
-        score = ScoreCalculator.calculate(this);
+        score = hands.getScore();
     }
 
     @Override
