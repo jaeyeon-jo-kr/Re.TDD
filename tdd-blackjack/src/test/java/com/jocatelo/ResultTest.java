@@ -28,8 +28,7 @@ public class ResultTest {
         player.setCommand(PlayerCommand.STAND);
         player.execute();
 
-        round.updateAllStatus();
-        round.updateAllScore();
+        round.updateAllStatus();        
         round.endTurn();
         round.endGame();
 

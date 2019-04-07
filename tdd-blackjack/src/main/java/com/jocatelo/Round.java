@@ -120,12 +120,7 @@ public class Round {
     {
         players.getPlayers().forEach(player -> player.execute());
         dealer.execute();
-    }
-
-    public void updateAllScore()
-    {
-        
-    }
+    }    
 
     public void updateAllStatus() throws Exception
     {

@@ -115,8 +115,7 @@ public class CommandTest {
         assertEquals(2, hands.getCardCount());
 
         round.executeAll();
-        round.updateAllStatus();
-        round.updateAllScore();
+        round.updateAllStatus();        
         round.endTurn();
 
         assertEquals(3, hands.getCardCount());
