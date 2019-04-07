@@ -3,17 +3,10 @@ package com.jocatelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.DelayQueue;
 
-import com.jocatelo.character.Commandable;
 import com.jocatelo.character.Dealer;
-import com.jocatelo.character.Hands;
-import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.PlayerGroup;
-import com.jocatelo.character.User;
-import com.jocatelo.rule.DealerCommand;
 import com.jocatelo.rule.DealerStatus;
 import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.PlayerStatus;
@@ -157,18 +150,14 @@ public class Round {
     {
         return players.getPlayers().get(index);
     }
-    
-    
 
     public void setCommand(Player player, PlayerCommand command) {
         player.setCommand(command);
     }
 
-    
     public PlayerCommand getCommand(Player player) {
         return player.getCommand();
     }
-
     public boolean isOver() {
         
         boolean isplaying = dealer.getStatus() == DealerStatus.PLAYING;

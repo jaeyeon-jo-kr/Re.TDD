@@ -4,6 +4,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ import com.jocatelo.rule.DealerCommand;
 import com.jocatelo.rule.PlayerCommand;
 
 import org.hamcrest.core.IsCollectionContaining;
+
+
 import org.junit.Test;
 
 public class CommandTest {
@@ -23,7 +26,6 @@ public class CommandTest {
     public void availablePlayerCommands() throws Exception {
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();
-        player.setDealer(dealer);
 
         player.addCard(Card.heart(10));
         player.addCard(Card.heart(10));
@@ -44,8 +46,7 @@ public class CommandTest {
     public void availablePlayerCommandsAfterBlackJack() throws Exception
     {
         Player player = Player.of("PLAYER 1");
-        Dealer dealer = Dealer.of();
-        player.setDealer(dealer);
+        Dealer dealer = Dealer.of();        
         
         player.addCard(Card.heart(10));
         player.addCard(Card.heart(1));
@@ -67,7 +68,6 @@ public class CommandTest {
     {
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();
-        player.setDealer(dealer);
 
         player.addCard(Card.heart(10));
         player.addCard(Card.heart(10));
@@ -91,8 +91,9 @@ public class CommandTest {
         DealerCommand command = dealer.getNextCommand();
         dealer.addCard(Card.heart(10));        
         dealer.addCard(Card.heart(7));
+        dealer.updateScore();
         command = dealer.getNextCommand();
-        assertTrue(command == DealerCommand.STAND);
+        assertThat(command, equalTo(DealerCommand.STAND));
     }
     
     @Test
