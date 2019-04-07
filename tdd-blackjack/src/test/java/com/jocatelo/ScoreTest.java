@@ -18,7 +18,7 @@ public class ScoreTest
         Hands hands = player.getHands();
         hands.add(Card.diamond(1));
         hands.add(Card.diamond(1));
-        player.updateScore();
+        
         assertThat(player.getScore()).isEqualTo(12);
     }
 
@@ -29,7 +29,7 @@ public class ScoreTest
         hands.add(Card.heart(1));
         hands.add(Card.heart(1));
         hands.add(Card.diamond(1));
-        player.updateScore();
+
         assertThat(player.getScore()).isEqualTo(13);
     }
 
@@ -40,7 +40,7 @@ public class ScoreTest
 
         hands.add(Card.heart(1));
         hands.add(Card.heart(10));
-        player.updateScore();
+        
         assertThat(player.getScore()).isEqualTo(21);
     }
 
@@ -53,7 +53,7 @@ public class ScoreTest
         hands.add(Card.heart(1));
         hands.add(Card.heart(10));
         hands.add(Card.heart(10));
-        player.updateScore();
+        
         assertThat(player.getScore()).isEqualTo(21);
     }
 }

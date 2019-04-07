@@ -23,4 +23,9 @@ public abstract class User {
     {
         hands.add(card);
     }
+
+    public int getScore()
+    {
+        return hands.getScore();
+    }
 }

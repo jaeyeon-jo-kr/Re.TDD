@@ -31,11 +31,6 @@ public class Dealer extends User implements Playable, Commandable {
         return NAME.hashCode();
     }
     
-    @Override
-    public void updateScore() {        
-        score = hands.getScore();
-    }
-
     public void updateStatus() throws Exception {
         status = status.next(this);
     }

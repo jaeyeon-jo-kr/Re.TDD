@@ -62,12 +62,7 @@ public class Player extends User implements Playable,Commandable {
     @Override
     public int hashCode() {
         return name.hashCode();
-    }
-
-    @Override
-    public void updateScore() {
-        score = hands.getScore();
-    }
+    }   
 
     @Override
     public void updateStatus() {

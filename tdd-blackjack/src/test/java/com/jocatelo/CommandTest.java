@@ -29,11 +29,11 @@ public class CommandTest {
 
         player.addCard(Card.heart(10));
         player.addCard(Card.heart(10));
-        player.updateScore();
+        
 
         dealer.addCard(Card.clover(10));
         dealer.addCard(Card.clover(7));
-        dealer.updateScore();
+        
         List<PlayerCommand> commands = player.getAvailableCommands();
 
         assertThat("Player can be HIT, SPLIT, DOUBLEDOWN", commands,
@@ -50,12 +50,11 @@ public class CommandTest {
         
         player.addCard(Card.heart(10));
         player.addCard(Card.heart(1));
-        player.updateScore();
-        dealer.setScore(17);
+        
 
         dealer.addCard(Card.clover(10));
         dealer.addCard(Card.clover(7));
-        dealer.updateScore();
+        
 
         List<PlayerCommand> commands = player.getAvailableCommands();        
         
@@ -72,11 +71,11 @@ public class CommandTest {
         player.addCard(Card.heart(10));
         player.addCard(Card.heart(10));
         player.addCard(Card.heart(2));
-        player.updateScore();
+        
 
         dealer.addCard(Card.heart(10));        
         dealer.addCard(Card.heart(7));
-        dealer.updateScore();
+        
 
         List<PlayerCommand> commands = player.getAvailableCommands();
         
@@ -91,7 +90,7 @@ public class CommandTest {
         DealerCommand command = dealer.getNextCommand();
         dealer.addCard(Card.heart(10));        
         dealer.addCard(Card.heart(7));
-        dealer.updateScore();
+        
         command = dealer.getNextCommand();
         assertThat(command, equalTo(DealerCommand.STAND));
     }

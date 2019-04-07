@@ -124,8 +124,7 @@ public class Round {
 
     public void updateAllScore()
     {
-        players.getPlayers().forEach(player -> player.updateScore());
-        dealer.updateScore();
+        
     }
 
     public void updateAllStatus() throws Exception

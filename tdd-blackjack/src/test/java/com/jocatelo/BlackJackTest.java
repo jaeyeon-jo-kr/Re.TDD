@@ -35,11 +35,10 @@ public class BlackJackTest {
         hands.add(Card.clover(10));
         hands.add(Card.clover(10));
         hands.add(Card.clover(3));
-
-        player.updateScore();
+        
         player.updateStatus();
 
-        assertEquals(PlayerStatus.BUST, player.getStatus());        
+        assertThat("Player must be bust.", player.getStatus(),equalTo(PlayerStatus.BUST));
 
     }
 
@@ -61,7 +60,7 @@ public class BlackJackTest {
         player.setStatus(PlayerStatus.PLAYING);
         hands.add(Card.clover(1));
         hands.add(Card.clover(10));
-        player.updateScore();
+        
         player.updateStatus();
 
         round.endTurn();
