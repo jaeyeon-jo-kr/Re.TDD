@@ -1,23 +1,19 @@
 package com.jocatelo;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import java.util.List;
 
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Hands;
 import com.jocatelo.character.Player;
-import com.jocatelo.character.User;
-import com.jocatelo.rule.DealerCommand;
 import com.jocatelo.rule.PlayerCommand;
+import com.jocatelo.rule.dealer.DealerCommand;
 
 import org.hamcrest.core.IsCollectionContaining;
-
-
 import org.junit.Test;
 
 public class CommandTest {

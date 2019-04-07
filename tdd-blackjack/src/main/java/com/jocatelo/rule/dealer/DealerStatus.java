@@ -1,9 +1,7 @@
-package com.jocatelo.rule;
+package com.jocatelo.rule.dealer;
 
 import com.jocatelo.character.Dealer;
-import com.jocatelo.character.Hands;
-
-import lombok.ToString;
+import com.jocatelo.rule.IllegalStatusException;
 
 public enum DealerStatus {
 

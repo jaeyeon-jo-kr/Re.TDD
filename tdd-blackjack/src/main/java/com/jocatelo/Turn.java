@@ -1,23 +1,15 @@
 package com.jocatelo;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Map.Entry;
 
 import com.jocatelo.character.Commandable;
 import com.jocatelo.character.Dealer;
-import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.PlayerGroup;
-import com.jocatelo.rule.DealerCommand;
 import com.jocatelo.rule.PlayerCommand;
+import com.jocatelo.rule.dealer.DealerCommand;
 
 import lombok.Getter;
 import lombok.Setter;

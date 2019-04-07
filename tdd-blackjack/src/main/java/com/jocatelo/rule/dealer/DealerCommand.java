@@ -1,14 +1,8 @@
-package com.jocatelo.rule;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.jocatelo.rule.dealer;
 
 import com.jocatelo.Card;
 import com.jocatelo.Drawable;
-import com.jocatelo.Round;
 import com.jocatelo.character.Dealer;
-import com.jocatelo.character.Playable;
-import com.jocatelo.character.Player;
 
 public enum DealerCommand {    
     NONE("NONE"){public void execute(Drawable drawable, Dealer dealer){}},            

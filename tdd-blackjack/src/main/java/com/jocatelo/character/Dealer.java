@@ -1,8 +1,7 @@
 package com.jocatelo.character;
 
-import com.jocatelo.rule.DealerCommand;
-import com.jocatelo.rule.DealerStatus;
-import com.jocatelo.rule.ScoreCalculator;
+import com.jocatelo.rule.dealer.DealerCommand;
+import com.jocatelo.rule.dealer.DealerStatus;
 
 import lombok.Getter;
 import lombok.Setter;

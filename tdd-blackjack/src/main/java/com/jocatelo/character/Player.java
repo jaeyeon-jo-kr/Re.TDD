@@ -3,11 +3,9 @@ package com.jocatelo.character;
 import java.util.List;
 
 import com.jocatelo.InvalidValueException;
-import com.jocatelo.rule.DealerStatus;
 import com.jocatelo.rule.PlayerCommand;
-import com.jocatelo.rule.ScoreCalculator;
-import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.PlayingStatus;
+import com.jocatelo.rule.WinStatus;
 
 import lombok.Getter;
 import lombok.Setter;

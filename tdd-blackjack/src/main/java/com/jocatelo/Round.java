@@ -7,12 +7,12 @@ import java.util.List;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.PlayerGroup;
-import com.jocatelo.rule.DealerStatus;
 import com.jocatelo.rule.Finalyzable;
 import com.jocatelo.rule.FinalyzerFactory;
 import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.PlayingStatus;
 import com.jocatelo.rule.WinStatus;
+import com.jocatelo.rule.dealer.DealerStatus;
 
 public class Round {
     private PlayerGroup players;

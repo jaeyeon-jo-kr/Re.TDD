@@ -1,9 +1,8 @@
 package com.jocatelo.rule;
 
-import java.util.function.Function;
-
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Player;
+import com.jocatelo.rule.dealer.DealerStatus;
 
 public abstract class FinalyzerFactory {
 
