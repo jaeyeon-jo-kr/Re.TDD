@@ -131,10 +131,9 @@ public class Round {
     } 
     public void endGame()
     {
-        players.getPlayers().forEach((Player player) -> {
-            PlayingStatus status = player.getStatus();
-            Finalyzable finalyzable = FinalyzerFactory.create(status);
-            WinStatus winStatus = finalyzable.finalize(dealer, player);
+        players.getPlayers().forEach((Player player) -> {            
+            Finalyzable finalyzable = FinalyzerFactory.create(player);
+            WinStatus winStatus = finalyzable.finalizeStatus(dealer);
             player.setWinStatus(winStatus);
         }
         );

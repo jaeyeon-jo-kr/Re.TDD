@@ -33,9 +33,6 @@ public class Player extends User implements Playable, Commandable {
     private WinStatus winStatus;
 
     @Getter @Setter
-    private float winningRate;
-
-    @Getter @Setter
     private PlayerCommand command;
     
     private Player(String name) {
@@ -43,7 +40,6 @@ public class Player extends User implements Playable, Commandable {
         this.name = name;
         credit = 0;
         bet = 0;
-        winningRate = 0;
         status = PlayingStatus.PLAYING;
     }
 
@@ -76,7 +72,7 @@ public class Player extends User implements Playable, Commandable {
     }
 
     public int getWinningCredit() {
-        return (int)(bet * winningRate);        
+        return (int)(bet * winStatus.getRate());        
     }
 
     public void execute(){

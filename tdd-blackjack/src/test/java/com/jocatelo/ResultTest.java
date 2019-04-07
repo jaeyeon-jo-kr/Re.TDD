@@ -33,7 +33,7 @@ public class ResultTest {
         round.endTurn();
         round.endGame();
 
-        assertThat(WinStatus.WIN).isEqualTo(round.getWinStatus(player));
+        assertThat(WinStatus.BLACKJACK_WIN).isEqualTo(round.getWinStatus(player));
 
         
         

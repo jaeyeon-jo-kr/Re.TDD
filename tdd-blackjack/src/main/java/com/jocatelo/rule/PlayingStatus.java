@@ -11,36 +11,11 @@ public enum PlayingStatus {
         public PlayingStatus next(Player player) {
             return this;
         }
-        @Override
-        public WinStatus finalize(Player player) {
-            Dealer dealer = player.getDealer();
-            if(dealer.getStatus() == DealerStatus.BLACKJACK || 
-            player.getScore() < dealer.getScore()){
-                player.setWinningRate(0.0f);
-                return WinStatus.LOSE;
-            }
-
-            if(dealer.getScore() < player.getScore())
-            {
-                player.setWinningRate(2.0f);
-                return WinStatus.WIN;
-            }
-
-            player.setWinningRate(1.0f);
-            return WinStatus.DRAW;
-        }
-
     },
     BUST("BUST") {
         @Override
         public PlayingStatus next(Player player) {
             return this;
-        }
-
-        @Override
-        public WinStatus finalize(Player player) {
-            player.setWinningRate(0.0f);
-            return WinStatus.LOSE;
         }
     },
     PLAYING("PLAYING") {
@@ -68,39 +43,18 @@ public enum PlayingStatus {
                 return BUST;
             return this;
         }
-        @Override
-        public WinStatus finalize(Player player) {
-            return STAND.finalize(player);
-        }
     },
     BLACKJACK("BLACKJACK") {
         @Override
         public PlayingStatus next(Player player) {
             return this;
-        }
-        @Override
-        public WinStatus finalize(Player player) {
-            Dealer dealer = player.getDealer();
-            if(dealer.getStatus() == DealerStatus.BLACKJACK)
-            {
-                player.setWinningRate(1.0f);
-                return WinStatus.PUSH;
-            }
-
-            player.setWinningRate(2.5f);
-            return WinStatus.WIN;
-        }
+        }      
     },
     SURRENDER("SURRENDER") {
         @Override
         public PlayingStatus next(Player player) {
             return this;
-        }
-        @Override
-        public WinStatus finalize(Player player) {
-            player.setWinningRate(0.0f);
-            return WinStatus.LOSE;
-        }
+        }    
     };
     
     private static final int BLACKJACK_SCORE = 21;
@@ -112,13 +66,10 @@ public enum PlayingStatus {
     }
 
     public abstract PlayingStatus next (Player player);
-    public abstract WinStatus finalize (Player player);
+    
 
 	@Override
 	public String toString() {
 		return symbol;
 	}
-
-    
-    
 }
