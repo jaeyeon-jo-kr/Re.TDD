@@ -7,9 +7,10 @@ import com.jocatelo.Card;
 import com.jocatelo.Drawable;
 import com.jocatelo.Round;
 import com.jocatelo.character.Player;
+import com.jocatelo.rule.Command;
 
 
-public enum PlayerCommand {
+public enum PlayerCommand implements Command {
     NONE("NONE"){
         public void execute(Drawable drawable, Player player) {
         }

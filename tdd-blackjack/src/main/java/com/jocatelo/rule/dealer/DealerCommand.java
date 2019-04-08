@@ -3,8 +3,9 @@ package com.jocatelo.rule.dealer;
 import com.jocatelo.Card;
 import com.jocatelo.Drawable;
 import com.jocatelo.character.Dealer;
+import com.jocatelo.rule.Command;
 
-public enum DealerCommand {    
+public enum DealerCommand implements Command {    
     NONE("NONE"){public void execute(Drawable drawable, Dealer dealer){}},            
     DRAW("DRAW"){public void execute(Drawable drawable, Dealer dealer){
         Card card = drawable.popCard();

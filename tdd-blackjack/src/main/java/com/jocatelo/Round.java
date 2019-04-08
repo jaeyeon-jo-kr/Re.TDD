@@ -1,7 +1,6 @@
 
 package com.jocatelo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.jocatelo.character.Dealer;
@@ -13,23 +12,23 @@ import com.jocatelo.rule.player.Finalyzable;
 import com.jocatelo.rule.player.FinalyzerFactory;
 import com.jocatelo.rule.player.PlayerCommand;
 import com.jocatelo.rule.player.PlayingStatus;
+import com.jocatelo.turn.Turns;
 
 public class Round {
     private PlayerGroup players;
     private Dealer dealer;
-    private List<Turn> turns;
-    private CardDeck deck;    
-    private Turn current;    
+    private Turns turns;
+    private CardDeck deck;
     private Option option;
 
     private Round() {
-        deck = new CardDeck();
-        turns = new ArrayList<>();
+        deck = new CardDeck();        
         this.dealer = Dealer.of();         
         deck.initialize();
         option = Option.of();
         players = PlayerGroup.of();
-        current = null;
+        turns = Turns.of();
+    
     }
 
     public static Round of() {
@@ -95,20 +94,9 @@ public class Round {
         return this;
     }
 
-    public Turn turn() {
-        return current;
-    }   
-    
     public void startTurn()
     {
-        if(current == null)
-        {
-            current = Turn.first(dealer, players);
-            turns.add(current);
-            return;
-        }        
-        current = Turn.nextTurn(current);
-        turns.add(current);        
+        turns.start();
     }
 
     public void executeAll()
@@ -124,7 +112,7 @@ public class Round {
     }
 
     public void endTurn(){
-        current.end();        
+        turns.end();
     } 
     public void endGame()
     {
