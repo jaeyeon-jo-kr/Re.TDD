@@ -25,6 +25,8 @@ public abstract class User {
 
     public int getScore()
     {
-        return hands.getScore();
+        Score score = Score.of();
+        score.update(hands);
+        return score.getScore();
     }
 }

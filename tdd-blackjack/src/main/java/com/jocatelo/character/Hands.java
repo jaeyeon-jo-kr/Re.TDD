@@ -11,14 +11,11 @@ import lombok.Getter;
 
 public class Hands {
     private List<Card> hands;
-    private ScoreCalculator calculator;
-    @Getter
-    private int score;
 
     private Hands(){
-        this.hands = new ArrayList<>();
-        this.calculator = ScoreCalculator.of(this);
+        this.hands = new ArrayList<>();        
     }
+
     public static Hands of()
     {
         return new Hands();
@@ -33,12 +30,7 @@ public class Hands {
     }
 
     public void add(Card card) {
-        hands.add(card);
-        updateScore();
+        hands.add(card);        
     }
-
-    private void updateScore()
-    {
-        score = calculator.calculate();
-    }
+    
 }
