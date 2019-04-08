@@ -23,7 +23,7 @@ public class Round {
 
     private Round() {
         deck = new CardDeck();        
-        this.dealer = Dealer.of();         
+        dealer = Dealer.of();         
         deck.initialize();
         option = Option.of();
         players = PlayerGroup.of();
@@ -37,7 +37,7 @@ public class Round {
 
     public Dealer dealer()
     {
-        return this.dealer;
+        return dealer;
     }
 
     public Round setPlayerGeneration(boolean ok){

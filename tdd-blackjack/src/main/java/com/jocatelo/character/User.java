@@ -10,7 +10,6 @@ import lombok.Data;
 @Data
 public abstract class User {
     protected Hands hands;    
-    protected int score;
     protected String name;
     protected Drawable drawer; 
 
