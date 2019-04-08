@@ -1,4 +1,4 @@
-package com.jocatelo.rule;
+package com.jocatelo.rule.player;
 
 import com.jocatelo.Round;
 import com.jocatelo.character.Dealer;

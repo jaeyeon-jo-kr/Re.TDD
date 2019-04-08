@@ -1,13 +1,13 @@
 package com.jocatelo;
 
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Hands;
 import com.jocatelo.character.Player;
-import com.jocatelo.rule.PlayingStatus;
-import static org.hamcrest.core.IsEqual.equalTo;
+import com.jocatelo.rule.player.PlayingStatus;
+
 import org.junit.Test;
 
 public class BlackJackTest {

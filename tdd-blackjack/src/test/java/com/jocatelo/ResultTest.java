@@ -1,13 +1,13 @@
 package com.jocatelo;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Player;
-import com.jocatelo.rule.PlayerCommand;
-import com.jocatelo.rule.PlayingStatus;
 import com.jocatelo.rule.WinStatus;
+import com.jocatelo.rule.player.PlayerCommand;
 
 import org.junit.Test;
-import static org.assertj.core.api.Assertions.*;
 
 public class ResultTest {
 

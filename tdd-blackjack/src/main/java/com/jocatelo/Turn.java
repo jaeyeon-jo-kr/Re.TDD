@@ -8,8 +8,8 @@ import com.jocatelo.character.Commandable;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.PlayerGroup;
-import com.jocatelo.rule.PlayerCommand;
 import com.jocatelo.rule.dealer.DealerCommand;
+import com.jocatelo.rule.player.PlayerCommand;
 
 import lombok.Getter;
 import lombok.Setter;

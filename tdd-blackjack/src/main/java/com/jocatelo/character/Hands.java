@@ -1,5 +1,6 @@
 package com.jocatelo.character;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,9 +15,13 @@ public class Hands {
     @Getter
     private int score;
 
-    public Hands(List<Card> hands){
-        this.hands = hands;
+    private Hands(){
+        this.hands = new ArrayList<>();
         this.calculator = ScoreCalculator.of(this);
+    }
+    public static Hands of()
+    {
+        return new Hands();
     }
 
     public List<Card> getHands() {

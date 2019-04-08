@@ -1,7 +1,8 @@
-package com.jocatelo.rule;
+package com.jocatelo.rule.player;
 
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Player;
+import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.dealer.DealerStatus;
 
 public abstract class FinalyzerFactory {

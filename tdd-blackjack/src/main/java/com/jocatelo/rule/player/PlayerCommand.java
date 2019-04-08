@@ -1,4 +1,4 @@
-package com.jocatelo.rule;
+package com.jocatelo.rule.player;
 
 import java.util.ArrayList;
 import java.util.List;

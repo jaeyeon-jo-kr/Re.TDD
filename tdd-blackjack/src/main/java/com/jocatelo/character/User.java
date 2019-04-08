@@ -15,8 +15,7 @@ public abstract class User {
     protected Drawable drawer; 
 
     protected User() {
-        hands = new Hands(new ArrayList<Card>());
-        
+        hands = Hands.of();
     }
     
     public void addCard(Card card)
