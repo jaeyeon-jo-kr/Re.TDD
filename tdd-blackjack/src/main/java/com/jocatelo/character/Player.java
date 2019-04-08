@@ -16,11 +16,7 @@ public class Player extends User implements Playable, Commandable {
     private int credit;
 
     @Getter
-    private int bet;
-
-    @Getter
-    @Setter
-    private Dealer dealer;
+    private int bet;    
 
     @Getter
     @Setter

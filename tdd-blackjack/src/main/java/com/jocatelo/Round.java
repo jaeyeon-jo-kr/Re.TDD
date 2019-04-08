@@ -74,9 +74,6 @@ public class Round {
             
         if(option.isAutomaticDistribute())
             distribute();
-
-        players.getPlayers().forEach(player -> player.setDealer(dealer));        
-
     }
 
     public Round shuffle() {
