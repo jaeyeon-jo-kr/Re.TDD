@@ -16,7 +16,7 @@ public class BlackJackTest {
     @Test
     public void distribute2Card() throws Exception {
         Round round = Round.of().setPlayerNumber(8);
-    
+        
         round.initialize();
         round.startTurn();
 

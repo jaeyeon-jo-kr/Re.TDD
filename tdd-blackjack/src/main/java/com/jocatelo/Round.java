@@ -1,18 +1,11 @@
 
 package com.jocatelo;
 
-import java.util.List;
-
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Participants;
 import com.jocatelo.character.Player;
-import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.rule.WinStatus;
-import com.jocatelo.rule.dealer.DealerStatus;
-import com.jocatelo.rule.player.Finalyzable;
-import com.jocatelo.rule.player.FinalyzerFactory;
 import com.jocatelo.rule.player.PlayerCommand;
-import com.jocatelo.rule.player.PlayingStatus;
 import com.jocatelo.turn.Turns;
 
 import lombok.Getter;
