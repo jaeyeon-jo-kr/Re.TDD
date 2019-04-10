@@ -5,7 +5,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import com.jocatelo.character.Hands;
+import com.jocatelo.character.Participants;
 import com.jocatelo.character.Player;
+import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.rule.player.PlayingStatus;
 
 import org.junit.Test;
@@ -14,11 +16,14 @@ public class BlackJackTest {
     @Test
     public void distribute2Card() throws Exception {
         Round round = Round.of().setPlayerNumber(8);
-        
+    
         round.initialize();
-        round.startTurn();        
+        round.startTurn();
 
-        for (Player user : round.players()) {
+        Participants participants = round.getParticipants();
+        PlayerGroup players = participants.getPlayers();
+
+        for (Player user : players.getPlayers()) {
             Hands hands = user.getHands();
             assertEquals(2, hands.getCardCount() );
         }
@@ -52,7 +57,9 @@ public class BlackJackTest {
         round.initialize();
         round.startTurn();
 
-        Player player = round.players().get(0);
+        Participants participants = round.getParticipants();
+        PlayerGroup players = participants.getPlayers();
+        Player player = players.get(0);
         player.setCredit(100);
         player.bet(10);
 

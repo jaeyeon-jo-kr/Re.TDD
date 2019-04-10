@@ -3,7 +3,9 @@ package com.jocatelo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jocatelo.character.Dealer;
+import com.jocatelo.character.Participants;
 import com.jocatelo.character.Player;
+import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.player.PlayerCommand;
 
@@ -16,9 +18,11 @@ public class ResultTest {
         Round round = Round.of().setPlayerNumber(1).setAutomaticDistribute(false);
         round.initialize();
         round.startTurn();
+        Participants participants = round.getParticipants();
+        PlayerGroup players = participants.getPlayers();
 
-        Player player = round.getPlayer(0);
-        Dealer dealer = round.dealer();
+        Player player = players.get(0);
+        Dealer dealer = participants.getDealer();
 
         dealer.addCard(Card.clover(10));
         dealer.addCard(Card.clover(10));
@@ -27,7 +31,7 @@ public class ResultTest {
         player.addCard(Card.clover(1));
         
         player.setCommand(PlayerCommand.STAND);
-        player.execute();
+        round.executeAll();
 
         round.updateAllStatus();        
         round.endTurn();
@@ -42,8 +46,11 @@ public class ResultTest {
         round.initialize();
         round.startTurn();
 
-        Player player = round.getPlayer(0);
-        Dealer dealer = round.dealer();
+        Participants participants = round.getParticipants();
+        PlayerGroup players = participants.getPlayers();
+
+        Player player = players.get(0);
+        Dealer dealer = participants.getDealer();
 
         dealer.addCard(Card.clover(10));
         dealer.addCard(Card.clover(1));
@@ -52,7 +59,7 @@ public class ResultTest {
         player.addCard(Card.clover(10));
         
         player.setCommand(PlayerCommand.STAND);
-        player.execute();
+        round.executeAll();
 
         round.updateAllStatus();        
         round.endTurn();
@@ -68,8 +75,11 @@ public class ResultTest {
         round.initialize();
         round.startTurn();
 
-        Player player = round.getPlayer(0);
-        Dealer dealer = round.dealer();
+        Participants participants = round.getParticipants();
+        PlayerGroup players = participants.getPlayers();
+
+        Player player = players.get(0);
+        Dealer dealer = participants.getDealer();
 
         dealer.addCard(Card.clover(10));
         dealer.addCard(Card.clover(1));
@@ -78,7 +88,7 @@ public class ResultTest {
         player.addCard(Card.clover(1));
         
         player.setCommand(PlayerCommand.STAND);
-        player.execute();
+        round.executeAll();
 
         round.updateAllStatus();        
         round.endTurn();
@@ -93,8 +103,11 @@ public class ResultTest {
         round.initialize();
         round.startTurn();
 
-        Player player = round.getPlayer(0);
-        Dealer dealer = round.dealer();
+        Participants participants = round.getParticipants();
+        PlayerGroup players = participants.getPlayers();
+
+        Player player = players.get(0);
+        Dealer dealer = participants.getDealer();
 
         dealer.addCard(Card.clover(10));
         dealer.addCard(Card.clover(9));
@@ -103,7 +116,8 @@ public class ResultTest {
         player.addCard(Card.clover(9));
         
         player.setCommand(PlayerCommand.STAND);
-        player.execute();
+        round.executeAll();
+
 
         round.updateAllStatus();        
         round.endTurn();

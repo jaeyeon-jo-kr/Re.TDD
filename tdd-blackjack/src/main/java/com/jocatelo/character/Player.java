@@ -2,6 +2,7 @@ package com.jocatelo.character;
 
 import java.util.List;
 
+import com.jocatelo.Drawable;
 import com.jocatelo.InvalidValueException;
 import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.player.PlayerCommand;
@@ -70,7 +71,8 @@ public class Player extends User implements Playable, Commandable {
         return (int)(bet * winStatus.getRate());        
     }
 
-    public void execute(){
+    @Override
+    public void execute(Drawable drawer){
         command.execute(drawer, this);
     }
 

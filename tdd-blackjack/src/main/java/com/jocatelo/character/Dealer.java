@@ -1,5 +1,6 @@
 package com.jocatelo.character;
 
+import com.jocatelo.Drawable;
 import com.jocatelo.rule.dealer.DealerCommand;
 import com.jocatelo.rule.dealer.DealerStatus;
 
@@ -40,7 +41,7 @@ public class Dealer extends User implements Playable, Commandable {
     }
 
     @Override
-    public void execute() {
+    public void execute(Drawable drawer) {
         DealerCommand command = DealerCommand.getAvailable(this);
         command.execute(drawer, this);
     }

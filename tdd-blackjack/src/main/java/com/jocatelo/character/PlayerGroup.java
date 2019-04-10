@@ -32,6 +32,11 @@ public class PlayerGroup {
         players.add(player);
     }
 
+    public Player get(int index)
+    {
+        return players.get(0);
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }

@@ -4,6 +4,7 @@ package com.jocatelo;
 import java.util.List;
 
 import com.jocatelo.character.Dealer;
+import com.jocatelo.character.Participants;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.rule.WinStatus;
@@ -14,21 +15,21 @@ import com.jocatelo.rule.player.PlayerCommand;
 import com.jocatelo.rule.player.PlayingStatus;
 import com.jocatelo.turn.Turns;
 
-public class Round {
-    private PlayerGroup players;
-    private Dealer dealer;
+import lombok.Getter;
+
+public class Round {    
     private Turns turns;
     private CardDeck deck;
     private GameOption option;
+    @Getter
+    private Participants participants;
 
     private Round() {
         deck = new CardDeck();        
-        dealer = Dealer.of();         
+        participants = Participants.of();
         deck.initialize();
-        option = GameOption.of();
-        players = PlayerGroup.of();
+        option = GameOption.of();        
         turns = Turns.of();
-    
     }
 
     public static Round of() {
@@ -37,7 +38,7 @@ public class Round {
 
     public Dealer dealer()
     {
-        return dealer;
+        return participants.getDealer();
     }
 
     public Round setPlayerGeneration(boolean ok){
@@ -51,7 +52,7 @@ public class Round {
     }
     public Round setPlayerNumber(int number)
     {
-        players = PlayerGroup.of(number);
+        participants.setPlayerNumber(number);
         return this;
     }
 
@@ -60,14 +61,14 @@ public class Round {
         if(option.isShuffle())
             shuffle();
 
-        players.getPlayers().forEach(player -> player.setDrawer(deck));
-        dealer.setDrawer(deck);
+        //players.getPlayers().forEach(player -> player.setDrawer(deck));
+        //dealer.setDrawer(deck);
     }    
 
     public void initialize() throws Exception
     {
         if(option.isAutomaticGeneratePlayer())  
-            players.createPlayers();
+            participants.createPlayers();
 
         initializeDeck();
             
@@ -84,13 +85,7 @@ public class Round {
      * At the round of initial, players must have two cards.
      */
     public Round distribute() {
-        players.getPlayers().stream().forEach(player -> {
-            player.addCard(deck.popCard());
-            player.addCard(deck.popCard());
-        });        
-        
-        dealer.addCard(deck.popCard());
-        dealer.addCard(deck.popCard());
+        participants.distributeCards(deck);
         return this;
     }
 
@@ -99,16 +94,15 @@ public class Round {
         turns.start();
     }
 
+    
     public void executeAll()
     {
-        players.getPlayers().forEach(player -> player.execute());
-        dealer.execute();
+        participants.executeAll(deck);
     }    
 
     public void updateAllStatus() throws Exception
     {
-        players.getPlayers().forEach(player -> player.updateStatus());
-        dealer.updateStatus();
+        participants.updateAllStatus();
     }
 
     public void endTurn(){
@@ -116,22 +110,8 @@ public class Round {
     } 
     public void endGame()
     {
-        players.getPlayers().forEach((Player player) -> {            
-            Finalyzable finalyzable = FinalyzerFactory.create(player);
-            WinStatus winStatus = finalyzable.finalizeStatus(dealer);
-            player.setWinStatus(winStatus);
-        }
-        );
-    }
-    public List<Player> players()
-    {
-        return players.getPlayers();
-    }
-
-    public Player getPlayer(int index)
-    {
-        return players.getPlayers().get(index);
-    }
+        participants.endGame();
+    }    
 
     public void setCommand(Player player, PlayerCommand command) {
         player.setCommand(command);
@@ -141,11 +121,7 @@ public class Round {
         return player.getCommand();
     }
     public boolean isOver() {        
-        boolean isplaying = dealer.getStatus() == DealerStatus.PLAYING;
-        for (Player player : players()) {
-            isplaying = (player.getStatus() == PlayingStatus.PLAYING);
-        }
-        return isplaying;
+        return participants.isOver();
     }
 
     public WinStatus getWinStatus(Player player)

@@ -9,7 +9,9 @@ import java.util.List;
 
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Hands;
+import com.jocatelo.character.Participants;
 import com.jocatelo.character.Player;
+import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.rule.dealer.DealerCommand;
 import com.jocatelo.rule.player.PlayerCommand;
 
@@ -100,7 +102,10 @@ public class CommandTest {
         
         round.startTurn();
 
-        Player player = round.players().get(0);
+        Participants participants = round.getParticipants();
+        PlayerGroup players = participants.getPlayers();
+
+        Player player = players.get(0);
 
         player.setCredit(10000);
         player.bet(1000);

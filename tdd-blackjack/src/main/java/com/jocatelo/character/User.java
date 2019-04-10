@@ -11,7 +11,7 @@ import lombok.Data;
 public abstract class User {
     protected Hands hands;    
     protected String name;
-    protected Drawable drawer; 
+    
 
     protected User() {
         hands = Hands.of();
