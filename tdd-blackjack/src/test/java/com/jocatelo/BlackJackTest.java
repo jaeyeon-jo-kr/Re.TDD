@@ -64,6 +64,7 @@ public class BlackJackTest {
         player.updateStatus();
 
         round.endTurn();
+        
 
         assertThat("Player의 점수는 21이어야 한다.", player.getScore(), equalTo(21));
         assertThat("Player의 상태는 21이어야 한다.", player.getStatus(), equalTo(PlayingStatus.BLACKJACK));        

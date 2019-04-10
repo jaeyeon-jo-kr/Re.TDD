@@ -19,13 +19,13 @@ public class Round {
     private Dealer dealer;
     private Turns turns;
     private CardDeck deck;
-    private Option option;
+    private GameOption option;
 
     private Round() {
         deck = new CardDeck();        
-        this.dealer = Dealer.of();         
+        dealer = Dealer.of();         
         deck.initialize();
-        option = Option.of();
+        option = GameOption.of();
         players = PlayerGroup.of();
         turns = Turns.of();
     
@@ -37,7 +37,7 @@ public class Round {
 
     public Dealer dealer()
     {
-        return this.dealer;
+        return dealer;
     }
 
     public Round setPlayerGeneration(boolean ok){

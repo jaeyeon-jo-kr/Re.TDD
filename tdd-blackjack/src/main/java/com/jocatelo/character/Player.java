@@ -35,6 +35,7 @@ public class Player extends User implements Playable, Commandable {
         credit = 0;
         bet = 0;
         status = PlayingStatus.PLAYING;
+        winStatus = winStatus.NONE;
     }
 
     /**

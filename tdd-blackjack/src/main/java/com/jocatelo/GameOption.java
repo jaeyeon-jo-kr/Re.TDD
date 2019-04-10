@@ -3,18 +3,18 @@ package com.jocatelo;
 import lombok.Data;
 
 @Data
-public class Option {
+public class GameOption {
     private boolean shuffle;
     private boolean automaticGeneratePlayer;
     //Card is distributed manually
     private boolean automaticDistribute;
 
-    private Option(){
+    private GameOption(){
         shuffle = true;
         automaticGeneratePlayer = true;
         automaticDistribute = true;
     }
-    public static Option of(){
-        return new Option();
+    public static GameOption of(){
+        return new GameOption();
     }
 }
