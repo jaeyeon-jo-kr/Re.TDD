@@ -6,6 +6,11 @@ import java.util.Calendar;
 import java.util.Queue;
 import java.util.Random;
 
+import com.jocatelo.character.Commandable;
+import com.jocatelo.character.Dealer;
+import com.jocatelo.character.Participants;
+import com.jocatelo.character.PlayerGroup;
+
 public class CardDeck implements Drawable {
     final private Queue<Card> cardQueue;
     final private int TOTAL_COUNT = 13 * 4;
@@ -26,25 +31,49 @@ public class CardDeck implements Drawable {
                 Card card = Card.of(cardNumber, cardType);
                 cardQueue.add(card);
             }
-        }        
+        }
     }
 
-    public void shuffle(){
+    public void shuffle() {
         Card array[] = cardQueue.toArray(new Card[cardQueue.size()]);
-        Random random = new Random(Calendar.getInstance().getTimeInMillis());                
-        
-        for(int i=0;i<TOTAL_COUNT;i++){
-            int randomIndex = Math.abs(random.nextInt()) % cardQueue.size();            
+        Random random = new Random(Calendar.getInstance().getTimeInMillis());
+
+        for (int i = 0; i < TOTAL_COUNT; i++) {
+            int randomIndex = Math.abs(random.nextInt()) % cardQueue.size();
             swapCard(array[i], array[randomIndex]);
         }
         cardQueue.clear();
         cardQueue.addAll(Arrays.asList(array));
-        
+
     }
 
-    private void swapCard(Card first, Card second){
+    private void swapCard(Card first, Card second) {
         Card temp = first;
         first = second;
         second = temp;
+    }
+
+    private void distributeToPlayers(PlayerGroup players)
+    {
+        players.getPlayers().stream().forEach(player -> {
+            player.addCard(popCard());
+            player.addCard(popCard());
+        });
+    }
+
+    private void distributeToDealer(Dealer dealer){
+        dealer.addCard(popCard());
+        dealer.addCard(popCard());
+    }   
+
+    @Override
+    public void distributeCard(Participants participants) {
+        distributeToPlayers(participants.getPlayers());
+        distributeToDealer(participants.getDealer());        
+    }
+
+    @Override
+    public void execute(Commandable player) {
+
     }
 }

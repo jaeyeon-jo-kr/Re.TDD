@@ -78,21 +78,18 @@ public class Round {
      * At the round of initial, players must have two cards.
      */
     public Round distribute() {
-        participants.distributeCards(deck);
+        deck.distributeCard(participants);
         return this;
     }
-
-    public void startTurn()
-    {
-        turns.start();
-    }
-
-    
     public void executeAll()
     {
         participants.executeAll(deck);
     }    
 
+    public void startTurn()
+    {
+        turns.start();
+    }
     public void updateAllStatus() throws Exception
     {
         participants.updateAllStatus();

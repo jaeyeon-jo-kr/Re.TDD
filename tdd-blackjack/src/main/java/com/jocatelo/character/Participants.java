@@ -35,15 +35,6 @@ public class Participants{
         players.createPlayers();
     }
 
-    public void distributeCards(Drawable draw){
-        players.getPlayers().stream().forEach(player -> {
-            player.addCard(draw.popCard());
-            player.addCard(draw.popCard());
-        });        
-        dealer.addCard(draw.popCard());
-        dealer.addCard(draw.popCard());
-    }
-
     public void executeAll(Drawable drawable)
     {
         players.getPlayers().forEach(player -> player.execute(drawable));
