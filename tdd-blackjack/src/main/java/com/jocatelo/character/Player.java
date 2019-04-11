@@ -78,6 +78,20 @@ public class Player extends User implements Playable, Commandable {
 
     public List<PlayerCommand> getAvailableCommands() {
         return PlayerCommand.getAvailable(this);
-    }    
+    }  
+
+    public void transaction(Drawable drawer, PlayerCommand input)
+    {
+        Player player = this;
+        Thread thread = new Thread(new Runnable(){
+        
+            @Override
+            public void run() {
+                input.execute(drawer, player);
+            }
+        });
+        thread.start();
+        
+    }
    
 }

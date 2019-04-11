@@ -108,9 +108,9 @@ public class CommandTest {
         Player player = players.get(0);
 
         player.setCredit(10000);
-        player.bet(1000);
+        player.bet(1000);        
         
-        round.setCommand(player, PlayerCommand.HIT);
+        player.setCommand(PlayerCommand.HIT);
 
         Hands hands = player.getHands();
         assertEquals(2, hands.getCardCount());

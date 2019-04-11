@@ -13,6 +13,7 @@ import lombok.Getter;
 
 public class Round {    
     private Turns turns;
+    @Getter
     private CardDeck deck;
     private GameOption option;
     @Getter
@@ -91,7 +92,7 @@ public class Round {
     {
         turns.newTurn();
         Turn turn = turns.getCurrent();
-        turn.start();
+        turn.start(participants.getPlayers());
     }
     public void updateAllStatus() throws Exception
     {

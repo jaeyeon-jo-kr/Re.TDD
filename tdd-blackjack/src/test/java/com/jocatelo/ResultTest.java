@@ -96,8 +96,9 @@ public class ResultTest {
         player.addCard(Card.clover(10));
         player.addCard(Card.clover(9));
         
-        player.setCommand(PlayerCommand.STAND);
-        round.executeAll();
+        //player.setCommand(PlayerCommand.STAND);
+        //round.executeAll();
+        player.transaction(round.getDeck(), PlayerCommand.STAND);
 
 
         round.updateAllStatus();        
