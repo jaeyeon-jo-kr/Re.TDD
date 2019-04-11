@@ -17,7 +17,19 @@ public class Turn {
     {
         return new Turn();
     }    
+    public void start()
+    {
+        
+    }
+
+    
+
+    public void end()
+    {
+        
+    }
     public void add(Commandable commandable, Command command){
         userCommands.put(commandable, command);
     }
+   
 }

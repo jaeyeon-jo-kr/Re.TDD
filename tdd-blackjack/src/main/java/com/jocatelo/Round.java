@@ -6,6 +6,7 @@ import com.jocatelo.character.Participants;
 import com.jocatelo.character.Player;
 import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.player.PlayerCommand;
+import com.jocatelo.turn.Turn;
 import com.jocatelo.turn.Turns;
 
 import lombok.Getter;
@@ -88,7 +89,9 @@ public class Round {
 
     public void startTurn()
     {
-        turns.start();
+        turns.newTurn();
+        Turn turn = turns.getCurrent();
+        turn.start();
     }
     public void updateAllStatus() throws Exception
     {
@@ -96,7 +99,8 @@ public class Round {
     }
 
     public void endTurn(){
-        turns.end();
+        Turn turn = turns.getCurrent();
+        turn.end();
     } 
     public void endGame()
     {

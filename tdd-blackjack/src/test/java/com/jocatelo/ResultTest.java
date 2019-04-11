@@ -37,7 +37,7 @@ public class ResultTest {
         round.endTurn();
         round.endGame();
 
-        assertThat(WinStatus.BLACKJACK_WIN).isEqualTo(round.getWinStatus(player));
+        assertThat(WinStatus.BLACKJACK_WIN).isEqualTo(player.getWinStatus());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ResultTest {
         round.endTurn();
         round.endGame();
 
-        assertThat(WinStatus.LOSE).isEqualTo(round.getWinStatus(player));
+        assertThat(WinStatus.LOSE).isEqualTo(player.getWinStatus());
 
     }
 
@@ -94,7 +94,7 @@ public class ResultTest {
         round.endTurn();
         round.endGame();
 
-        assertThat(WinStatus.PUSH).isEqualTo(round.getWinStatus(player));
+        assertThat(WinStatus.PUSH).isEqualTo(player.getWinStatus());
     }
 
     @Test
@@ -123,6 +123,6 @@ public class ResultTest {
         round.endTurn();
         round.endGame();
 
-        assertThat(WinStatus.DRAW).isEqualTo(round.getWinStatus(player));
+        assertThat(WinStatus.DRAW).isEqualTo(player.getWinStatus());
     }
 }

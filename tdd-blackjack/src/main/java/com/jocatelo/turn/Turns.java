@@ -6,9 +6,12 @@ import java.util.List;
 import com.jocatelo.character.Commandable;
 import com.jocatelo.rule.Command;
 
+import lombok.Getter;
+
 public class Turns {
     
     private List<Turn> turns;
+    @Getter
     private Turn current;
 
     private Turns() {
@@ -20,13 +23,9 @@ public class Turns {
         return new Turns();
     }
 
-    public void start()
+    public void newTurn()
     {
         current = Turn.of();
-    }
-
-    public void end()
-    {
         turns.add(current);
     }
 
@@ -34,8 +33,4 @@ public class Turns {
         current.add(commandable, command);
         
     }
-
-
-    
-    
 }

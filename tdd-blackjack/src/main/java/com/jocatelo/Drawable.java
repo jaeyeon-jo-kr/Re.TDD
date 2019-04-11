@@ -8,5 +8,4 @@ public interface Drawable {
     public Card popCard();
     public void distributeCard(Participants particpants);
     public void execute(Commandable player);
-    
 }
