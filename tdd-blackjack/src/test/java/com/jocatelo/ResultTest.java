@@ -9,21 +9,32 @@ import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.player.PlayerCommand;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class ResultTest {
 
-    @Test
-    public void winningTest() throws Exception {
-        Round round = Round.of().setPlayerNumber(1).setAutomaticDistribute(false);
+    Round round;
+    Dealer dealer;
+    Player player;
+    
+
+    @Before
+    public void BeforeTest() throws Exception
+    {
+        round = Round.of().setPlayerNumber(1).setAutomaticDistribute(false);
         round.initialize();
         round.startTurn();
         Participants participants = round.getParticipants();
         PlayerGroup players = participants.getPlayers();
 
-        Player player = players.get(0);
-        Dealer dealer = participants.getDealer();
+        player = players.get(0);
+        dealer = participants.getDealer();
 
+    }
+
+    @Test
+    public void winningTest() throws Exception {
         dealer.addCard(Card.clover(10));
         dealer.addCard(Card.clover(10));
 
@@ -42,16 +53,6 @@ public class ResultTest {
 
     @Test
     public void losingTest() throws Exception {
-        Round round = Round.of().setPlayerNumber(1).setAutomaticDistribute(false);
-        round.initialize();
-        round.startTurn();
-
-        Participants participants = round.getParticipants();
-        PlayerGroup players = participants.getPlayers();
-
-        Player player = players.get(0);
-        Dealer dealer = participants.getDealer();
-
         dealer.addCard(Card.clover(10));
         dealer.addCard(Card.clover(1));
 
@@ -70,17 +71,7 @@ public class ResultTest {
     }
 
     @Test
-    public void pushTest() throws Exception {
-        Round round = Round.of().setPlayerNumber(1).setAutomaticDistribute(false);
-        round.initialize();
-        round.startTurn();
-
-        Participants participants = round.getParticipants();
-        PlayerGroup players = participants.getPlayers();
-
-        Player player = players.get(0);
-        Dealer dealer = participants.getDealer();
-
+    public void pushTest() throws Exception {        
         dealer.addCard(Card.clover(10));
         dealer.addCard(Card.clover(1));
 
@@ -99,16 +90,6 @@ public class ResultTest {
 
     @Test
     public void drawTest() throws Exception {
-        Round round = Round.of().setPlayerNumber(1).setAutomaticDistribute(false);
-        round.initialize();
-        round.startTurn();
-
-        Participants participants = round.getParticipants();
-        PlayerGroup players = participants.getPlayers();
-
-        Player player = players.get(0);
-        Dealer dealer = participants.getDealer();
-
         dealer.addCard(Card.clover(10));
         dealer.addCard(Card.clover(9));
 

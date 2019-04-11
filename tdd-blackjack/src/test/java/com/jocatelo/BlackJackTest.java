@@ -10,9 +10,18 @@ import com.jocatelo.character.Player;
 import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.rule.player.PlayingStatus;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class BlackJackTest {
+
+    
+    @Before
+    public void initialize(){
+
+    }
+
     @Test
     public void distribute2Card() throws Exception {
         Round round = Round.of().setPlayerNumber(8);
@@ -76,7 +85,7 @@ public class BlackJackTest {
         assertThat("Player의 점수는 21이어야 한다.", player.getScore(), equalTo(21));
         assertThat("Player의 상태는 21이어야 한다.", player.getStatus(), equalTo(PlayingStatus.BLACKJACK));        
         round.endGame();
-        assertThat("Player가 되돌려받는 돈은 25이어야 한다.", round.getWinningCredit(player), equalTo(25));
+        assertThat("Player가 되돌려받는 돈은 25이어야 한다.", player.getWinningCredit(), equalTo(25));
 
     }
 

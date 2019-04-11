@@ -118,15 +118,8 @@ public class Round {
         return participants.isOver();
     }
 
-    public WinStatus getWinStatus(Player player)
-    {
-        return player.getWinStatus();
-    }
-
-	public Object getWinningCredit(Player player) {
-        return player.getWinningCredit();
-	}
-
+    
+	
     
 
 }
