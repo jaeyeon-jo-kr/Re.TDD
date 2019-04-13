@@ -8,10 +8,9 @@ import com.jocatelo.character.Hands;
 import com.jocatelo.character.Participants;
 import com.jocatelo.character.Player;
 import com.jocatelo.character.PlayerGroup;
-import com.jocatelo.rule.player.PlayingStatus;
+import com.jocatelo.rule.player.status.PlayerStatus;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class BlackJackTest {
@@ -43,7 +42,7 @@ public class BlackJackTest {
     public void bustStatus() throws Exception
     {
         Player player = Player.of("Player");
-        player.setStatus(PlayingStatus.PLAYING);
+        player.setStatus(PlayerStatus.PLAYING);
 
         Hands hands = player.getHands();
         hands.add(Card.clover(10));
@@ -52,7 +51,7 @@ public class BlackJackTest {
         
         player.updateStatus();
 
-        assertThat("Player must be bust.", player.getStatus(),equalTo(PlayingStatus.BUST));
+        assertThat("Player must be bust.", player.getStatus(),equalTo(PlayerStatus.BUST));
 
     }
 
@@ -73,7 +72,7 @@ public class BlackJackTest {
         player.bet(10);
 
         Hands hands = player.getHands();
-        player.setStatus(PlayingStatus.PLAYING);
+        player.setStatus(PlayerStatus.PLAYING);
         hands.add(Card.clover(1));
         hands.add(Card.clover(10));
         
@@ -83,7 +82,7 @@ public class BlackJackTest {
         
 
         assertThat("Player의 점수는 21이어야 한다.", player.getScore(), equalTo(21));
-        assertThat("Player의 상태는 21이어야 한다.", player.getStatus(), equalTo(PlayingStatus.BLACKJACK));        
+        assertThat("Player의 상태는 21이어야 한다.", player.getStatus(), equalTo(PlayerStatus.BLACKJACK));        
         round.endGame();
         assertThat("Player가 되돌려받는 돈은 25이어야 한다.", player.getWinningCredit(), equalTo(25));
 

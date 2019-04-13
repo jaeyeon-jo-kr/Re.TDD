@@ -6,7 +6,7 @@ import com.jocatelo.Drawable;
 import com.jocatelo.InvalidValueException;
 import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.player.PlayerCommand;
-import com.jocatelo.rule.player.PlayingStatus;
+import com.jocatelo.rule.player.status.PlayerStatus;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +21,7 @@ public class Player extends User implements Playable, Commandable {
 
     @Getter
     @Setter
-    private PlayingStatus status;
+    private PlayerStatus status;
 
     @Getter
     @Setter
@@ -35,8 +35,8 @@ public class Player extends User implements Playable, Commandable {
         this.name = name;
         credit = 0;
         bet = 0;
-        status = PlayingStatus.PLAYING;
-        winStatus = winStatus.NONE;
+        status = PlayerStatus.PLAYING;
+        winStatus = WinStatus.NONE;
     }
 
     /**

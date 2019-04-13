@@ -4,7 +4,6 @@ package com.jocatelo;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Participants;
 import com.jocatelo.character.Player;
-import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.player.PlayerCommand;
 import com.jocatelo.turn.Turn;
 import com.jocatelo.turn.Turns;

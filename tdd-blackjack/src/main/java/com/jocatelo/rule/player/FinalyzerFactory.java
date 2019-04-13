@@ -4,6 +4,7 @@ import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Player;
 import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.dealer.DealerStatus;
+import com.jocatelo.rule.player.status.PlayerStatus;
 
 public abstract class FinalyzerFactory {
 
@@ -11,7 +12,7 @@ public abstract class FinalyzerFactory {
     static public Finalyzable create(Player player)
     {
         
-        PlayingStatus status = player.getStatus();
+        PlayerStatus status = player.getStatus();
         switch(status)
         {
             case STAND:
@@ -38,7 +39,6 @@ public abstract class FinalyzerFactory {
             {
                 if(dealer.getStatus() == DealerStatus.BLACKJACK)
                     return WinStatus.PUSH;
-
                 return WinStatus.BLACKJACK_WIN;
             };
             

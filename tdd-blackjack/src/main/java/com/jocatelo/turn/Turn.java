@@ -1,7 +1,5 @@
 package com.jocatelo.turn;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import com.jocatelo.character.Commandable;
 import com.jocatelo.character.PlayerGroup;

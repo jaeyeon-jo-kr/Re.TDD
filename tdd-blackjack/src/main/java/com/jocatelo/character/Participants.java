@@ -5,7 +5,7 @@ import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.dealer.DealerStatus;
 import com.jocatelo.rule.player.Finalyzable;
 import com.jocatelo.rule.player.FinalyzerFactory;
-import com.jocatelo.rule.player.PlayingStatus;
+import com.jocatelo.rule.player.status.PlayerStatus;
 
 import lombok.Getter;
 
@@ -61,7 +61,7 @@ public class Participants{
     {
         boolean isplaying = dealer.getStatus() == DealerStatus.PLAYING;
         for (Player player : players.getPlayers()) {
-            isplaying = (player.getStatus() == PlayingStatus.PLAYING);
+            isplaying = (player.getStatus() == PlayerStatus.PLAYING);
         }
         return isplaying;
     }

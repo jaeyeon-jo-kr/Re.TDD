@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import com.jocatelo.Card;
-import com.jocatelo.rule.ScoreCalculator;
-
-import lombok.Getter;
 
 public class Hands {
     private List<Card> hands;

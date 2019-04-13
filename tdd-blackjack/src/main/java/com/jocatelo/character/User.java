@@ -1,10 +1,6 @@
 package com.jocatelo.character;
 
-import java.util.ArrayList;
-
 import com.jocatelo.Card;
-import com.jocatelo.Drawable;
-import com.jocatelo.Round;
 
 import lombok.Data;
 @Data

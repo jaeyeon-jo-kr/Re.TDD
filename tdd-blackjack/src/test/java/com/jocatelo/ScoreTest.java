@@ -1,12 +1,8 @@
 package com.jocatelo;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 import com.jocatelo.character.Hands;
-import com.jocatelo.character.Playable;
 import com.jocatelo.character.Player;
-import com.jocatelo.character.User;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.*;

@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.jocatelo.Card;
 import com.jocatelo.Drawable;
-import com.jocatelo.Round;
 import com.jocatelo.character.Player;
 import com.jocatelo.rule.Command;
+import com.jocatelo.rule.player.status.*;
 
 
 public enum PlayerCommand implements Command {
@@ -18,7 +18,7 @@ public enum PlayerCommand implements Command {
     
     SURRENDER("SURRENDER"){
         public void execute(Drawable drawable, Player player) {
-            player.setStatus(PlayingStatus.SURRENDER);
+            player.setStatus(PlayerStatus.SURRENDER);
         }
     },    
     HIT("HIT"){

@@ -4,17 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.jocatelo.character.Commandable;
-import com.jocatelo.character.Dealer;
-import com.jocatelo.character.Participants;
-import com.jocatelo.character.Player;
 import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.rule.Command;
-import com.jocatelo.rule.WinStatus;
-import com.jocatelo.rule.player.PlayerCommand;
-import com.jocatelo.turn.Turn;
-import com.jocatelo.turn.Turns;
 
-import lombok.Getter;
 import lombok.Setter;
 
 public class PlayingPhase implements Runnable{

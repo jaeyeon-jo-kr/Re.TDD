@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import com.jocatelo.InvalidValueException;
-
 public class PlayerGroup {
     private List<Player> players;
     private int number;

@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import com.jocatelo.Card;
 import com.jocatelo.character.Hands;
-import com.jocatelo.character.User;
 
 public class ScoreCalculator {
 
