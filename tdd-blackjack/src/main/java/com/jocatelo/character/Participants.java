@@ -3,8 +3,8 @@ package com.jocatelo.character;
 import com.jocatelo.Drawable;
 import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.dealer.DealerStatus;
-import com.jocatelo.rule.player.Finalyzable;
-import com.jocatelo.rule.player.FinalyzerFactory;
+import com.jocatelo.rule.player.win.Finalyzable;
+import com.jocatelo.rule.player.win.FinalyzerFactory;
 import com.jocatelo.rule.player.status.PlayerStatus;
 
 import lombok.Getter;

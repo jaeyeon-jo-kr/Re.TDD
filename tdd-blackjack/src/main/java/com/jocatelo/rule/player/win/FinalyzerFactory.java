@@ -1,4 +1,4 @@
-package com.jocatelo.rule.player;
+package com.jocatelo.rule.player.win;
 
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Player;
