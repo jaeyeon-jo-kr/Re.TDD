@@ -5,6 +5,7 @@ import com.jocatelo.Card;
 import lombok.Data;
 @Data
 public abstract class User {
+    
     protected Hands hands;    
     protected String name;
     
@@ -20,8 +21,6 @@ public abstract class User {
 
     public int getScore()
     {
-        Score score = Score.of();
-        score.update(hands);
-        return score.getScore();
+        return hands.getScore();
     }
 }

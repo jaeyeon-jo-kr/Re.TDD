@@ -5,16 +5,35 @@ import java.util.Collections;
 import java.util.List;
 
 import com.jocatelo.Card;
+import com.jocatelo.rule.ScoreCalculator;
+
+import lombok.Getter;
 
 public class Hands {
-    private List<Card> hands;
+    public class Score {
+        @Getter
+        int score = 0;
 
-    private Hands(){
-        this.hands = new ArrayList<>();        
+        public Score() {
+            score = 0;
+        }
+
+        
+
+        public void update(Hands hands) {
+            ScoreCalculator calculator = ScoreCalculator.of(hands);
+            score = calculator.calculate();
+        }
+
     }
 
-    public static Hands of()
-    {
+    private List<Card> hands;
+
+    private Hands() {
+        this.hands = new ArrayList<>();
+    }
+
+    public static Hands of() {
         return new Hands();
     }
 
@@ -27,7 +46,14 @@ public class Hands {
     }
 
     public void add(Card card) {
-        hands.add(card);        
+        hands.add(card);
     }
-    
+
+    public int getScore()
+    {
+        Score score = new Score();
+        score.update(this);
+        return score.getScore();
+    }
+
 }
