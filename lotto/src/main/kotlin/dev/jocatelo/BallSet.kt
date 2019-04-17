@@ -1,5 +1,3 @@
 package dev.jocatelo
 
-interface BallSet {
-    val number:Int
-}
+interface BallSet : Set<Int>
