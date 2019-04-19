@@ -1,5 +1,6 @@
 
 
+import dev.jocatelo.BallSet
 import dev.jocatelo.BallsGenerator
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -7,8 +8,7 @@ import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.hamcrest.Matchers.lessThanOrEqualTo
 
 import org.junit.Test
-import java.util.*
-import kotlin.random.Random
+import kotlin.collections.ArrayList
 
 class TestLotto {
     //랜덤넘버 6개를 생성한다
@@ -24,19 +24,19 @@ class TestLotto {
         }
     }
 
-    // 랜덤넘버를 생성한다
+    // 중복되지 않는 랜덤넘버를 생성한다
     @Test
     fun createRandomNumber()
     {
-        val seed = 1000L
+
         val generator = BallsGenerator()
-        val ballSet:Set<Int> = generator.generateBalls(seed)
+        val ballSet = generator.generateBalls()
+        val testSet:ArrayList<Int> = ArrayList()
 
-        val testSet = hashSetOf<Int>()
-        val random = Random(seed)
-        repeat(6 ){ testSet.add(random.nextInt(1, 45)) }
-
-        assertThat(ballSet.toList(), equalTo(testSet.toList()))
+        for(item in ballSet.iterator()){
+            assertThat(testSet.toList(), not(hasItem(item)))
+            testSet.add(item)
+        }
     }
 
     //1에서 45까지의 넘버를 생성한다.
@@ -52,5 +52,15 @@ class TestLotto {
                 everyItem(allOf(greaterThanOrEqualTo(1), lessThanOrEqualTo(45)))
             )
         }
+    }
+
+    //당첨 번호 조합은 1세트이다.
+    @Test
+    fun winningNumbers()
+    {
+        val generator = BallsGenerator()
+        val winningNumbers:BallSet = generator.generateBalls()
+
+        assertThat(winningNumbers, not(nullValue()))
     }
 }
