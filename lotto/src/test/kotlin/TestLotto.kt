@@ -1,6 +1,11 @@
+
+
 import dev.jocatelo.BallsGenerator
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.greaterThanOrEqualTo
+import org.hamcrest.Matchers.lessThanOrEqualTo
+
 import org.junit.Test
 import java.util.*
 import kotlin.random.Random
@@ -19,7 +24,7 @@ class TestLotto {
         }
     }
 
-    //1에서 45까지의 랜덤넘버를 생성한다
+    // 랜덤넘버를 생성한다
     @Test
     fun createRandomNumber()
     {
@@ -27,13 +32,25 @@ class TestLotto {
         val generator = BallsGenerator()
         val ballSet:Set<Int> = generator.generateBalls(seed)
 
-        var testSet = hashSetOf<Int>()
+        val testSet = hashSetOf<Int>()
         val random = Random(seed)
         repeat(6 ){ testSet.add(random.nextInt(1, 45)) }
 
-        //assertThat(Arrays.asList("1,2,3"), hasItems(testSet.))
         assertThat(ballSet.toList(), equalTo(testSet.toList()))
     }
 
-
+    //1에서 45까지의 넘버를 생성한다.
+    @Test
+    fun createNumberRange()
+    {
+        repeat(1000)
+        {
+            val generator = BallsGenerator()
+            val ballSet: Set<Int> = generator.generateBalls()
+            assertThat(
+                ballSet.toList(),
+                everyItem(allOf(greaterThanOrEqualTo(1), lessThanOrEqualTo(45)))
+            )
+        }
+    }
 }
