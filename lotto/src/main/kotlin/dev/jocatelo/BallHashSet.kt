@@ -1,18 +1,18 @@
 package dev.jocatelo
 
 
-class BallHashSet : BallSet {
-    private val ballHashSet = hashSetOf<Int>()
+class BallHashSet : Balls {
+    private val ballHashSet = hashSetOf<Ball>()
 
     override val size: Int
         get() = ballHashSet.size
 
 
-    override fun contains(element: Int): Boolean {
+    override fun contains(element: Ball): Boolean {
         return ballHashSet.contains(element)
     }
 
-    override fun containsAll(elements: Collection<Int>): Boolean {
+    override fun containsAll(elements: Collection<Ball>): Boolean {
         return ballHashSet.containsAll(elements)
     }
 
@@ -20,11 +20,11 @@ class BallHashSet : BallSet {
         return ballHashSet.isEmpty()
     }
 
-    override fun iterator(): Iterator<Int> {
+    override fun iterator(): Iterator<Ball> {
         return ballHashSet.iterator()
     }
 
-    fun add(number: Int) {
+    fun add(number: Ball) {
         ballHashSet.add(number)
     }
 }

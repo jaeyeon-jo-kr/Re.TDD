@@ -30,7 +30,7 @@ class TestLotto {
 
         val generator = BallsGenerator()
         val ballSet = generator.generateBalls()
-        val testSet:ArrayList<Int> = ArrayList()
+        val testSet:ArrayList<Ball> = ArrayList()
 
         for(item in ballSet.iterator()){
             assertThat(testSet.toList(), not(hasItem(item)))
@@ -45,7 +45,7 @@ class TestLotto {
         repeat(1000)
         {
             val generator = BallsGenerator()
-            val ballSet: BallSet = generator.generateBalls()
+            val ballSet: Balls = generator.generateBalls()
             assertThat(
                 ballSet.toList(),
                 everyItem(allOf(greaterThanOrEqualTo(1), lessThanOrEqualTo(45)))
@@ -67,10 +67,13 @@ class TestLotto {
     @Test
     fun bonusNumberIsNotDuplicated()
     {
-        val generator = WinningBallsGenerator()
-        val winningNumbers: WinningBalls = generator.generateBalls()
+        repeat(1000)
+        {
+            val generator = WinningBallsGenerator()
+            val winningNumbers: WinningBalls = generator.generateBalls()
 
-        assertThat(winningNumbers, not(hasItem(winningNumbers.getBonusBall())))
+            assertThat(winningNumbers, not(hasItem(winningNumbers.bonus)))
+        }
     }
 
 }
