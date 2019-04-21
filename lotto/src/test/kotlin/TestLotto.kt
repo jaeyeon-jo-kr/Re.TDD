@@ -1,9 +1,6 @@
 
 
-import dev.jocatelo.BallSet
-import dev.jocatelo.BallsGenerator
-import dev.jocatelo.WinningBallSet
-import dev.jocatelo.WinningBallsGenerator
+import dev.jocatelo.*
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThanOrEqualTo
@@ -48,7 +45,7 @@ class TestLotto {
         repeat(1000)
         {
             val generator = BallsGenerator()
-            val ballSet: Set<Int> = generator.generateBalls()
+            val ballSet: BallSet = generator.generateBalls()
             assertThat(
                 ballSet.toList(),
                 everyItem(allOf(greaterThanOrEqualTo(1), lessThanOrEqualTo(45)))
@@ -58,11 +55,22 @@ class TestLotto {
 
     //당첨 번호 1세트는 보너스 번호를 가지고 있어야 한다.
     @Test
-    fun bonusNumbers()
+    fun winningNumbersHasBonusNumbers()
     {
         val generator = WinningBallsGenerator()
-        val winningNumbers: WinningBallSet = generator.generateBalls()
+        val winningNumbers: WinningBalls = generator.generateBalls()
 
         assertThat(winningNumbers.hasBonusBall(), equalTo(true))
     }
+
+    //당첨 번호들은 Bonus Ball을 가지고 있지 않아야 한다.
+    @Test
+    fun bonusNumberIsNotDuplicated()
+    {
+        val generator = WinningBallsGenerator()
+        val winningNumbers: WinningBalls = generator.generateBalls()
+
+        assertThat(winningNumbers, not(hasItem(winningNumbers.getBonusBall())))
+    }
+
 }
