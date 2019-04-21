@@ -2,11 +2,7 @@ package dev.jocatelo
 
 
 class BallHashSet : BallSet {
-    private val ballHashSet:HashSet<Int>
-
-    init {
-        ballHashSet = hashSetOf<Int>()
-    }
+    private val ballHashSet = hashSetOf<Int>()
 
     override val size: Int
         get() = ballHashSet.size

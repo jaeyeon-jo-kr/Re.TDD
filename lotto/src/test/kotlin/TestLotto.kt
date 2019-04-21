@@ -2,6 +2,8 @@
 
 import dev.jocatelo.BallSet
 import dev.jocatelo.BallsGenerator
+import dev.jocatelo.WinningBallSet
+import dev.jocatelo.WinningBallsGenerator
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThanOrEqualTo
@@ -54,13 +56,13 @@ class TestLotto {
         }
     }
 
-    //당첨 번호 조합은 1세트이다.
+    //당첨 번호 1세트는 보너스 번호를 가지고 있어야 한다.
     @Test
-    fun winningNumbers()
+    fun bonusNumbers()
     {
-        val generator = BallsGenerator()
-        val winningNumbers:BallSet = generator.generateBalls()
+        val generator = WinningBallsGenerator()
+        val winningNumbers: WinningBallSet = generator.generateBalls()
 
-        assertThat(winningNumbers, not(nullValue()))
+        assertThat(winningNumbers.hasBonusBall(), equalTo(true))
     }
 }

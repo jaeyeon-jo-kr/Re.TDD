@@ -10,7 +10,7 @@ class BallsGenerator {
         return generateBalls(seed)
     }
 
-    fun generateBalls(seed:Long): BallSet
+    private fun generateBalls(seed:Long): BallSet
     {
         val random = Random(seed)
         val balls = BallHashSet()
