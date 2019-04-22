@@ -1,10 +1,8 @@
 
 
 import dev.jocatelo.*
-import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.greaterThanOrEqualTo
-import org.hamcrest.Matchers.lessThanOrEqualTo
+import org.hamcrest.Matchers.*
 
 import org.junit.Test
 import kotlin.collections.ArrayList
@@ -88,6 +86,16 @@ class TestLotto {
         lottoTicket.`generateLotto's`(lottoCount, generator)
 
         assertThat(lottoTicket.lottoCount, equalTo(3))
+    }
+
+    //클라이언트는 로또 티켓을 주문한다.
+    @Test
+    fun clientCreateLottoTicket()
+    {
+        val client = Client()
+        val count = 3
+        client.orderLottoTicket(count)
+        assertThat(client.ticket, notNullValue())
     }
 
 }
