@@ -80,10 +80,8 @@ class TestLotto {
     @Test
     fun ticketReceiveLotto()
     {
-        val lottoTicket = LottoTicket()
-        val generator = LottoGenerator()
-        val lottoCount = 3
-        lottoTicket.`generateLotto's`(lottoCount, generator)
+        val generator = TicketGenerator()
+        val lottoTicket = generator.generateTicket(3)
 
         assertThat(lottoTicket.lottoCount, equalTo(3))
     }

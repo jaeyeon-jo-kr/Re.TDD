@@ -4,6 +4,7 @@ class Client {
     var ticket : LottoTicket? = null
 
     fun orderLottoTicket(count: Int) {
-        ticket = LottoTicket()
+        val generator = TicketGenerator()
+        ticket = generator.generateTicket(count)
     }
 }

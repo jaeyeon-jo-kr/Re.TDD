@@ -9,7 +9,8 @@ class LottoTicket {
 
     private var `lotto's` = hashSetOf<Lotto>()
 
-    fun `generateLotto's`(lottoCount: Int, generator: LottoGenerator) {
+    fun `generateLotto's`(lottoCount: Int) {
+        val generator = LottoGenerator()
         repeat(lottoCount) {
             `lotto's`.add(generator.generateBalls())
         }
