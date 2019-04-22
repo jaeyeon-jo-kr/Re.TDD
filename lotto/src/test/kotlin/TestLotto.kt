@@ -9,6 +9,8 @@ import org.hamcrest.Matchers.lessThanOrEqualTo
 import org.junit.Test
 import kotlin.collections.ArrayList
 
+
+
 class TestLotto {
     //랜덤넘버 6개를 생성한다
     @Test
@@ -76,11 +78,16 @@ class TestLotto {
         }
     }
 
+    //로또 티켓이 여러개의 당첨 번호 세트(Lotto)를 가지고 있다.
     @Test
-    fun clientReceiveBalls()
+    fun ticketReceiveLotto()
     {
-        
+        val lottoTicket = LottoTicket()
+        val generator = LottoGenerator()
+        val lottoCount = 3
+        lottoTicket.`generateLotto's`(lottoCount, generator)
 
+        assertThat(lottoTicket.lottoCount, equalTo(3))
     }
 
 }
