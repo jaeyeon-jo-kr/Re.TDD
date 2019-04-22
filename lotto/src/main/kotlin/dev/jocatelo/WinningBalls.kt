@@ -1,7 +1,7 @@
 package dev.jocatelo
 
 
-class WinningBalls(originBalls:Balls, val bonus: Ball) : Balls {
+class WinningBalls(originBalls:Lotto, val bonus: Ball) : Lotto {
     private var balls = originBalls
 
     override val size: Int

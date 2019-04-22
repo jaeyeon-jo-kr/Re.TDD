@@ -2,15 +2,15 @@ package dev.jocatelo
 import java.util.*
 import kotlin.random.Random
 
-class BallsGenerator {
+class LottoGenerator {
 
-    fun generateBalls() :Balls{
+    fun generateBalls() :Lotto{
         val calendar = Calendar.getInstance()
         val seed = calendar.timeInMillis
         return generateBalls(seed)
     }
 
-    private fun generateBalls(seed:Long): Balls
+    private fun generateBalls(seed:Long): Lotto
     {
         val random = Random(seed)
         val balls = BallHashSet()

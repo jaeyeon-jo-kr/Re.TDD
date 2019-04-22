@@ -3,9 +3,9 @@ package dev.jocatelo
 import kotlin.random.Random
 
 class WinningBallsGenerator {
-    var ballsGenerator:BallsGenerator = BallsGenerator()
+    var lottoGenerator:LottoGenerator = LottoGenerator()
     fun generateBalls(): WinningBalls {
-        val basic = ballsGenerator.generateBalls()
+        val basic = lottoGenerator.generateBalls()
         var bonus = Random.nextInt(1,45)
 
         while(basic.contains(bonus)){

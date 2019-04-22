@@ -1,7 +1,7 @@
 package dev.jocatelo
 
 
-class BallHashSet : Balls {
+class BallHashSet : Lotto {
     private val ballHashSet = hashSetOf<Ball>()
 
     override val size: Int
