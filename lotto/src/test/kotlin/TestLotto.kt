@@ -105,6 +105,18 @@ class TestLotto {
         assertThat(rankChecker, notNullValue())
     }
 
+    @Test
+    fun `등수 확인자는 로또를 제공받으면 등수를 제공한다`()
+    {
+        val generator = WinningLottoGenerator()
+        val rankChecker:RankChecker = generator.generateLotto()
+        repeat(1000) {
+            val lotto = LottoGenerator().generateLotto()
+            val rank = rankChecker.askRank(lotto)
+            assertThat(rank, both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(5)))
+        }
+    }
+
 
 
 }
