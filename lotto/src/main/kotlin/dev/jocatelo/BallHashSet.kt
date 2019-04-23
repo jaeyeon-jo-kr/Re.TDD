@@ -8,21 +8,13 @@ class BallHashSet : Lotto {
         get() = ballHashSet.size
 
 
-    override fun contains(element: Ball): Boolean {
-        return ballHashSet.contains(element)
-    }
+    override fun contains(element: Ball): Boolean = ballHashSet.contains(element)
 
-    override fun containsAll(elements: Collection<Ball>): Boolean {
-        return ballHashSet.containsAll(elements)
-    }
+    override fun containsAll(elements: Collection<Ball>): Boolean = ballHashSet.containsAll(elements)
 
-    override fun isEmpty(): Boolean {
-        return ballHashSet.isEmpty()
-    }
+    override fun isEmpty(): Boolean = ballHashSet.isEmpty()
 
-    override fun iterator(): Iterator<Ball> {
-        return ballHashSet.iterator()
-    }
+    override fun iterator(): Iterator<Ball> = ballHashSet.iterator()
 
     fun add(number: Ball) {
         ballHashSet.add(number)

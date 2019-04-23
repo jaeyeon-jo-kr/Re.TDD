@@ -21,15 +21,15 @@ class WinningLotto(origin:Lotto, val bonus: Ball) : Lotto,  RankChecker {
         return true
     }
 
-    override fun askRank(clientLotto: Lotto): Int {
-        when(clientLotto.filter { number -> lotto.contains(number) || number == bonus }.count()){
-            6 -> return 1
-            5 -> return 2
-            4 -> return 3
-            3 -> return 4
-            2 -> return 5
+    override fun askRank(lotto: Lotto): Int {
+        return when(lotto.filter { number -> this.lotto.contains(number) || number == bonus }.count()){
+            6 -> 1
+            5 -> 2
+            4 -> 3
+            3 -> 4
+            2 -> 5
+            else -> 0
         }
-        return 0
     }
 
 }

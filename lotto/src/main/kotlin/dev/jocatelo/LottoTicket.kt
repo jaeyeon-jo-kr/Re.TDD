@@ -3,9 +3,8 @@ package dev.jocatelo
 class LottoTicket {
 
     val lottoCount: Int
-        get() {
-            return `lotto's`.size
-        }
+        get() = `lotto's`.size
+
 
     private var `lotto's` = hashSetOf<Lotto>()
 

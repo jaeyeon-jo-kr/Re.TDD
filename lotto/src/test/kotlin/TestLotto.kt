@@ -9,6 +9,7 @@ import kotlin.collections.ArrayList
 
 
 
+@Suppress("NonAsciiCharacters")
 class TestLotto {
     //랜덤넘버 6개를 생성한다
     @Test
@@ -115,6 +116,13 @@ class TestLotto {
             val rank = rankChecker.askRank(lotto)
             assertThat(rank, both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(5)))
         }
+    }
+    @Test
+    fun `당첨금 정보는 등수에 따른 보상금을 알려준다`()
+    {
+        val prizeInfo = PrizeInfo()
+        val anyPrize = prizeInfo.getPrize(1)
+        assertThat(anyPrize, instanceOf(Int::class.java))
     }
 
 
