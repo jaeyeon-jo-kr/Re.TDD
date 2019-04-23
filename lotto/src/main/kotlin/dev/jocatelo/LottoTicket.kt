@@ -9,10 +9,6 @@ class LottoTicket : Set<Lotto> {
     override val size: Int
         get() = `lotto's`.size
 
-    val lottoCount: Int
-        get() = `lotto's`.size
-
-
     private var `lotto's` = hashSetOf<Lotto>()
 
     fun `generateLotto's`(lottoCount: Int) {

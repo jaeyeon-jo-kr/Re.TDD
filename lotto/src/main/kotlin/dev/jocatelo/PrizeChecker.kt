@@ -1,5 +1,5 @@
 package dev.jocatelo
 
 interface PrizeChecker {
-    fun expectedPrize(ticket: LottoTicket): Int
+    fun expectedPrize(rankChecker: RankChecker): Int
 }

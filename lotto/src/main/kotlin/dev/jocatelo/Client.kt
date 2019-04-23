@@ -7,10 +7,10 @@ class Client :PrizeChecker{
         val generator = TicketGenerator()
         ticket = generator.generateTicket(count)
     }
-    override fun expectedPrize(ticket: LottoTicket): Int {
+    override fun expectedPrize(rankChecker: RankChecker): Int {
         val prizeInfo = PrizeInfo()
         var prize = 0
-        val rankChecker:RankChecker = WinningLottoGenerator().generateLotto()
+
         ticket.forEach{
             lotto -> val rank = rankChecker.askRank(lotto)
             prize += prizeInfo.getPrize(rank)

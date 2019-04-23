@@ -84,7 +84,7 @@ class TestLotto {
         val generator = TicketGenerator()
         val lottoTicket = generator.generateTicket(3)
 
-        assertThat(lottoTicket.lottoCount, equalTo(3))
+        assertThat(lottoTicket.size, equalTo(3))
     }
 
     //클라이언트는 로또 티켓을 주문한다.
@@ -130,8 +130,8 @@ class TestLotto {
     {
         val client = Client()
         client.orderLottoTicket(3)
-        val prizeChecker = Client()
-        val expectedPrize = prizeChecker.expectedPrize(client.ticket)
+        val winningLotto = WinningLottoGenerator().generateLotto()
+        val expectedPrize = client.expectedPrize(winningLotto)
 
         assertThat(expectedPrize, instanceOf(Int::class.java))
     }
