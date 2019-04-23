@@ -125,6 +125,17 @@ class TestLotto {
         assertThat(anyPrize, instanceOf(Int::class.java))
     }
 
+    @Test
+    fun `클라이언트는 당첨금 확인자에게 로또 티켓을 보여주며 당첨금을 확인한다`()
+    {
+        val client = Client()
+        client.orderLottoTicket(3)
+        val prizeChecker = Client()
+        val expectedPrize = prizeChecker.expectedPrize(client.ticket)
+
+        assertThat(expectedPrize, instanceOf(Int::class.java))
+    }
+
 
 
 }
