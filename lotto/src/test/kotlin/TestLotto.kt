@@ -11,9 +11,9 @@ import kotlin.collections.ArrayList
 
 @Suppress("NonAsciiCharacters")
 class TestLotto {
-    //랜덤넘버 6개를 생성한다
+
     @Test
-    fun createSixNumber()
+    fun `랜덤넘버 6개를 생성한다`()
     {
         repeat(1000)
         {
@@ -24,9 +24,8 @@ class TestLotto {
         }
     }
 
-    // 중복되지 않는 랜덤넘버를 생성한다
     @Test
-    fun createRandomNumber()
+    fun `중복되지 않는 랜덤넘버를 생성한다`()
     {
 
         val generator = LottoGenerator()
@@ -39,9 +38,9 @@ class TestLotto {
         }
     }
 
-    //1에서 45까지의 넘버를 생성한다.
+
     @Test
-    fun createNumberRange()
+    fun `1에서 45까지의 넘버를 생성한다`()
     {
         repeat(1000)
         {
@@ -54,9 +53,9 @@ class TestLotto {
         }
     }
 
-    //당첨 번호 1세트는 보너스 번호를 가지고 있어야 한다.
+
     @Test
-    fun winningNumbersHasBonusNumbers()
+    fun `당첨 번호 1세트는 보너스 번호를 가지고 있어야 한다`()
     {
         val generator = WinningLottoGenerator()
         val winningNumbers: WinningLotto = generator.generateLotto()
@@ -64,9 +63,9 @@ class TestLotto {
         assertThat(winningNumbers.hasBonusBall(), equalTo(true))
     }
 
-    //당첨 번호들은 Bonus Ball을 가지고 있지 않아야 한다.
+    //.
     @Test
-    fun bonusNumberIsNotDuplicated()
+    fun `당첨 번호들은 Bonus Ball을 가지고 있지 않아야 한다`()
     {
         repeat(1000)
         {
@@ -77,9 +76,9 @@ class TestLotto {
         }
     }
 
-    //로또 티켓이 여러개의 당첨 번호 세트(Lotto)를 가지고 있다.
+
     @Test
-    fun ticketReceiveLotto()
+    fun `로또 티켓이 여러개의 당첨 번호 세트(Lotto)를 가지고 있다`()
     {
         val generator = TicketGenerator()
         val lottoTicket = generator.generateTicket(3)
@@ -87,9 +86,8 @@ class TestLotto {
         assertThat(lottoTicket.size, equalTo(3))
     }
 
-    //클라이언트는 로또 티켓을 주문한다.
     @Test
-    fun clientCreateLottoTicket()
+    fun `클라이언트는 로또 티켓을 주문한다`()
     {
         val client = Client()
         val count = 3

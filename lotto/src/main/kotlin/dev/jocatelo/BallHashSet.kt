@@ -17,6 +17,6 @@ class BallHashSet : Lotto {
     override fun iterator(): Iterator<Ball> = ballHashSet.iterator()
 
     fun add(number: Ball) {
-        ballHashSet.add(number)
+        ballHashSet += number
     }
 }
