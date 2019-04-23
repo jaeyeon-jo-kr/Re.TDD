@@ -3,8 +3,8 @@ package dev.jocatelo
 import kotlin.random.Random
 
 class WinningLottoGenerator {
-    var lottoGenerator:LottoGenerator = LottoGenerator()
-    fun generateBalls(): WinningLotto {
+    private var lottoGenerator:LottoGenerator = LottoGenerator()
+    fun generateLotto(): WinningLotto {
         val basic = lottoGenerator.generateLotto()
         var bonus = Random.nextInt(1,45)
 

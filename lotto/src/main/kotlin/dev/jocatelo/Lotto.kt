@@ -1,3 +1,3 @@
 package dev.jocatelo
 
-interface Lotto : Set<Ball>
+interface Lotto : Set<Ball>, RankChecker

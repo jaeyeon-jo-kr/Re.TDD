@@ -58,7 +58,7 @@ class TestLotto {
     fun winningNumbersHasBonusNumbers()
     {
         val generator = WinningLottoGenerator()
-        val winningNumbers: WinningLotto = generator.generateBalls()
+        val winningNumbers: WinningLotto = generator.generateLotto()
 
         assertThat(winningNumbers.hasBonusBall(), equalTo(true))
     }
@@ -70,7 +70,7 @@ class TestLotto {
         repeat(1000)
         {
             val generator = WinningLottoGenerator()
-            val winningNumbers: WinningLotto = generator.generateBalls()
+            val winningNumbers: WinningLotto = generator.generateLotto()
 
             assertThat(winningNumbers, not(hasItem(winningNumbers.bonus)))
         }
@@ -95,5 +95,16 @@ class TestLotto {
         client.orderLottoTicket(count)
         assertThat(client.ticket, notNullValue())
     }
+
+    @Test
+    fun `등수 확인자는 당첨 로또를 알고 있어야 한다`()
+    {
+        val generator = WinningLottoGenerator()
+        val rankChecker:RankChecker = generator.generateLotto()
+
+        assertThat(rankChecker, notNullValue())
+    }
+
+
 
 }
