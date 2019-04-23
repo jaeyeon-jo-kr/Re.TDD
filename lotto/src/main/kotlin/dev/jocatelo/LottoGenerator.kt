@@ -4,13 +4,13 @@ import kotlin.random.Random
 
 class LottoGenerator {
 
-    fun generateBalls() :Lotto{
+    fun generateLotto() :Lotto{
         val calendar = Calendar.getInstance()
         val seed = calendar.timeInMillis
-        return generateBalls(seed)
+        return generateLotto(seed)
     }
 
-    private fun generateBalls(seed:Long): Lotto
+    private fun generateLotto(seed:Long): Lotto
     {
         val random = Random(seed)
         val balls = BallHashSet()

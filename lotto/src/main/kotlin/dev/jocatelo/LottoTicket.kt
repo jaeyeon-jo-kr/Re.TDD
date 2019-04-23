@@ -12,7 +12,7 @@ class LottoTicket {
     fun `generateLotto's`(lottoCount: Int) {
         val generator = LottoGenerator()
         repeat(lottoCount) {
-            `lotto's`.add(generator.generateBalls())
+            `lotto's`.add(generator.generateLotto())
         }
     }
 }

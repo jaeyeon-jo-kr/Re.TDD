@@ -17,7 +17,7 @@ class TestLotto {
         repeat(1000)
         {
             val generator = LottoGenerator()
-            val ballSet = generator.generateBalls()
+            val ballSet = generator.generateLotto()
 
             assertThat(ballSet.size, equalTo(6))
         }
@@ -29,7 +29,7 @@ class TestLotto {
     {
 
         val generator = LottoGenerator()
-        val ballSet = generator.generateBalls()
+        val ballSet = generator.generateLotto()
         val testSet:ArrayList<Ball> = ArrayList()
 
         for(item in ballSet.iterator()){
@@ -45,7 +45,7 @@ class TestLotto {
         repeat(1000)
         {
             val generator = LottoGenerator()
-            val ballSet: Lotto = generator.generateBalls()
+            val ballSet: Lotto = generator.generateLotto()
             assertThat(
                 ballSet.toList(),
                 everyItem(allOf(greaterThanOrEqualTo(1), lessThanOrEqualTo(45)))
@@ -57,8 +57,8 @@ class TestLotto {
     @Test
     fun winningNumbersHasBonusNumbers()
     {
-        val generator = WinningBallsGenerator()
-        val winningNumbers: WinningBalls = generator.generateBalls()
+        val generator = WinningLottoGenerator()
+        val winningNumbers: WinningLotto = generator.generateBalls()
 
         assertThat(winningNumbers.hasBonusBall(), equalTo(true))
     }
@@ -69,8 +69,8 @@ class TestLotto {
     {
         repeat(1000)
         {
-            val generator = WinningBallsGenerator()
-            val winningNumbers: WinningBalls = generator.generateBalls()
+            val generator = WinningLottoGenerator()
+            val winningNumbers: WinningLotto = generator.generateBalls()
 
             assertThat(winningNumbers, not(hasItem(winningNumbers.bonus)))
         }

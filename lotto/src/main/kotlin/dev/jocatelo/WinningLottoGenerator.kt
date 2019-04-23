@@ -2,15 +2,15 @@ package dev.jocatelo
 
 import kotlin.random.Random
 
-class WinningBallsGenerator {
+class WinningLottoGenerator {
     var lottoGenerator:LottoGenerator = LottoGenerator()
-    fun generateBalls(): WinningBalls {
-        val basic = lottoGenerator.generateBalls()
+    fun generateBalls(): WinningLotto {
+        val basic = lottoGenerator.generateLotto()
         var bonus = Random.nextInt(1,45)
 
         while(basic.contains(bonus)){
             bonus = Random.nextInt(1,45)
         }
-        return WinningBalls(basic, bonus)
+        return WinningLotto(basic, bonus)
     }
 }
