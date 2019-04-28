@@ -15,11 +15,8 @@ class TestLotto {
     @Test
     fun `넘버 6개를 생성한다`()
     {
-        repeat(1000)
-        {
-            val ballSet = LottoGenerator.generateLotto()
-            assertThat(ballSet.size, equalTo(6))
-        }
+        val ballSet = LottoGenerator.generateLotto()
+        assertThat(ballSet.size, equalTo(6))
     }
 
     @Test
@@ -27,12 +24,11 @@ class TestLotto {
     {
 
         val ballSet = LottoGenerator.generateLotto()
-        val testSet:ArrayList<Ball> = ArrayList()
+        val testSet = hashSetOf<Ball>()
 
-        for(item in ballSet.iterator()){
-            assertThat(testSet.toList(), not(hasItem(item)))
-            testSet.add(item)
-        }
+        ballSet.filter { true }.forEach { ball -> testSet.add(ball) }
+
+        assertThat(ballSet.size, equalTo(testSet.size))
     }
 
 
@@ -40,12 +36,10 @@ class TestLotto {
     fun `1에서 45까지의 넘버를 생성한다`()
     {
         val expected = (1 until 46).toHashSet()
-        var loopCount = 100
-        while( loopCount > 0 && expected.isNotEmpty() )
-        {
-            val lotto: Lotto = LottoGenerator.generateLotto()
-            lotto.iterator().forEach { ball -> expected.remove(ball) }
-            loopCount--
+        var loop = 100
+
+        (0 until loop).forEach{
+            expected.removeAll(LottoGenerator.generateLotto().ballSet)
         }
         assertThat(expected.isEmpty(), equalTo(true))
     }
@@ -55,12 +49,8 @@ class TestLotto {
     @Test
     fun `당첨 Ball들은 Bonus Ball을 가지고 있지 않아야 한다`()
     {
-        repeat(1000)
-        {
-            val winningNumbers: WinningLotto = WinningLottoGenerator.generateLotto()
-
-            assertThat(winningNumbers, not(hasItem(winningNumbers.bonus)))
-        }
+        val winningNumbers: WinningLotto = WinningLottoGenerator.generateLotto()
+        assertThat(winningNumbers, not(hasItem(winningNumbers.bonus)))
     }
 
 
@@ -88,15 +78,14 @@ class TestLotto {
     }
 
     @Test
-    fun `등수 확인자는 로또를 제공받으면 등수를 제공한다`()
+    fun `등수 확인자는 로또를 제공받으면 0에서 5까지의 등수를 제공한다`()
     {
 
         val rankChecker:RankChecker = WinningLottoGenerator.generateLotto()
-        repeat(1000) {
-            val lotto = LottoGenerator.generateLotto()
-            val rank = rankChecker.askRank(lotto)
-            assertThat(rank, both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(5)))
-        }
+        val lotto = LottoGenerator.generateLotto()
+        val rank = rankChecker.askRank(lotto)
+        assertThat(rank, both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(5)))
+
     }
     @Test
     fun `당첨금 정보는 등수에 따른 보상금을 알려준다`()
