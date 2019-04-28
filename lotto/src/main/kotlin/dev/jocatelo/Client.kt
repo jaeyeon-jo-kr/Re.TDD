@@ -1,5 +1,7 @@
 package dev.jocatelo
 
+import kotlin.collections.forEach as forEach1
+
 class Client :PrizeChecker{
     var ticket : LottoTicket = LottoTicket()
 
@@ -11,7 +13,7 @@ class Client :PrizeChecker{
         val prizeInfo = PrizeInfo()
         var prize = 0
 
-        ticket.forEach{
+        ticket.iterator().forEach1<Lotto> {
             lotto -> val rank = rankChecker.askRank(lotto)
             prize += prizeInfo.getPrize(rank)
         }

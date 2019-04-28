@@ -1,35 +1,30 @@
 package dev.jocatelo
 
 
-class WinningLotto(origin:Lotto, val bonus: Ball) : Lotto,  RankChecker {
-    private var lotto = origin
+class WinningLotto(var lotto:Lotto, val bonus: Ball) : RankChecker, Iterable<Ball> {
 
-    override val size: Int
-        get() = lotto.size
+    override fun iterator(): Iterator<Ball> =  lotto.iterator()
 
-    override fun contains(element: Ball): Boolean = lotto.contains(element)
-
-    override fun containsAll(elements: Collection<Ball>): Boolean = lotto.containsAll(elements)
-
-    override fun isEmpty(): Boolean = lotto.isEmpty()
-
-    override fun iterator(): Iterator<Ball> = lotto.iterator()
 
     // Bulk Operations
-
     fun hasBonusBall(): Boolean {
         return true
     }
 
-    override fun askRank(lotto: Lotto): Int {
-        return when(lotto.filter { number -> this.lotto.contains(number) || number == bonus }.count()){
+    private fun askRankBonus(client:Lotto):Int =
+        when (client.contains(bonus)) {
+            true -> 2
+            false -> 3
+        }
+
+
+    override fun askRank(client: Lotto): Int =
+        when (client.filter { number -> lotto.contains(number) }.count()) {
             6 -> 1
-            5 -> 2
-            4 -> 3
-            3 -> 4
-            2 -> 5
+            5 -> askRankBonus(client)
+            4 -> 4
+            3 -> 5
             else -> 0
         }
-    }
 
 }
