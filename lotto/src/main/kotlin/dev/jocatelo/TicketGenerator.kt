@@ -1,10 +1,12 @@
 package dev.jocatelo
 
-class TicketGenerator {
+object TicketGenerator {
     fun generateTicket(lottoCount: Int): LottoTicket {
-        val ticket = LottoTicket()
-        ticket.`generateLotto's`(lottoCount)
-        return ticket
+        val lottoSet = hashSetOf<Lotto>()
+        repeat(lottoCount) {
+            lottoSet.add(LottoGenerator.generateLotto())
+        }
+        return LottoTicket(lottoSet)
     }
 
 }

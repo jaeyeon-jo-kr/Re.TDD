@@ -13,23 +13,20 @@ import kotlin.collections.ArrayList
 class TestLotto {
 
     @Test
-    fun `랜덤넘버 6개를 생성한다`()
+    fun `넘버 6개를 생성한다`()
     {
         repeat(1000)
         {
-            val generator = LottoGenerator()
-            val ballSet = generator.generateLotto()
-
+            val ballSet = LottoGenerator.generateLotto()
             assertThat(ballSet.size, equalTo(6))
         }
     }
 
     @Test
-    fun `중복되지 않는 랜덤넘버를 생성한다`()
+    fun `중복되지 않는 넘버를 생성한다`()
     {
 
-        val generator = LottoGenerator()
-        val ballSet = generator.generateLotto()
+        val ballSet = LottoGenerator.generateLotto()
         val testSet:ArrayList<Ball> = ArrayList()
 
         for(item in ballSet.iterator()){
@@ -42,35 +39,25 @@ class TestLotto {
     @Test
     fun `1에서 45까지의 넘버를 생성한다`()
     {
-        repeat(1000)
+        val expected = (1 until 46).toHashSet()
+        var loopCount = 100
+        while( loopCount > 0 && expected.isNotEmpty() )
         {
-            val generator = LottoGenerator()
-            val ballSet: Lotto = generator.generateLotto()
-            assertThat(
-                ballSet.toList(),
-                everyItem(allOf(greaterThanOrEqualTo(1), lessThanOrEqualTo(45)))
-            )
+            val lotto: Lotto = LottoGenerator.generateLotto()
+            lotto.iterator().forEach { ball -> expected.remove(ball) }
+            loopCount--
         }
+        assertThat(expected.isEmpty(), equalTo(true))
     }
 
-
-    @Test
-    fun `당첨 번호 1세트는 보너스 번호를 가지고 있어야 한다`()
-    {
-        val generator = WinningLottoGenerator()
-        val winningNumbers: WinningLotto = generator.generateLotto()
-
-        assertThat(winningNumbers.hasBonusBall(), equalTo(true))
-    }
 
     //.
     @Test
-    fun `당첨 번호들은 Bonus Ball을 가지고 있지 않아야 한다`()
+    fun `당첨 Ball들은 Bonus Ball을 가지고 있지 않아야 한다`()
     {
         repeat(1000)
         {
-            val generator = WinningLottoGenerator()
-            val winningNumbers: WinningLotto = generator.generateLotto()
+            val winningNumbers: WinningLotto = WinningLottoGenerator.generateLotto()
 
             assertThat(winningNumbers, not(hasItem(winningNumbers.bonus)))
         }
@@ -80,9 +67,7 @@ class TestLotto {
     @Test
     fun `로또 티켓이 여러개의 당첨 번호 세트(Lotto)를 가지고 있다`()
     {
-        val generator = TicketGenerator()
-        val lottoTicket = generator.generateTicket(3)
-
+        val lottoTicket = TicketGenerator.generateTicket(3)
         assertThat(lottoTicket.size, equalTo(3))
     }
 
@@ -98,19 +83,17 @@ class TestLotto {
     @Test
     fun `등수 확인자는 당첨 로또를 알고 있어야 한다`()
     {
-        val generator = WinningLottoGenerator()
-        val rankChecker:RankChecker = generator.generateLotto()
-
+        val rankChecker:RankChecker = WinningLottoGenerator.generateLotto()
         assertThat(rankChecker, notNullValue())
     }
 
     @Test
     fun `등수 확인자는 로또를 제공받으면 등수를 제공한다`()
     {
-        val generator = WinningLottoGenerator()
-        val rankChecker:RankChecker = generator.generateLotto()
+
+        val rankChecker:RankChecker = WinningLottoGenerator.generateLotto()
         repeat(1000) {
-            val lotto = LottoGenerator().generateLotto()
+            val lotto = LottoGenerator.generateLotto()
             val rank = rankChecker.askRank(lotto)
             assertThat(rank, both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(5)))
         }
@@ -128,7 +111,7 @@ class TestLotto {
     {
         val client = Client()
         client.orderLottoTicket(3)
-        val winningLotto = WinningLottoGenerator().generateLotto()
+        val winningLotto = WinningLottoGenerator.generateLotto()
         val expectedPrize = client.expectedPrize(winningLotto)
 
         assertThat(expectedPrize, instanceOf(Int::class.java))

@@ -2,13 +2,13 @@ package dev.jocatelo
 
 import kotlin.random.Random
 
-class WinningLottoGenerator {
-    private var lottoGenerator:LottoGenerator = LottoGenerator()
+object WinningLottoGenerator {
+
     fun generateLotto(): WinningLotto {
-        val basic = lottoGenerator.generateLotto()
+        val basic = LottoGenerator.generateLotto()
         var bonus: Int
         do{
-            bonus = Random.nextInt(1,45)
+            bonus = BallGenerator.generateRandom()
         }while(basic.contains(bonus))
         return WinningLotto(basic, bonus)
     }
