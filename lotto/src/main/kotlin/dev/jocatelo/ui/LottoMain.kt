@@ -10,8 +10,9 @@ object LottoMain {
 
     fun processInput(input:String)
     {
-
-
+        if(status == Status.MAIN_MENU && input.equals("4")){
+            running = false
+        }
     }
 
 
