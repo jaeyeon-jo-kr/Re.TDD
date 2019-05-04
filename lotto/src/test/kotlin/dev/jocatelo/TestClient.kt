@@ -1,3 +1,5 @@
+package dev.jocatelo
+
 import dev.jocatelo.Client
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers

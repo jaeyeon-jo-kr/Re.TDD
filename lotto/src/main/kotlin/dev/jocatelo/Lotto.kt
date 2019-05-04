@@ -18,7 +18,4 @@ data class Lotto(val ballSet:Set<Ball>) {
         return ballSet.filter(param)
     }
 
-    fun toList(): List<Ball> {
-        return ballSet.toList()
-    }
-}
+ }

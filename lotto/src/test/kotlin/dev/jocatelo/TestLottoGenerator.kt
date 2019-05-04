@@ -1,5 +1,5 @@
-import dev.jocatelo.Ball
-import dev.jocatelo.LottoGenerator
+package dev.jocatelo
+
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
