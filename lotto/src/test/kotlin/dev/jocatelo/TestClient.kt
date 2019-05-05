@@ -10,8 +10,7 @@ class TestClient {
     fun `클라이언트는 로또 티켓을 주문한다`()
     {
         val client = Client()
-        val count = 3
-        client.orderLottoTicket(count)
-        MatcherAssert.assertThat(client.ticket, Matchers.notNullValue())
+        client.addLottoTicket(TicketGenerator.generateTicket(3))
+
     }
 }

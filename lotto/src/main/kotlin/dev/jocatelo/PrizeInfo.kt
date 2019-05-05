@@ -1,7 +1,8 @@
 package dev.jocatelo
 
 class PrizeInfo {
-    fun getPrize(rank: Int): Int {
+
+    fun getPrize(rank: Rank): Int {
         return when (rank) {
             1 -> 1_000_000
             2 -> 500_000

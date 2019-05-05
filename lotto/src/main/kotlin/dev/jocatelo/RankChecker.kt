@@ -1,5 +1,6 @@
 package dev.jocatelo
 
+typealias Rank = Int
 interface RankChecker {
-    fun askRank(client: Lotto): Int
+    fun askRank(lotto: Lotto): Rank
 }
