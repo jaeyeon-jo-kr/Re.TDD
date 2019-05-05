@@ -24,7 +24,7 @@ class TestWinningLottoGenerator {
     {
 
         val rankChecker:RankChecker = WinningLottoGenerator.generateLotto()
-        val lotto = LottoGenerator.generateLotto()
+        val lotto = LottoGenerator.generate()
         val rank = rankChecker.askRank(lotto)
         MatcherAssert.assertThat(
             rank,

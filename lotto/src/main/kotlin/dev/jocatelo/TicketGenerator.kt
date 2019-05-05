@@ -4,7 +4,7 @@ object TicketGenerator {
     fun generateTicket(lottoCount: Int): LottoTicket {
         val lottoSet = hashSetOf<Lotto>()
         repeat(lottoCount) {
-            lottoSet.add(LottoGenerator.generateLotto())
+            lottoSet.add(LottoGenerator.generate())
         }
         return LottoTicket(lottoSet)
     }

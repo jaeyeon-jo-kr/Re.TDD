@@ -20,6 +20,8 @@ class Client :PrizeChecker{
             val rank = rankChecker.askRank(lotto)
             prize += prizeInfo.getPrize(rank)
         }
+
+
         return prize
     }
 }

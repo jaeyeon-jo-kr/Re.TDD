@@ -2,11 +2,11 @@ package dev.jocatelo
 
 object LottoGenerator {
 
-    fun generateLotto() :Lotto{
+    fun generate() :Lotto{
         val ballSet = hashSetOf<Ball>()
         while(ballSet.size < 6){
-            val number = BallGenerator.generateRandom()
-            ballSet.add(number)
+            val ball = BallGenerator.generateRandom()
+            ballSet.add(ball)
         }
         return Lotto(ballSet)
     }

@@ -9,7 +9,7 @@ class TestLottoGenerator
     @Test
     fun `넘버 6개를 생성한다`()
     {
-        val ballSet = LottoGenerator.generateLotto()
+        val ballSet = LottoGenerator.generate()
         MatcherAssert.assertThat(ballSet.size, Matchers.equalTo(6))
     }
 
@@ -17,7 +17,7 @@ class TestLottoGenerator
     fun `중복되지 않는 넘버를 생성한다`()
     {
 
-        val ballSet = LottoGenerator.generateLotto()
+        val ballSet = LottoGenerator.generate()
         val testSet = hashSetOf<Ball>()
 
         ballSet.filter { true }.forEach { ball -> testSet.add(ball) }
@@ -33,7 +33,7 @@ class TestLottoGenerator
         val loop = 100
 
         (0 until loop).forEach{
-            expected.removeAll(LottoGenerator.generateLotto().ballSet)
+            expected.removeAll(LottoGenerator.generate().ballSet)
         }
         MatcherAssert.assertThat(expected.isEmpty(), Matchers.equalTo(true))
     }

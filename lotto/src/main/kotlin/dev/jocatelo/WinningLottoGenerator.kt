@@ -1,11 +1,9 @@
 package dev.jocatelo
 
-import kotlin.random.Random
-
 object WinningLottoGenerator {
 
     fun generateLotto(): WinningLotto {
-        val basic = LottoGenerator.generateLotto()
+        val basic = LottoGenerator.generate()
         var bonus: Int
         do{
             bonus = BallGenerator.generateRandom()
