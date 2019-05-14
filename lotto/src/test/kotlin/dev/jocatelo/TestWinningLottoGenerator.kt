@@ -15,17 +15,18 @@ class TestWinningLottoGenerator {
     @Test
     fun `등수 확인자는 당첨 로또를 알고 있어야 한다`()
     {
-        val rankChecker: RankChecker = WinningLottoGenerator.generateLotto()
-        MatcherAssert.assertThat(rankChecker, Matchers.notNullValue())
+        val winningLotto: WinningLotto = WinningLottoGenerator.generateLotto()
+        MatcherAssert.assertThat(winningLotto, Matchers.notNullValue())
     }
 
     @Test
     fun `등수 확인자는 로또를 제공받으면 0에서 5까지의 등수를 제공한다`()
     {
 
-        val rankChecker:RankChecker = WinningLottoGenerator.generateLotto()
+        val winningLotto:WinningLotto = WinningLottoGenerator.generateLotto()
         val lotto = LottoGenerator.generate()
-        val rank = rankChecker.askRank(lotto)
+
+        val rank = PrizeChecker(winningLotto).getRank(lotto)
         MatcherAssert.assertThat(
             rank,
             Matchers.both(Matchers.greaterThanOrEqualTo(0)).and(Matchers.lessThanOrEqualTo(5))

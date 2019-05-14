@@ -1,13 +1,29 @@
 package dev.jocatelo.ui
 
+import dev.jocatelo.Client
+
+
 enum class Status {
     MAIN_MENU
     {
-        override val screen = UIString.MAIN_MENU.toString()
-    }, GAMMING
+        override fun screen() = """==== Lotto ====
+                |1. Ticket 정보 보기
+                |2. Ticket 만들기
+                |3. 등수 확인
+                |4. 종료하기
+                |명령>
+                """.trimMargin("|")
+    }, TICKET_INFO
     {
-        override val screen = ""
+        override fun screen(): String
+        {
+            val lottoList = LottoMain.client.ticketSet.joinToString()
+            val background = """===== Ticket 정보 =====
+            |Ticket 구매자 :
+            |%BALL_LIST%
+            """.trimIndent()
+            return background.replace("%BALL_LIST%", lottoList)
+        }
     };
-
-    abstract val screen:String
+    abstract fun screen():String
 }

@@ -6,11 +6,9 @@ data class LottoTicket(private val `lotto's`:Set<Lotto>) {
     val size: Int
         get() = `lotto's`.size
 
-    fun sum(rankChecker:RankChecker, prizeInfo:PrizeInfo) {
-        `lotto's`.sumBy { lotto ->
-            var rank = rankChecker.askRank(lotto)
-            var prize = prizeInfo.getPrize(rank)
-            prize
+    fun sum(winningLotto: WinningLotto) :Int {
+        return `lotto's`.sumBy { lotto ->
+            PrizeChecker(winningLotto).getPrizeByLotto(lotto)
         }
     }
 }

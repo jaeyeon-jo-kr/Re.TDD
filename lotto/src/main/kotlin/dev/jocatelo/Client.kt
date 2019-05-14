@@ -1,24 +1,22 @@
 package dev.jocatelo
 
-import org.jetbrains.annotations.Nullable
 import kotlin.collections.forEach as forEach
 
 class Client{
     val ticketSet: HashSet<LottoTicket> = hashSetOf()
+        get() = field
+
     fun addLottoTicket(ticket:LottoTicket) {
         ticketSet.add(ticket)
     }
 
     fun expectedPrize(winningLotto: WinningLotto): Int {
-        val prizeInfo = PrizeInfo()
-        var prize = 0
-
-        ticketSet.forEach{
-            it.sum(winningLotto, prizeInfo)
+        return ticketSet.sumBy{
+            it.sum(winningLotto)
         }
-
-        return prize
     }
+
+
 
 
 }

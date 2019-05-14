@@ -8,8 +8,8 @@ class TestPrizeInfo {
     @Test
     fun `당첨금 정보는 등수에 따른 보상금을 알려준다`()
     {
-        val prizeInfo = PrizeInfo()
-        val anyPrize = prizeInfo.getPrize(1)
+        val prizeInfo = PrizeChecker(WinningLottoGenerator.generateLotto())
+        val anyPrize = prizeInfo.getExpectedPrize(1)
         MatcherAssert.assertThat(anyPrize, Matchers.instanceOf(Int::class.java))
     }
 
