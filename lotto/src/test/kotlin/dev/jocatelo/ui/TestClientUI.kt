@@ -1,6 +1,7 @@
 package dev.jocatelo.ui
 
 import dev.jocatelo.*
+import dev.jocatelo.ui.state.BuyTicket
 import dev.jocatelo.ui.state.Main
 import dev.jocatelo.ui.state.Screen
 import junit.framework.TestCase.assertEquals
@@ -61,6 +62,17 @@ class TestClientUI
         var mockScreen = Screen()
         var expected = Main(mockScreen)
         assertThat("Return to main menu", LottoMain.screen.output(), IsEqual(expected.output()))
+    }
+
+    @Test
+    fun `티켓 사기를 수행하면 클라이언트가 티켓을 사는 메뉴를 보여준다`()
+    {
+        LottoMain.processInput("2")
+
+        var mockScreen = Screen()
+        var expected = BuyTicket(mockScreen)
+
+        assertThat("Buy Ticket", LottoMain.screen.output(), IsEqual(expected.output()))
     }
 
 }

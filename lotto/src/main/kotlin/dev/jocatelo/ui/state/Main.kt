@@ -18,8 +18,10 @@ class Main(private val screen: Screen) : State {
 
     override fun change(number: String) {
         when (number) {
-            "4" -> screen.state = Stopped(screen)
             "1" -> screen.state = TicketInfo(screen)
+            "2" -> screen.state = BuyTicket(screen)
+            "4" -> screen.state = Stopped(screen)
+
         }
     }
 
