@@ -16,6 +16,12 @@ class Client{
         }
     }
 
+    fun clear()
+    {
+        ticketSet.clear()
+
+    }
+
 
 
 

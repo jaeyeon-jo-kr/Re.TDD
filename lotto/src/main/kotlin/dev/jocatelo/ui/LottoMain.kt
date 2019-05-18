@@ -1,32 +1,27 @@
 package dev.jocatelo.ui
 
 import dev.jocatelo.Client
+import dev.jocatelo.ui.state.Main
+import dev.jocatelo.ui.state.Screen
+import dev.jocatelo.ui.state.State
 
 object LottoMain {
-    var running: Boolean = true
-    var status: Status = Status.MAIN_MENU
-    var screen: String = status.screen()
-    val client:Client = Client()
+
+    val screen = Screen()
+    val client = Client()
+
     init{
-        running = true
+
     }
-
-
 
     fun processInput(input:String)
     {
-        if(status == Status.MAIN_MENU){
-            when (input) {
-                "4"-> running = false
-                "1"-> {
-                    status = Status.TICKET_INFO
-                    screen = status.screen()
-                }
-            }
-        }
+        screen.processInput(input)
+        screen.update(client)
     }
 
-
-
-
+    fun isRunning(): Boolean = !screen.isStopped()
+    fun reset() {
+        screen.reset()
+    }
 }
