@@ -3,9 +3,6 @@ package dev.jocatelo.ui.state
 import dev.jocatelo.Client
 
 class Main(private val screen: Screen) : State {
-    override fun updateInfo(client: Client) {
-        // No Action
-    }
 
     override fun output(): String =
         """==== Lotto ====

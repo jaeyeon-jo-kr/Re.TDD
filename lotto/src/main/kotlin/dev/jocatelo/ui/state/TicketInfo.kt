@@ -3,14 +3,10 @@ package dev.jocatelo.ui.state
 import dev.jocatelo.Client
 
 class TicketInfo (private val screen: Screen) : State{
-    var lottoList:String = ""
-
-    override fun updateInfo(client: Client) {
-        lottoList = client.ticketSet.joinToString();
-    }
 
     override fun output(): String {
 
+        val lottoList = with(screen) { with(client) { ticketSet.joinToString() } }
         val background = """===== Ticket 정보 =====
             |구매한 Ticket 정보 :
             |%BALL_LIST%

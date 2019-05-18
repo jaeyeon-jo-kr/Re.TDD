@@ -1,13 +1,11 @@
 package dev.jocatelo.ui
 
 import dev.jocatelo.*
-import dev.jocatelo.ui.state.AfterBuyTicket
-import dev.jocatelo.ui.state.BuyTicket
-import dev.jocatelo.ui.state.Main
-import dev.jocatelo.ui.state.Screen
+import dev.jocatelo.ui.state.*
 import junit.framework.TestCase.assertEquals
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual
+import org.hamcrest.core.IsNot
 import org.hamcrest.core.StringContains
 import org.hamcrest.text.StringContainsInOrder
 import org.junit.Before
@@ -44,7 +42,7 @@ class TestClientUI
     fun `사용자는 첫 메뉴에서 로또 정보 보기를 선택하면 구매한 로또 티켓을 보여준다`()
     {
         val ticket = TicketGenerator.generateTicket(1)
-        val client: Client = LottoMain.client
+        val client: Client = LottoMain.screen.client
         client.addLottoTicket(ticket)
         LottoMain.processInput("1")
 
@@ -94,10 +92,21 @@ class TestClientUI
         LottoMain.processInput("2")
         LottoMain.processInput("3")
 
-        var mockScreen = Screen()
-        var expected = AfterBuyTicket(mockScreen, 3)
-
         assertThat("Show Ticket Count", LottoMain.screen.output(), StringContains("3"))
+    }
+
+    @Test
+    fun `티켓을 샀으면 로또 정보를 볼 때 티켓 정보가 비어있으면 안된다`()
+    {
+        LottoMain.processInput("2")// 티켓 구매
+        LottoMain.processInput("3")// 티켓 갯수
+        LottoMain.processInput("")// 확인
+        LottoMain.processInput("1")//티켓 확인
+
+        var mockScreen = Screen()
+        var notExpected = TicketInfo(mockScreen).output()
+
+        assertThat("Show Ticket Count", LottoMain.screen.output(), IsNot(IsEqual(notExpected)))
     }
 
 }

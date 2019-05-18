@@ -12,7 +12,5 @@ class AfterBuyTicket(private val screen: Screen, private val number: Int) : Stat
         screen.state = Main(screen)
     }
 
-    override fun updateInfo(client: Client) {
-        //Nothing
-    }
+
 }

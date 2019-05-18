@@ -4,13 +4,10 @@ import dev.jocatelo.Client
 
 class Screen
 {
+    val client = Client()
     var state:State = Main(this)
     fun processInput(input: String) {
         state.change(input)
-    }
-
-    fun update(client: Client) {
-        state.updateInfo(client)
     }
 
     fun output() : String =  state.output()

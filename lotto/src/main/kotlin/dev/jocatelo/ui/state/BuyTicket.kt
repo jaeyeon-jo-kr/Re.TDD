@@ -13,10 +13,13 @@ class BuyTicket(private val screen: Screen, private var count:Int = 0) : State {
 
     override fun change(number: String) {
         count = number.toInt()
+        updateInfo(screen.client)
         screen.state = AfterBuyTicket(screen, count)
+
+
     }
 
-    override fun updateInfo(client: Client) {
+    fun updateInfo(client: Client) {
         repeat(count) { client.addLottoTicket(TicketGenerator.generateTicket(6)) }
     }
 }
