@@ -5,14 +5,14 @@ import dev.jocatelo.Client
 class AfterBuyTicket(private val screen: Screen, private val number: Int) : State {
 
     override fun output(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return "$number 장 구매가 완료되었습니다. 아무키나 눌러주세요."
     }
 
     override fun change(number: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        screen.state = Main(screen)
     }
 
     override fun updateInfo(client: Client) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //Nothing
     }
 }

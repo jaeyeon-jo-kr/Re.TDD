@@ -1,6 +1,7 @@
 package dev.jocatelo.ui
 
 import dev.jocatelo.*
+import dev.jocatelo.ui.state.AfterBuyTicket
 import dev.jocatelo.ui.state.BuyTicket
 import dev.jocatelo.ui.state.Main
 import dev.jocatelo.ui.state.Screen
@@ -73,6 +74,30 @@ class TestClientUI
         var expected = BuyTicket(mockScreen)
 
         assertThat("Buy Ticket", LottoMain.screen.output(), IsEqual(expected.output()))
+    }
+
+    @Test
+    fun `티켓을 샀으면 티켓을 산 결과를 보여준다`()
+    {
+        LottoMain.processInput("2")
+        LottoMain.processInput("3")
+
+        var mockScreen = Screen()
+        var expected = AfterBuyTicket(mockScreen, 3)
+
+        assertThat("After Buy Ticket", LottoMain.screen.output(), IsEqual(expected.output()))
+    }
+
+    @Test
+    fun `티켓을 샀으면 티켓을 산 횟수를 보여준다`()
+    {
+        LottoMain.processInput("2")
+        LottoMain.processInput("3")
+
+        var mockScreen = Screen()
+        var expected = AfterBuyTicket(mockScreen, 3)
+
+        assertThat("Show Ticket Count", LottoMain.screen.output(), StringContains("3"))
     }
 
 }
