@@ -11,6 +11,5 @@ class TestClient {
     {
         val client = Client()
         client.addLottoTicket(TicketGenerator.generateTicket(3))
-
     }
 }

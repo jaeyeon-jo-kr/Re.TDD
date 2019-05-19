@@ -16,13 +16,13 @@ class TestLottoGenerator
     @Test
     fun `넘버 6개를 수동으로 생성한다`()
     {
-        val ballSet = setOf(1, 2, 3, 4, 5, 5 )
+        val ballSet = setOf(1, 2, 3, 4, 5, 7 )
         val lotto = LottoGenerator.generate(ballSet)
         MatcherAssert.assertThat(lotto.size, Matchers.equalTo(6))
     }
 
     @Test
-    fun `중복되지 않는 넘버를 생성한다`()
+    fun `생성되는 값들은 중복되지 않아야 한다`()
     {
 
         val lotto = LottoGenerator.generate()
@@ -35,13 +35,15 @@ class TestLottoGenerator
 
 
     @Test
-    fun `1에서 45까지의 넘버를 생성한다`()
+    fun `로도 생성기는 1에서 45까지의 넘버를 생성한다`()
     {
         val expected = (1 until 46).toHashSet()
         val loop = 100
 
-        (0 until loop).forEach{
-            expected.removeAll(LottoGenerator.generate().ballSet)
+        repeat(loop) {
+            val lotto = LottoGenerator.generate()
+            val ballSet = lotto.ballSet
+            expected.removeAll(ballSet)
         }
         MatcherAssert.assertThat(expected.isEmpty(), Matchers.equalTo(true))
     }
