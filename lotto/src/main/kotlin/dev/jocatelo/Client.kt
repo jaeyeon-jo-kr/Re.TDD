@@ -19,10 +19,20 @@ class Client{
     fun clear()
     {
         ticketSet.clear()
-
     }
 
+    fun ticketCount():Int
+    {
+        return ticketSet.size
+    }
 
+    fun orderRandomTickets(count: Int) {
+        repeat(count) {
+            addLottoTicket(TicketGenerator.generate())
+        }
+    }
 
-
+    fun orderManualTicket(lottoSet: Set<Lotto>) {
+        addLottoTicket(TicketGenerator.generate(lottoSet))
+    }
 }

@@ -20,6 +20,6 @@ class BuyTicket(private val screen: Screen, private var count:Int = 0) : State {
     }
 
     fun updateInfo(client: Client) {
-        repeat(count) { client.addLottoTicket(TicketGenerator.generateTicket(6)) }
+        repeat(count) { client.addLottoTicket(TicketGenerator.generate()) }
     }
 }

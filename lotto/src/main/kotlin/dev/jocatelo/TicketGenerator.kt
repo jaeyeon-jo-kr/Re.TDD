@@ -1,11 +1,20 @@
 package dev.jocatelo
 
 object TicketGenerator {
-    fun generateTicket(lottoCount: Int): LottoTicket {
+    const val lotttoCount = 6
+
+    fun generate(): LottoTicket {
         val lottoSet = hashSetOf<Lotto>()
-        repeat(lottoCount) {
+        repeat(lotttoCount) {
             lottoSet.add(LottoGenerator.generate())
         }
+        return LottoTicket(lottoSet)
+    }
+
+    fun generate(lottoSet:Set<Lotto>) : LottoTicket
+    {
+        if(lottoSet.size != 6)
+            throw InvalidSizeException()
         return LottoTicket(lottoSet)
     }
 

@@ -7,7 +7,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual
 import org.hamcrest.core.IsNot
 import org.hamcrest.core.StringContains
-import org.hamcrest.text.StringContainsInOrder
 import org.junit.Before
 import org.junit.Test
 
@@ -41,7 +40,7 @@ class TestClientUI
     @Test
     fun `사용자는 첫 메뉴에서 로또 정보 보기를 선택하면 구매한 로또 티켓을 보여준다`()
     {
-        val ticket = TicketGenerator.generateTicket(1)
+        val ticket = TicketGenerator.generate()
         val client: Client = LottoMain.screen.client
         client.addLottoTicket(ticket)
         LottoMain.processInput("1")
