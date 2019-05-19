@@ -7,22 +7,30 @@ import org.junit.Test
 class TestLottoGenerator
 {
     @Test
-    fun `넘버 6개를 생성한다`()
+    fun `넘버 6개를 자동으로 생성한다`()
     {
-        val ballSet = LottoGenerator.generate()
-        MatcherAssert.assertThat(ballSet.size, Matchers.equalTo(6))
+        val lotto = LottoGenerator.generate()
+        MatcherAssert.assertThat(lotto.size, Matchers.equalTo(6))
+    }
+
+    @Test
+    fun `넘버 6개를 수동으로 생성한다`()
+    {
+        val ballSet = setOf(1, 2, 3, 4, 5, 5 )
+        val lotto = LottoGenerator.generate(ballSet)
+        MatcherAssert.assertThat(lotto.size, Matchers.equalTo(6))
     }
 
     @Test
     fun `중복되지 않는 넘버를 생성한다`()
     {
 
-        val ballSet = LottoGenerator.generate()
+        val lotto = LottoGenerator.generate()
         val testSet = hashSetOf<Ball>()
 
-        ballSet.filter { true }.forEach { ball -> testSet.add(ball) }
+        lotto.filter { true }.forEach { ball -> testSet.add(ball) }
 
-        MatcherAssert.assertThat(ballSet.size, Matchers.equalTo(testSet.size))
+        MatcherAssert.assertThat(lotto.size, Matchers.equalTo(testSet.size))
     }
 
 

@@ -5,7 +5,7 @@ data class Lotto(val ballSet:Set<Ball>) {
 
     init{
         if(ballSet.size != 6)
-            throw Exception()
+            throw InvalidSizeException()
     }
     val size: Int
         get() = ballSet.size
