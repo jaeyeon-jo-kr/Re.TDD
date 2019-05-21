@@ -1,7 +1,7 @@
 package dev.jocatelo
 
-class PrizeChecker(winningLotto: WinningLotto) {
-    private val winningLotto = winningLotto
+class PrizeChecker(private val winningLotto: WinningLotto) {
+
     private fun askRankBonus(client:Lotto):Int=
         when (client.contains(winningLotto.bonus)) {
             true -> 2
