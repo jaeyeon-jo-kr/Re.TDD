@@ -2,6 +2,7 @@ package dev.jocatelo
 
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual
+import org.hamcrest.core.IsNot
 import org.junit.Test
 import org.junit.rules.ExpectedException
 
@@ -41,14 +42,14 @@ class TestClient {
 
         assertThat("티켓 주문", client.money, IsEqual(45_000))
     }
+
     @Test(expected = NotEnoughMoneyException::class)
     fun `돈이 부족하면 로또를 살 수 없다`()
     {
         val client = Client()
         client.money = 1_000
         client.orderRandomTickets(1)
-        assertThat("티켓 주문", client.money, IsEqual(1_000))
-
     }
+
 
 }

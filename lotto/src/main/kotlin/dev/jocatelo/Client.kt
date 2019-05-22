@@ -35,19 +35,24 @@ class Client{
         if(money < TICKET_PRICE)
             throw NotEnoughMoneyException()
     }
-
     fun orderRandomTickets(count: Int) {
         repeat(count) {
             checkMoney()
             money -= TICKET_PRICE
             addLottoTicket(TicketGenerator.generate())
         }
-
     }
 
     fun orderManualTicket(lottoSet: Set<Lotto>) {
         checkMoney()
         money -= TICKET_PRICE
         addLottoTicket(TicketGenerator.generate(lottoSet))
+    }
+
+    fun tryGetPrize()
+    {
+//        val prizeChecker = PrizeChecker()
+//
+//        prizeChecker.getPrizeByLotto()
     }
 }

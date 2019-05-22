@@ -43,4 +43,6 @@ class TestWinningLottoGenerator {
 
         MatcherAssert.assertThat(expectedPrize, Matchers.instanceOf(Int::class.java))
     }
+
+    
 }
