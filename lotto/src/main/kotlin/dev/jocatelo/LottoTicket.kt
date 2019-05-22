@@ -1,6 +1,9 @@
 package dev.jocatelo
 
-data class LottoTicket(private val `lotto's`:Set<Lotto>) {
+import java.util.*
+
+data class LottoTicket(private val `lotto's`:Set<Lotto>, private val purchaseDate:Calendar) {
+
     fun iterator(): Iterator<Lotto> = `lotto's`.iterator()
 
     val size: Int
@@ -10,5 +13,9 @@ data class LottoTicket(private val `lotto's`:Set<Lotto>) {
         return `lotto's`.sumBy { lotto ->
             PrizeChecker(winningLotto).getPrizeByLotto(lotto)
         }
+    }
+
+    fun getPurchaseDate(): Calendar {
+        return purchaseDate
     }
 }

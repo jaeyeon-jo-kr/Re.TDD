@@ -9,6 +9,6 @@ object WinningLottoLibrary{
     }
 
     fun getLotto(time: Int): WinningLotto? {
-        return winningLottoMap.get(time)
+        return winningLottoMap[time]
     }
 }
