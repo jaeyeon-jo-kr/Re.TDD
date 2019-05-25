@@ -1,5 +1,7 @@
 package dev.jocatelo
 
+import dev.jocatelo.winninglotto.WinningLotto
+
 class PrizeChecker(private val winningLotto: WinningLotto) {
 
     private fun askRankBonus(client:Lotto):Int=

@@ -1,5 +1,6 @@
 package dev.jocatelo
 
+import dev.jocatelo.winninglotto.WinningLotto
 import kotlin.collections.forEach as forEach
 
 const val TICKET_PRICE = 5000

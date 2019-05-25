@@ -1,5 +1,7 @@
 package dev.jocatelo
 
+import dev.jocatelo.winninglotto.WinningLottoGenerator
+import dev.jocatelo.winninglotto.WinningLottoLibrary
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNot
 import org.hamcrest.core.IsNull
@@ -13,4 +15,5 @@ class TestWinningLottoLibrary {
         WinningLottoLibrary.setLotto(1, WinningLottoGenerator.generateLotto())
         assertThat("로또번호 설정", WinningLottoLibrary.getLotto(1), IsNot(IsNull()))
     }
+
 }

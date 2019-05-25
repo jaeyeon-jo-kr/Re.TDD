@@ -1,5 +1,6 @@
 package dev.jocatelo
 
+import dev.jocatelo.winninglotto.WinningLotto
 import java.util.*
 
 data class LottoTicket(private val `lotto's`:Set<Lotto>, private val purchaseDate:Calendar) {

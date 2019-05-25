@@ -1,4 +1,4 @@
-package dev.jocatelo
+package dev.jocatelo.winninglotto
 
 object WinningLottoLibrary{
     var winningLottoMap = hashMapOf<Int, WinningLotto>()

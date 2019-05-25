@@ -1,5 +1,6 @@
 package dev.jocatelo
 
+import dev.jocatelo.winninglotto.WinningLottoGenerator
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test

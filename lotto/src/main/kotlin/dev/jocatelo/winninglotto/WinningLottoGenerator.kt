@@ -1,4 +1,7 @@
-package dev.jocatelo
+package dev.jocatelo.winninglotto
+
+import dev.jocatelo.BallGenerator
+import dev.jocatelo.LottoGenerator
 
 object WinningLottoGenerator {
 
@@ -8,6 +11,7 @@ object WinningLottoGenerator {
         do{
             bonus = BallGenerator.generateRandom()
         }while(basic.contains(bonus))
+
         return WinningLotto(basic, bonus)
     }
 }

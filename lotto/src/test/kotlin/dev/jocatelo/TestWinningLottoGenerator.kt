@@ -1,7 +1,14 @@
 package dev.jocatelo
 
+import dev.jocatelo.winninglotto.WinningInfo
+import dev.jocatelo.winninglotto.WinningLotto
+import dev.jocatelo.winninglotto.WinningLottoGenerator
 import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
+import org.hamcrest.core.Is
+import org.hamcrest.core.IsNot
+import org.hamcrest.core.IsNull
 import org.junit.Test
 
 class TestWinningLottoGenerator {
@@ -9,25 +16,24 @@ class TestWinningLottoGenerator {
     fun `당첨 Ball들은 Bonus Ball을 가지고 있지 않아야 한다`()
     {
         val winningNumbers: WinningLotto = WinningLottoGenerator.generateLotto()
-        MatcherAssert.assertThat(winningNumbers, Matchers.not(Matchers.hasItem(winningNumbers.bonus)))
+        assertThat(winningNumbers, Matchers.not(Matchers.hasItem(winningNumbers.bonus)))
     }
 
     @Test
     fun `등수 확인자는 당첨 로또를 알고 있어야 한다`()
     {
         val winningLotto: WinningLotto = WinningLottoGenerator.generateLotto()
-        MatcherAssert.assertThat(winningLotto, Matchers.notNullValue())
+        assertThat(winningLotto, Matchers.notNullValue())
     }
 
     @Test
     fun `등수 확인자는 로또를 제공받으면 0에서 5까지의 등수를 제공한다`()
     {
-
-        val winningLotto:WinningLotto = WinningLottoGenerator.generateLotto()
+        val winningLotto: WinningLotto = WinningLottoGenerator.generateLotto()
         val lotto = LottoGenerator.generate()
 
         val rank = PrizeChecker(winningLotto).getRank(lotto)
-        MatcherAssert.assertThat(
+        assertThat(
             rank,
             Matchers.both(Matchers.greaterThanOrEqualTo(0)).and(Matchers.lessThanOrEqualTo(5))
         )
@@ -41,8 +47,16 @@ class TestWinningLottoGenerator {
         val winningLotto = WinningLottoGenerator.generateLotto()
         val expectedPrize = client.expectedPrize(winningLotto)
 
-        MatcherAssert.assertThat(expectedPrize, Matchers.instanceOf(Int::class.java))
+        assertThat(expectedPrize, Matchers.instanceOf(Int::class.java))
     }
 
-    
+    @Test
+    fun `당첨 로또는 회차 정보를 가지고 있어야 한다`()
+    {
+        val winningLotto: WinningLotto = WinningLottoGenerator.generateLotto()
+        val winningInfo = WinningInfo(winningLotto)
+        winningInfo.round = 5
+
+        assertThat(winningInfo.round, Is(Matchers.equalTo(5)))
+    }
 }
