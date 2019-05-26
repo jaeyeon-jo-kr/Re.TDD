@@ -11,4 +11,18 @@ class AnnounceDate(val announceDate:LocalDate) {
     init{
 
     }
+
+    override operator fun equals(other: Any?) :Boolean {
+
+        if(other is AnnounceDate)
+        {
+            val expected: AnnounceDate = other
+            val expectedAnnounceDate = expected.announceDate
+            if(expectedAnnounceDate.year == announceDate.year &&
+                        expectedAnnounceDate.month == announceDate.month &&
+                        expectedAnnounceDate.dayOfMonth == announceDate.dayOfMonth)
+                return true
+        }
+        return false
+    }
 }

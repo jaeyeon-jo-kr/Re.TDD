@@ -1,15 +1,18 @@
 package dev.jocatelo
 
+import dev.jocatelo.date.AnnounceDate
 import dev.jocatelo.winninglotto.WinningInfo
 import dev.jocatelo.winninglotto.WinningLotto
 import dev.jocatelo.winninglotto.WinningLottoGenerator
 import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.core.Is
 import org.hamcrest.core.IsNot
 import org.hamcrest.core.IsNull
 import org.junit.Test
+import java.time.LocalDate
 
 class TestWinningLottoGenerator {
     @Test
@@ -58,5 +61,18 @@ class TestWinningLottoGenerator {
         winningInfo.round = 5
 
         assertThat(winningInfo.round, Is(Matchers.equalTo(5)))
+    }
+
+    @Test
+    fun `당첨 로또는 발표 정보를 가지고 있어야 한다`()
+    {
+        val winningLotto =  WinningLottoGenerator.generateLotto()
+        val winningInfo = WinningInfo(winningLotto)
+        winningInfo.announceDate = AnnounceDate(LocalDate.of(2019, 5, 25))
+
+        val expectedDate = AnnounceDate("2019-05-25")
+
+        assertThat(winningInfo.announceDate, equalTo(expectedDate))
+
     }
 }
