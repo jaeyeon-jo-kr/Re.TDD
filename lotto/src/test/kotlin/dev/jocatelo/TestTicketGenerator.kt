@@ -22,4 +22,5 @@ class TestTicketGenerator {
 
         assertThat("구매 날짜", lottoTicket.getPurchaseDate(), IsNot(IsNull()))
     }
+
 }

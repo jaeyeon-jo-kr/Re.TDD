@@ -14,7 +14,7 @@ class BuyTicket(private val screen: Screen, private var count:Int = 0) : State {
     override fun change(number: String) {
         count = number.toInt()
         updateInfo(screen.client)
-        screen.state = AfterBuyTicket(screen, count)
+       screen.state = AfterBuyTicket(screen, count)
 
 
     }
