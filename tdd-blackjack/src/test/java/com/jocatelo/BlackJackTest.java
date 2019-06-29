@@ -1,74 +1,91 @@
 package com.jocatelo;
 
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
+import com.jocatelo.character.Hands;
+import com.jocatelo.character.Participants;
+import com.jocatelo.character.Player;
+import com.jocatelo.character.PlayerGroup;
+import com.jocatelo.rule.player.status.PlayerStatus;
+
+import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import java.util.List;
-import java.util.ArrayList;
 
+public class BlackJackTest {
 
+    
+    @Before
+    public void initialize(){
 
-public class BlackJackTest
-{   
-    @Test
-    public void SendTwoCard(){
-        List<Player> players = new ArrayList<>(8);
-
-        Dealer dealer = new Dealer();
-        players.add(dealer);
-        for(int i = 1 ; i < 8; i++)
-        {
-            Player player = new Player();
-            players.add(player);
-        }
-
-        CardDeck deck = new CardDeck();
-        deck.initialize();
-
-
-        for(Player player:players)
-        {
-            Card card = deck.popCard();
-            player.addCard(card);
-            card = deck.popCard();
-            player.addCard(card);
-        }
-        
-        for(Player player:players)
-        {
-            assertEquals(player.getCardCount(), 2);        
-        }        
     }
 
     @Test
-    public void CardStatus()
-    {
-        CardDeck deck = new CardDeck();
-        deck.initialize();        
+    public void distribute2Card() throws Exception {
+        Round round = Round.of().setPlayerNumber(8);
         
-        for(int i = 1; i <= 4; i++)
-        {
-            for(int j=1;j<=13;j++)
-            {
-                Card card = deck.popCard();        
+        round.initialize();
+        round.startTurn();
 
-                if(j > 10){
-                    assertEquals(card.value(), 10);    
-                }else {
-                    assertEquals(card.value(), j);    
-                }
+        Participants participants = round.getParticipants();
+        PlayerGroup players = participants.getPlayers();
 
-                if(j==1){
-                    assertEquals(card.nextValue(), 11);
-                }else if(j > 10){
-                    assertEquals(card.nextValue(), 10);    
-                }else {
-                    assertEquals(card.nextValue(), j);    
-                }                
-                
-                assertEquals(card.type(), Card.Type.values()[i-1]);
-            }
-            
+        for (Player user : players.getPlayers()) {
+            Hands hands = user.getHands();
+            assertEquals(2, hands.getCardCount() );
         }
+    }
+
+
+    @Test
+    public void bustStatus() throws Exception
+    {
+        Player player = Player.of("Player");
+        player.setStatus(PlayerStatus.PLAYING);
+
+        Hands hands = player.getHands();
+        hands.add(Card.clover(10));
+        hands.add(Card.clover(10));
+        hands.add(Card.clover(3));
+        
+        player.updateStatus();
+
+        assertThat("Player must be bust.", player.getStatus(),equalTo(PlayerStatus.BUST));
+
+    }
+
+
+    @Test
+    
+    public void blackJackStatus() throws Exception
+    {
+        Round round = Round.of().setPlayerNumber(1)
+            .setAutomaticDistribute(false).setPlayerGeneration(true);
+        round.initialize();
+        round.startTurn();
+
+        Participants participants = round.getParticipants();
+        PlayerGroup players = participants.getPlayers();
+        Player player = players.get(0);
+        player.setCredit(100);
+        player.bet(10);
+
+        Hands hands = player.getHands();
+        player.setStatus(PlayerStatus.PLAYING);
+        hands.add(Card.clover(1));
+        hands.add(Card.clover(10));
+        
+        player.updateStatus();
+
+        round.endTurn();
+        
+
+        assertThat("Player의 점수는 21이어야 한다.", player.getScore(), equalTo(21));
+        assertThat("Player의 상태는 21이어야 한다.", player.getStatus(), equalTo(PlayerStatus.BLACKJACK));        
+        round.endGame();
+        assertThat("Player가 되돌려받는 돈은 25이어야 한다.", player.getWinningCredit(), equalTo(25));
+
     }
 
 }

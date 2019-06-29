@@ -1,0 +1,32 @@
+@startuml classDiagram
+
+abstract class User{
+    #Hands hands;    
+    #int score;        
+    #Rule rule;
+    #String name;
+}
+class Dealer
+class Player
+interface Commandable
+interface Playable {
+    + updateScore()
+    + updateStatus()
+    + finalizeStatus()   
+}
+class Round
+interface Drawable
+class PlayerGroup
+
+Dealer --|> User
+Player --|> User
+Dealer .. Playable
+Player .. Playable
+Dealer .. Commandable
+Player .. Commandable
+Round .. Drawable
+PlayerGroup --o Player
+
+
+
+@enduml
