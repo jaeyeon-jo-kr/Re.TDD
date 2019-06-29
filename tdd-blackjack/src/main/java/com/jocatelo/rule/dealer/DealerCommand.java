@@ -12,7 +12,7 @@ public enum DealerCommand implements Command {
         dealer.addCard(card);
     }},            
     STAND("STAND"){public void execute(Drawable drawable, Dealer dealer){}};
-    private String symbol;
+    private final String symbol;
     DealerCommand(String symbol){
         this.symbol = symbol;
     }
@@ -23,7 +23,7 @@ public enum DealerCommand implements Command {
 
     public abstract void execute(Drawable drawable, Dealer dealer);
     public static DealerCommand getAvailable(Dealer dealer){
-        DealerCommand command = DealerCommand.NONE;
+        DealerCommand command;
 
         if (dealer.getScore() <= 16) {
             command = DealerCommand.DRAW;

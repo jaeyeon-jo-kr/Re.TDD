@@ -14,7 +14,7 @@ public class Participants{
     @Getter
     private PlayerGroup players;
     @Getter
-    private Dealer dealer;
+    private final Dealer dealer;
 
     private Participants()
     {
@@ -43,18 +43,19 @@ public class Participants{
 
     public void updateAllStatus() throws Exception
     {
-        players.getPlayers().forEach(player -> player.updateStatus());
+        players.getPlayers().forEach(Player::updateStatus);
         dealer.updateStatus();
     }
 
     public void endGame()
     {
-        players.getPlayers().forEach((Player player) -> {            
+        for (Player player : players.getPlayers()) {
             Finalyzable finalyzable = FinalyzerFactory.create(player);
-            WinStatus winStatus = finalyzable.finalizeStatus(dealer);
-            player.setWinStatus(winStatus);
+            if (finalyzable != null) {
+                WinStatus winStatus = finalyzable.finalizeStatus(dealer);
+                player.setWinStatus(winStatus);
+            }
         }
-        );
     }
 
     public boolean isOver()

@@ -42,7 +42,7 @@ public class Card{
 
     public enum Type{
         DIAMOND("◆"), SPADE("♠"), HEART("♥"), CLOVER("♣");
-        private String symbol;
+        final private String symbol;
         Type(String symbol)
         {
             this.symbol = symbol;

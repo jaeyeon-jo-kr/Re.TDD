@@ -60,7 +60,7 @@ public enum DealerStatus {
     private final static int BLACKJACK_SCORE = 21;
     private final static int STAND_MIN_SCORE = 17;
 
-    private String symbol;
+    private final String symbol;
     
     DealerStatus(String symbol) {
         this.symbol = symbol;

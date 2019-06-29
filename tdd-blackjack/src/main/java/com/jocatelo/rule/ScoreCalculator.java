@@ -14,7 +14,7 @@ public class ScoreCalculator {
 
     private static final int BLACKJACK_SCORE = 21;
 
-    private Hands hands;
+    private final Hands hands;
 
     private ScoreCalculator(Hands hands)
     {
@@ -27,7 +27,7 @@ public class ScoreCalculator {
     }
 
     private List<Integer> generateScoreCandidates(Hands hands) {
-        List<Integer> candidates = new ArrayList<Integer>();
+        List<Integer> candidates = new ArrayList<>();
         candidates.add(0);
 
         for (Card card : hands.getHands()) {
@@ -37,7 +37,7 @@ public class ScoreCalculator {
     }
 
     private int getMaxScore(List<Integer> candidates) {
-        return candidates.stream().max(Comparator.comparing(Integer::valueOf)).get();
+        return candidates.stream().max(Comparator.comparing(Integer::valueOf)).orElse(0);
     }
 
     public int calculate() {

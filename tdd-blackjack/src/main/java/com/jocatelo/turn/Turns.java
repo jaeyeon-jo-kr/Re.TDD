@@ -10,7 +10,7 @@ import lombok.Getter;
 
 public class Turns {
     
-    private List<Turn> turns;
+    private final List<Turn> turns;
     @Getter
     private Turn current;
 

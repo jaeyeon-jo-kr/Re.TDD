@@ -23,7 +23,7 @@ public class Hands {
         }
     }
 
-    private List<Card> hands;
+    private final List<Card> hands;
 
     private Hands() {
         this.hands = new ArrayList<>();

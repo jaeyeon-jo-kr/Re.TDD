@@ -11,12 +11,12 @@ import com.jocatelo.turn.Turns;
 import lombok.Getter;
 
 public class Round {    
-    private Turns turns;
+    private final Turns turns;
     @Getter
-    private CardDeck deck;
-    private GameOption option;
+    private final CardDeck deck;
+    private final GameOption option;
     @Getter
-    private Participants participants;
+    private final Participants participants;
 
     private Round() {
         deck = new CardDeck();        

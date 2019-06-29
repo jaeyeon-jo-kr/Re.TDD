@@ -35,7 +35,7 @@ public enum PlayerStatus implements NextStatus{
         }    
     };    
 
-    private String symbol;
+    private final String symbol;
     PlayerStatus(String symbol)
     {
         this.symbol = symbol;

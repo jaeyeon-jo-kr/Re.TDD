@@ -6,7 +6,7 @@ import com.jocatelo.character.PlayerGroup;
 import com.jocatelo.rule.Command;
 
 public class Turn {    
-    private PlayingPhase cycle;
+    private final PlayingPhase cycle;
     
     private Turn()
     {   

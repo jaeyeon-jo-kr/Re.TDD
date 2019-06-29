@@ -52,7 +52,7 @@ public enum PlayerCommand implements Command {
 
         }
     };
-    private String symbol;
+    private final String symbol;
     PlayerCommand(String symbol){
         this.symbol = symbol;
     }
@@ -62,7 +62,7 @@ public enum PlayerCommand implements Command {
     }    
     public abstract void execute(Drawable drawable, Player player);
     public static List<PlayerCommand> getAvailable(Player player){
-        List<PlayerCommand> commands = new ArrayList<PlayerCommand>();
+        List<PlayerCommand> commands = new ArrayList<>();
         
         if (player.getScore() < 21) {
             commands.add(PlayerCommand.HIT);

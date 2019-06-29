@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class PlayerGroup {
-    private List<Player> players;
-    private int number;
+    private final List<Player> players;
+    private final int number;
 
     private PlayerGroup(int playerNumber) {
         players = new ArrayList<>(8);
