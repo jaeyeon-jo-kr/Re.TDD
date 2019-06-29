@@ -24,23 +24,6 @@ public class ScoreCalculator {
     public static ScoreCalculator of(Hands hands)
     {
         return new ScoreCalculator(hands);
-
-    }
-    private List<Integer> plusSpecialScore(int score, Optional<Integer> specialValue){
-        List<Integer> plus = new ArrayList<>();
-        if (specialValue.isPresent()) {
-            plus.add(score + specialValue.get());
-        }
-        return plus;
-    }
-
-    private List<Integer> addScore(List<Integer> candidates, Card card) {
-        List<Integer> result = new ArrayList<>();
-        for (int score : candidates) {
-            result.add(score + card.value());
-            result.addAll(plusSpecialScore(score, card.specialValue()));
-        }
-        return result;
     }
 
     private List<Integer> generateScoreCandidates(Hands hands) {
@@ -48,7 +31,7 @@ public class ScoreCalculator {
         candidates.add(0);
 
         for (Card card : hands.getHands()) {
-            candidates = addScore(candidates, card);
+            candidates = card.accumulateScore(candidates);
         }
         return candidates;
     }

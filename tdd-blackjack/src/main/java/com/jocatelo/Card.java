@@ -1,5 +1,7 @@
 package com.jocatelo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import lombok.Getter;
@@ -22,25 +24,23 @@ public class Card{
         Q(12, 10),
         K(13, 10);
         
-        @Getter
-        private final int value;        
-        @Getter
-        private final Optional<Integer> specialValue;
-        @Getter
-        private final int id;        
+        private final int value;
+        private final int specialValue;
+        private final int id;
+        public static final int NONE_SPECIAL_VALUE = -1;
         
 
         Number(int id, int value, int specialValue) {
             this.id = id;
             this.value = value;
-            this.specialValue = Optional.of(specialValue);
+            this.specialValue = specialValue;
             
         }
 
         Number(int id, int value) {
             this.id = id;
             this.value = value;
-            this.specialValue = Optional.empty();
+            this.specialValue = NONE_SPECIAL_VALUE;
         }
     }
 
@@ -97,24 +97,21 @@ public class Card{
     public static Card of(Number number, Type type){
         return new Card(number, type);
     }
-    
-    public int value()
-    {
-        return number.getValue();
+
+    private List<Integer> plusSpecialScore(int score){
+        List<Integer> plus = new ArrayList<>();
+        if (this.number.specialValue != Number.NONE_SPECIAL_VALUE)
+            plus.add(score + this.number.specialValue);
+        return plus;
     }
 
-    public Optional<Integer> specialValue()
+    public List<Integer> accumulateScore(List<Integer> candidates)
     {
-        return number.getSpecialValue();
-    }    
-
-    public Type type()
-    {
-        return this.type;
+        List<Integer> result = new ArrayList<>();
+        for (int score : candidates) {
+            result.add(score + this.number.value);
+            result.addAll(plusSpecialScore(score));
+        }
+        return result;
     }
-
-
-
-
-    
 }
