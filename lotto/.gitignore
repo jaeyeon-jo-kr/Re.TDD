@@ -39,3 +39,5 @@ tdd-blackjack/.project
 .project
 .settings/org.eclipse.buildship.core.prefs
 .idea/
+.settings/
+build/
