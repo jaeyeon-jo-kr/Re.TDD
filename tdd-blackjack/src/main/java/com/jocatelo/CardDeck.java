@@ -35,27 +35,20 @@ public class CardDeck implements Drawable {
     }
 
     public void shuffle() {
-        Card array[] = cardQueue.toArray(new Card[cardQueue.size()]);
+        Card[] array = cardQueue.toArray(new Card[cardQueue.size()]);
         Random random = new Random(Calendar.getInstance().getTimeInMillis());
 
         for (int i = 0; i < TOTAL_COUNT; i++) {
             int randomIndex = Math.abs(random.nextInt()) % cardQueue.size();
-            swapCard(array[i], array[randomIndex]);
         }
         cardQueue.clear();
         cardQueue.addAll(Arrays.asList(array));
 
     }
 
-    private void swapCard(Card first, Card second) {
-        Card temp = first;
-        first = second;
-        second = temp;
-    }
-
     private void distributeToPlayers(PlayerGroup players)
     {
-        players.getPlayers().stream().forEach(player -> {
+        players.getPlayers().forEach(player -> {
             player.addCard(popCard());
             player.addCard(popCard());
         });

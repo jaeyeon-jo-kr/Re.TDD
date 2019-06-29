@@ -14,15 +14,15 @@ import org.junit.Test;
 
 public class ResultTest {
 
-    Round round;
-    Dealer dealer;
-    Player player;
+    private Round round;
+    private Dealer dealer;
+    private Player player;
     
 
     @Before
-    public void BeforeTest() throws Exception
+    public void BeforeTest()
     {
-        round = Round.of().setPlayerNumber(1).setAutomaticDistribute(false);
+        round = Round.of().setAutomaticDistribute(false);
         round.initialize();
         round.startTurn();
         Participants participants = round.getParticipants();

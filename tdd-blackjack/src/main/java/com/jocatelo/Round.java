@@ -35,18 +35,8 @@ public class Round {
         return participants.getDealer();
     }
 
-    public Round setPlayerGeneration(boolean ok){
-        option.setAutomaticGeneratePlayer(ok);
-        return this;
-    }
-
     public Round setAutomaticDistribute(boolean ok){
         option.setAutomaticDistribute(ok);
-        return this;
-    }
-    public Round setPlayerNumber(int number)
-    {
-        participants.setPlayerNumber(number);
         return this;
     }
 
@@ -59,7 +49,7 @@ public class Round {
         //dealer.setDrawer(deck);
     }    
 
-    public void initialize() throws Exception
+    public void initialize()
     {
         if(option.isAutomaticGeneratePlayer())  
             participants.createPlayers();
@@ -70,7 +60,7 @@ public class Round {
             distribute();
     }
 
-    public Round shuffle() {
+    private Round shuffle() {
         deck.shuffle();
         return this;
     }
@@ -78,7 +68,7 @@ public class Round {
     /**
      * At the round of initial, players must have two cards.
      */
-    public Round distribute() {
+    private Round distribute() {
         deck.distributeCard(participants);
         return this;
     }

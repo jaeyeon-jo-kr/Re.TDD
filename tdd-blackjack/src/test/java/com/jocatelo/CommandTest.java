@@ -57,7 +57,7 @@ public class CommandTest {
         List<PlayerCommand> commands = player.getAvailableCommands();        
         
         assertTrue(commands.contains(PlayerCommand.STAND));
-        assertTrue(commands.size() == 1);
+        assertEquals(commands.size(),1);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class CommandTest {
     public void executeHit() throws Exception
     {
         
-        Round round = Round.of().setPlayerNumber(1);
+        Round round = Round.of();
         round.initialize();
         
         round.startTurn();
