@@ -60,17 +60,15 @@ public class Round {
             distribute();
     }
 
-    private Round shuffle() {
+    private void shuffle() {
         deck.shuffle();
-        return this;
     }
 
     /**
      * At the round of initial, players must have two cards.
      */
-    private Round distribute() {
+    private void distribute() {
         deck.distributeCard(participants);
-        return this;
     }
     public void executeAll()
     {

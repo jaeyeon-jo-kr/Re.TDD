@@ -38,9 +38,6 @@ public class CardDeck implements Drawable {
         Card[] array = cardQueue.toArray(new Card[cardQueue.size()]);
         Random random = new Random(Calendar.getInstance().getTimeInMillis());
 
-        for (int i = 0; i < TOTAL_COUNT; i++) {
-            int randomIndex = Math.abs(random.nextInt()) % cardQueue.size();
-        }
         cardQueue.clear();
         cardQueue.addAll(Arrays.asList(array));
 
@@ -65,8 +62,4 @@ public class CardDeck implements Drawable {
         distributeToDealer(participants.getDealer());        
     }
 
-    @Override
-    public void execute(Commandable player) {
-
-    }
 }

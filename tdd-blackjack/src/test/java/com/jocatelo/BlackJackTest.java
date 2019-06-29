@@ -1,8 +1,7 @@
 package com.jocatelo;
 
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import com.jocatelo.character.Hands;
 import com.jocatelo.character.Participants;
@@ -15,14 +14,8 @@ import org.junit.Test;
 
 public class BlackJackTest {
 
-    
-    @Before
-    public void initialize(){
-
-    }
-
     @Test
-    public void distribute2Card() throws Exception {
+    public void distribute2Card() {
         Round round = Round.of();
         
         round.initialize();
@@ -39,8 +32,7 @@ public class BlackJackTest {
 
 
     @Test
-    public void bustStatus() throws Exception
-    {
+    public void bustStatus() {
         Player player = Player.of("Player");
         player.setStatus(PlayerStatus.PLAYING);
 
@@ -58,8 +50,7 @@ public class BlackJackTest {
 
     @Test
     
-    public void blackJackStatus() throws Exception
-    {
+    public void blackJackStatus() {
         Round round = Round.of()
             .setAutomaticDistribute(false);
         round.initialize();
@@ -85,7 +76,6 @@ public class BlackJackTest {
         assertThat("Player의 상태는 21이어야 한다.", player.getStatus(), equalTo(PlayerStatus.BLACKJACK));        
         round.endGame();
         assertThat("Player가 되돌려받는 돈은 25이어야 한다.", player.getWinningCredit(), equalTo(25));
-
     }
 
 }

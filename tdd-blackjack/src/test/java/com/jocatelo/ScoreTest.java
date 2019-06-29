@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.*;
 public class ScoreTest
 {
     @Test
-    public void checkScore12() throws Exception {
+    public void checkScore12() {
         Player player = Player.of("user1");
         Hands hands = player.getHands();
         hands.add(Card.diamond(1));
@@ -19,7 +19,7 @@ public class ScoreTest
     }
 
     @Test
-    public void checkScore13() throws Exception {
+    public void checkScore13() {
         Player player = Player.of("user1");
         Hands hands = player.getHands();
         hands.add(Card.heart(1));
@@ -30,7 +30,7 @@ public class ScoreTest
     }
 
     @Test
-    public void checkBlackJackScoreWithTwoCards() throws Exception {
+    public void checkBlackJackScoreWithTwoCards() {
         Player player = Player.of("user1");
         Hands hands = player.getHands();
 
@@ -42,7 +42,7 @@ public class ScoreTest
 
     
     @Test
-    public void checkBlackJackScoreWithThreeCards() throws Exception {
+    public void checkBlackJackScoreWithThreeCards() {
         Player player = Player.of("user1");
         Hands hands = player.getHands();
 

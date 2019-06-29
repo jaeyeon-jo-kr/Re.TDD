@@ -21,7 +21,7 @@ import org.junit.Test;
 public class CommandTest {
     
     @Test
-    public void availablePlayerCommands() throws Exception {
+    public void availablePlayerCommands() {
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();
 
@@ -41,8 +41,7 @@ public class CommandTest {
 
 
     @Test
-    public void availablePlayerCommandsAfterBlackJack() throws Exception
-    {
+    public void availablePlayerCommandsAfterBlackJack() {
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();        
         
@@ -61,8 +60,7 @@ public class CommandTest {
     }
 
     @Test
-    public void availablePlayerCommandsAfterBurst() throws Exception
-    {
+    public void availablePlayerCommandsAfterBurst() {
         Player player = Player.of("PLAYER 1");
         Dealer dealer = Dealer.of();
 
@@ -82,8 +80,7 @@ public class CommandTest {
     }
 
     @Test
-    public void DealerStandCommand() throws Exception
-    {
+    public void DealerStandCommand() {
         Dealer dealer = Dealer.of();
         DealerCommand command = dealer.getNextCommand();
         dealer.addCard(Card.heart(10));        
