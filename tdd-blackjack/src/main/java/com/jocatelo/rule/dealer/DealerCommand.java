@@ -1,6 +1,6 @@
 package com.jocatelo.rule.dealer;
 
-import com.jocatelo.Card;
+import com.jocatelo.card.Card;
 import com.jocatelo.Drawable;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.rule.Command;

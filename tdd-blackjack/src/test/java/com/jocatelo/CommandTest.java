@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import com.jocatelo.card.Card;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Hands;
 import com.jocatelo.character.Participants;

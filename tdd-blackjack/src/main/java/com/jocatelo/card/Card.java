@@ -1,30 +1,35 @@
-package com.jocatelo;
+package com.jocatelo.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import lombok.Getter;
 
 public class Card {
-
 
     private static final int NONE_SPECIAL_VALUE = -1;
 
     public boolean isSpade() {
-        return type == Type.SPADE;
+        return isType(Type.SPADE);
     }
 
+
     public boolean isHeart() {
-        return type == Type.HEART;
+        return isType(Type.HEART);
     }
 
     public boolean isDiamond() {
-        return type == Type.DIAMOND;
+        return isType(Type.DIAMOND);
     }
 
     public boolean isClover() {
-        return type == Type.CLOVER;
+        return isType(Type.CLOVER);
+    }
+
+    public boolean isType(Card.Type type) {
+        return this.type == type;
+    }
+    public boolean isNumber(Number number)
+    {
+        return this.number == number;
     }
 
     public enum Number {
@@ -57,7 +62,7 @@ public class Card {
     }
 
     public enum Type {
-        SPADE("♠"), DIAMOND("◆"), CLOVER("♣"),  HEART("♥");
+        SPADE("♠"), DIAMOND("◆"), CLOVER("♣"), HEART("♥");
         final private String symbol;
 
         Type(String symbol) {

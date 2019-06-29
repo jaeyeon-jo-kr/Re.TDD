@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.jocatelo.Card;
+import com.jocatelo.card.Card;
 import com.jocatelo.rule.ScoreCalculator;
 
 import lombok.Getter;

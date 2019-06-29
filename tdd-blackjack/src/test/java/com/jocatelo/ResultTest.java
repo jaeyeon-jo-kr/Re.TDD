@@ -2,6 +2,7 @@ package com.jocatelo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.jocatelo.card.Card;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Participants;
 import com.jocatelo.character.Player;

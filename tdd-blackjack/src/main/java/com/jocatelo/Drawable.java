@@ -1,6 +1,6 @@
 package com.jocatelo;
 
-import com.jocatelo.character.Commandable;
+import com.jocatelo.card.Card;
 import com.jocatelo.character.Participants;
 
 public interface Drawable {

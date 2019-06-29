@@ -1,6 +1,7 @@
 
 package com.jocatelo;
 
+import com.jocatelo.card.CardDeck;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Participants;
 import com.jocatelo.character.Player;

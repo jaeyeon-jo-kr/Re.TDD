@@ -1,6 +1,6 @@
 package com.jocatelo.character;
 
-import com.jocatelo.Card;
+import com.jocatelo.card.Card;
 
 import lombok.Data;
 @Data

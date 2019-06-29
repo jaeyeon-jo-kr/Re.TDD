@@ -3,7 +3,7 @@ package com.jocatelo.rule.player;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jocatelo.Card;
+import com.jocatelo.card.Card;
 import com.jocatelo.Drawable;
 import com.jocatelo.character.Player;
 import com.jocatelo.rule.Command;

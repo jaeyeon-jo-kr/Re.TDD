@@ -1,4 +1,4 @@
-package com.jocatelo;
+package com.jocatelo.card;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
@@ -6,7 +6,8 @@ import java.util.Calendar;
 import java.util.Queue;
 import java.util.Random;
 
-import com.jocatelo.character.Commandable;
+import com.jocatelo.Drawable;
+import com.jocatelo.card.Card;
 import com.jocatelo.character.Dealer;
 import com.jocatelo.character.Participants;
 import com.jocatelo.character.PlayerGroup;
