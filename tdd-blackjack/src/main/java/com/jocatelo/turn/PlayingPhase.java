@@ -13,7 +13,7 @@ public class PlayingPhase implements Runnable{
     private final Map<Commandable, Command> userCommands;
     @Setter
     private PlayerGroup group;
-    boolean isRunning = false;
+    private boolean isRunning = false;
 
     private PlayingPhase()
     {
@@ -28,14 +28,17 @@ public class PlayingPhase implements Runnable{
     public void run() {
         isRunning = true;
 
-        while(isRunning && !isAllCommandAccepted())
-        {
-            /** Wait for player command. */
+        while(isRunning && !isAllCommandAccepted()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+                isRunning = false;
+            }
         }
-
     }
 
-    public void stop()
+    void stop()
     {
         isRunning = false;
     }

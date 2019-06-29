@@ -8,7 +8,6 @@ import java.util.stream.IntStream;
 public class PlayerGroup {
     private List<Player> players;
     private int number;
-    private static int DEFAULT_PLAYER_NUMBER = 1;
 
     private PlayerGroup(int playerNumber) {
         players = new ArrayList<>(8);
@@ -21,10 +20,9 @@ public class PlayerGroup {
     }
 
     static public PlayerGroup of() {
-        
+        int DEFAULT_PLAYER_NUMBER = 1;
         return new PlayerGroup(DEFAULT_PLAYER_NUMBER);
     }
-
 
     public void add(Player player) {
         players.add(player);
@@ -39,14 +37,8 @@ public class PlayerGroup {
         return Collections.unmodifiableList(players);
     }
 
-    public void createPlayers(){
-        IntStream.rangeClosed(1, number).forEach(i -> {
-            try {
-                players.add(Player.of("player " + i));
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        });
+    void createPlayers(){
+        IntStream.rangeClosed(1, number).forEach(i -> players.add(Player.of("player " + i)));
     }
 
 }

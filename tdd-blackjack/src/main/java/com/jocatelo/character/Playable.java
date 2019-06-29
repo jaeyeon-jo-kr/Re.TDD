@@ -2,7 +2,7 @@ package com.jocatelo.character;
 
 import com.jocatelo.Drawable;
 
-public interface Playable {
+interface Playable {
     void execute(Drawable drawable) throws Exception;
     void updateStatus() throws Exception;
 }

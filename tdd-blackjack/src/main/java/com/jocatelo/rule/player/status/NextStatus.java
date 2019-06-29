@@ -2,6 +2,6 @@ package com.jocatelo.rule.player.status;
 
 import com.jocatelo.character.Player;
 
-public interface NextStatus {
+interface NextStatus {
     PlayerStatus next(Player player);
 }

@@ -8,39 +8,35 @@ import lombok.Getter;
 
 public class Card{
 
-    
+
+    private static final int NONE_SPECIAL_VALUE = -1;
+
     public enum Number {
-        A(1, 1, 11),
-        N2(2, 2),
-        N3(3, 3),
-        N4(4, 4),
-        N5(5, 5),
-        N6(6, 6),
-        N7(7, 7),
-        N8(8, 8),
-        N9(9, 9),
-        N10(10, 10),
-        J(11, 10),
-        Q(12, 10),
-        K(13, 10);
+        A(1, 11),
+        N2(2),
+        N3( 3),
+        N4( 4),
+        N5( 5),
+        N6( 6),
+        N7( 7),
+        N8( 8),
+        N9( 9),
+        N10( 10),
+        J(10),
+        Q( 10),
+        K(10);
         
         private final int value;
         private final int specialValue;
-        private final int id;
-        public static final int NONE_SPECIAL_VALUE = -1;
-        
 
-        Number(int id, int value, int specialValue) {
-            this.id = id;
+
+        Number(final int value, final int specialValue) {
             this.value = value;
             this.specialValue = specialValue;
-            
         }
 
-        Number(int id, int value) {
-            this.id = id;
-            this.value = value;
-            this.specialValue = NONE_SPECIAL_VALUE;
+        Number(final int value) {
+            this(value, NONE_SPECIAL_VALUE);
         }
     }
 
@@ -100,7 +96,7 @@ public class Card{
 
     private List<Integer> plusSpecialScore(int score){
         List<Integer> plus = new ArrayList<>();
-        if (this.number.specialValue != Number.NONE_SPECIAL_VALUE)
+        if (this.number.specialValue != NONE_SPECIAL_VALUE)
             plus.add(score + this.number.specialValue);
         return plus;
     }

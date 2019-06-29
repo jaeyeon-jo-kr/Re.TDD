@@ -3,7 +3,6 @@ package com.jocatelo.character;
 import java.util.List;
 
 import com.jocatelo.Drawable;
-import com.jocatelo.InvalidValueException;
 import com.jocatelo.rule.WinStatus;
 import com.jocatelo.rule.player.PlayerCommand;
 import com.jocatelo.rule.player.status.PlayerStatus;
@@ -39,14 +38,14 @@ public class Player extends User implements Playable, Commandable {
         winStatus = WinStatus.NONE;
     }
 
+
     /**
      * create player
      * 
-     * @throws InvalidValueException
      */
-    public static Player of(String name) throws InvalidValueException {
-        if (name == null || name == Dealer.NAME) {
-            throw new InvalidValueException();
+    public static Player of(String name){
+        if (name == null || name.equals(Dealer.NAME)) {
+            name = "default player";
         }
         return new Player(name);
     }    
@@ -83,13 +82,7 @@ public class Player extends User implements Playable, Commandable {
     public void transaction(Drawable drawer, PlayerCommand input)
     {
         Player player = this;
-        Thread thread = new Thread(new Runnable(){
-        
-            @Override
-            public void run() {
-                input.execute(drawer, player);
-            }
-        });
+        Thread thread = new Thread(() -> input.execute(drawer, player));
         thread.start();
         
     }

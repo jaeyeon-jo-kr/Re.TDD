@@ -10,21 +10,17 @@ import com.jocatelo.rule.ScoreCalculator;
 import lombok.Getter;
 
 public class Hands {
-    public class Score {
+    class Score {
         @Getter
-        int score = 0;
+        int score;
 
-        public Score() {
+        Score() {
             score = 0;
         }
-
-        
-
-        public void update(Hands hands) {
+        void update(Hands hands) {
             ScoreCalculator calculator = ScoreCalculator.of(hands);
             score = calculator.calculate();
         }
-
     }
 
     private List<Card> hands;
@@ -49,7 +45,7 @@ public class Hands {
         hands.add(card);
     }
 
-    public int getScore()
+    int getScore()
     {
         Score score = new Score();
         score.update(this);
