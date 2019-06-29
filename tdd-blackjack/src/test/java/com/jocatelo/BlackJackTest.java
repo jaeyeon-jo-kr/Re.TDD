@@ -23,7 +23,7 @@ public class BlackJackTest {
 
     @Test
     public void distribute2Card() throws Exception {
-        Round round = Round.of().setPlayerNumber(8);
+        Round round = Round.of();
         
         round.initialize();
         round.startTurn();
@@ -60,8 +60,8 @@ public class BlackJackTest {
     
     public void blackJackStatus() throws Exception
     {
-        Round round = Round.of().setPlayerNumber(1)
-            .setAutomaticDistribute(false).setPlayerGeneration(true);
+        Round round = Round.of()
+            .setAutomaticDistribute(false);
         round.initialize();
         round.startTurn();
 
