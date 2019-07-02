@@ -3,8 +3,8 @@ class LadderCreator {
         return Any()
     }
 
-    fun createPartInfo(): Any {
-        return Any()
+    fun createPartInfo(): LadderInfo {
+        return LadderInfo(0,0, LadderMap(hashMapOf()))
     }
 
 }

@@ -1,4 +1,1 @@
-class LadderPart(val partChar: Char = ' '){
-
-
-}
+class LadderPart(val partChar: Char = ' ')

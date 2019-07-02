@@ -1,0 +1,17 @@
+.idea
+.gradle
+.gitignore
+build/classes/kotlin/main/META-INF/
+build/classes/kotlin/test/META-INF/
+build/kotlin/
+build/reports/
+build/test-results/
+gradle.properties
+gradle/wrapper/gradle-wrapper.properties
+gradlew
+gradlew.bat
+settings.gradle
+src/main/java/
+src/main/resources/
+src/test/java/
+src/test/resources/

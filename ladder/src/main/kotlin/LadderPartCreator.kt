@@ -1,6 +1,6 @@
 class LadderPartCreator {
-    fun createPart(ladderInfo: Any): Any {
-        return Any()
+    fun createPart(ladderInfo: LadderInfo): LadderPart {
+        return LadderPartFactory.createDown()
     }
 
 }

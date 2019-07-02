@@ -1,4 +1,3 @@
-import org.junit.Assert.assertThat
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -31,6 +30,22 @@ class CreateLadderTest {
         //then
         assertNotNull(part)
     }
+
+    @Test
+    fun `사다리의 정보에서 좌표가 0,0일 때, '|'파트를 만들어준다`()
+    {
+        //given
+        val ladderMap = LadderMap(hashMapOf())
+        val ladderInfo = LadderInfo(0,0, ladderMap)
+        val ladderPartCreator = LadderPartCreator()
+
+        //when
+        val ladderPart = ladderPartCreator.createPart(ladderInfo)
+
+        //then
+        assertEquals('│', ladderPart.partChar)
+    }
+
 
     //
     @Test
