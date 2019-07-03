@@ -1,3 +1,5 @@
+package jocatelo.tdd.ladder
+
 object LadderPartFactory {
     fun createDown() = LadderPart('│')
 
@@ -6,5 +8,7 @@ object LadderPartFactory {
     fun createTurnLeft()= LadderPart('┤')
 
     fun createHorizontal() = LadderPart('─')
+
+    fun createBlank() = LadderPart(' ')
 
 }
