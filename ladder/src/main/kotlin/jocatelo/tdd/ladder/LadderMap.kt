@@ -3,10 +3,10 @@ package jocatelo.tdd.ladder
 import org.jetbrains.annotations.Nullable
 import java.util.stream.IntStream.range
 
-class LadderMap {
+class LadderMap(val rowSize: Int = 5, val colSize: Int = 5) {
     private val ladder: HashMap<Int, HashMap<Int, LadderPart>> = hashMapOf()
-    constructor(rowSize: Int = 5,
-                colSize: Int = 5) {
+
+    init {
         range(0, rowSize)
             .mapToObj { row ->
                 ladder[row] = hashMapOf()
@@ -26,6 +26,9 @@ class LadderMap {
 
     @Nullable
     fun getPart(row: Int, col: Int): LadderPart {
+        if(col < 0)
+            return LadderPartFactory.createBlank()
+
         if (ladder[row].isNullOrEmpty())
             ladder[row] = hashMapOf()
 

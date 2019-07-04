@@ -5,6 +5,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
+
 class CreateLadderTest {
     @Test
     fun `사다리 제작자에게 사다리를 만들어달라고 요청하면 사다리를 만들어준다`()
@@ -50,21 +51,76 @@ class CreateLadderTest {
     }
 
     @Test
-    fun `왼쪽 파트가 │일 때, ' ' 파트를 만들어준다`()
+    fun `row 가 1이상 이고 마지막 row가 아니며 Col 이 0 일 때, 랜덤으로 '│' 파트를 만들어준다`()
     {
         // given
         val ladderMap = LadderMap()
-        val ladderPart = LadderPartFactory.createDown()
-        ladderMap.insertPart(0, 0, ladderPart)
         val ladderPartCreator = LadderPartCreator()
-        val ladderInfo = LadderInfo(0, 1, ladderMap)
+        val ladderInfo = LadderInfo(1, 0, ladderMap)
+
+        // when
+        val newLadderPart = ladderPartCreator.createPart(ladderInfo,0)
+
+        // then
+        assertEquals('│', newLadderPart.partChar)
+    }
+
+    @Test
+    fun `row 가 1이상 이고 마지막 row가 아니며 Col 이 0 일 때, 랜덤으로 '├' 파트를 만들어준다`()
+    {
+        // given
+        val ladderMap = LadderMap()
+
+        val ladderPartCreator = LadderPartCreator()
+        val ladderInfo = LadderInfo(1, 0, ladderMap)
+
+        // when
+        val newLadderPart = ladderPartCreator.createPart(ladderInfo, 1)
+
+        // then
+        assertEquals('├', newLadderPart.partChar)
+    }
+
+    @Test
+    fun `col - 1 파트가 '├'일 때, '─'를 만들어준다`()
+    {
+        // given
+        val ladderMap = LadderMap()
+        val ladderPartCreator = LadderPartCreator()
+        val previous = LadderPartFactory.createTurnRight()
+        ladderMap.insertPart(1, 0, previous)
+        val ladderInfo = LadderInfo(1, 1, ladderMap)
+
+        // when
+        val newLadderPart = ladderPartCreator.createPart(ladderInfo, 1)
+
+        // then
+        assertEquals('─', newLadderPart.partChar)
+    }
+
+
+
+
+
+    @Test
+    fun `왼쪽 파트가 ' ' 이고 row가 0일 때, '│' 파트를 만들어준다`()
+    {
+        // given
+        val ladderMap = LadderMap()
+        val blank = LadderPartFactory.createBlank()
+        ladderMap.insertPart(0, 1, blank)
+        val ladderPartCreator = LadderPartCreator()
+
+        val ladderInfo = LadderInfo(0, 2, ladderMap)
 
         // when
         val newLadderPart = ladderPartCreator.createPart(ladderInfo)
 
         // then
-        assertEquals(' ', newLadderPart.partChar)
+        assertEquals('│', newLadderPart.partChar)
     }
+
+
 
 
     //
