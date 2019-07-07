@@ -7,7 +7,7 @@ class LadderCreator (private val ladderMap: LadderMap = LadderMap(5,5)) {
     }
 
     fun createPartInfo(): LadderInfo {
-        return LadderInfo(0, 0, LadderMap())
+        return LadderInfo(0, 0, ladderMap)
     }
 
 }

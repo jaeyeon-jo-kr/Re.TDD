@@ -1,6 +1,5 @@
 package jocatelo.tdd.ladder
 
-import jocatelo.tdd.ladder.*
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -47,7 +46,7 @@ class CreateLadderTest {
         val ladderPart = ladderPartCreator.createPart(ladderInfo)
 
         // then
-        assertEquals('│', ladderPart.partChar)
+        assertEquals('│', ladderPart.block)
     }
 
     @Test
@@ -62,7 +61,7 @@ class CreateLadderTest {
         val newLadderPart = ladderPartCreator.createPart(ladderInfo,0)
 
         // then
-        assertEquals('│', newLadderPart.partChar)
+        assertEquals('│', newLadderPart.block)
     }
 
     @Test
@@ -78,7 +77,7 @@ class CreateLadderTest {
         val newLadderPart = ladderPartCreator.createPart(ladderInfo, 1)
 
         // then
-        assertEquals('├', newLadderPart.partChar)
+        assertEquals('├', newLadderPart.block)
     }
 
     @Test
@@ -95,7 +94,7 @@ class CreateLadderTest {
         val newLadderPart = ladderPartCreator.createPart(ladderInfo, 1)
 
         // then
-        assertEquals('─', newLadderPart.partChar)
+        assertEquals('─', newLadderPart.block)
     }
 
 
@@ -117,7 +116,7 @@ class CreateLadderTest {
         val newLadderPart = ladderPartCreator.createPart(ladderInfo)
 
         // then
-        assertEquals('│', newLadderPart.partChar)
+        assertEquals('│', newLadderPart.block)
     }
 
 
@@ -133,7 +132,7 @@ class CreateLadderTest {
         val ladderPart = LadderPartFactory.createDown()
 
         // then
-        assertEquals('│', ladderPart.partChar)
+        assertEquals('│', ladderPart.block)
     }
 
     @Test
@@ -145,7 +144,7 @@ class CreateLadderTest {
         val ladderPart = LadderPartFactory.createTurnRight()
 
         // then
-        assertEquals('├', ladderPart.partChar)
+        assertEquals('├', ladderPart.block)
     }
 
     @Test
@@ -157,7 +156,7 @@ class CreateLadderTest {
         val ladderPart = LadderPartFactory.createTurnLeft()
 
         // then
-        assertEquals('┤', ladderPart.partChar)
+        assertEquals('┤', ladderPart.block)
     }
 
     @Test
@@ -169,7 +168,7 @@ class CreateLadderTest {
         val ladderPart = LadderPartFactory.createHorizontal()
 
         // then
-        assertEquals('─', ladderPart.partChar)
+        assertEquals('─', ladderPart.block)
     }
 
 

@@ -1,14 +1,14 @@
 package jocatelo.tdd.ladder
 
 object LadderPartFactory {
-    fun createDown() = LadderPart('│')
+    fun createDown() = LadderPart.DOWN
 
-    fun createTurnRight()= LadderPart('├')
+    fun createTurnRight()= LadderPart.TURN_RIGHT
 
-    fun createTurnLeft()= LadderPart('┤')
+    fun createTurnLeft()= LadderPart.TURN_LEFT
 
-    fun createHorizontal() = LadderPart('─')
+    fun createHorizontal() = LadderPart.HORIZONTAL
 
-    fun createBlank() = LadderPart(' ')
+    fun createBlank() = LadderPart.BLANK
 
 }

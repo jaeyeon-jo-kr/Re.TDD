@@ -1,39 +1,66 @@
 package jocatelo.tdd.ladder
 
-import java.sql.Time
+
 import kotlin.random.Random
 
 class LadderPartCreator {
 
+    private fun isFirstRowAndEvenCol(ladderInfo: LadderInfo): Boolean {
+        if (isFirstRow(ladderInfo) && isEvenColumn(ladderInfo))
+            return true
+        return false
+    }
+
+    private fun isTurnLeftAvailable(ladderInfo: LadderInfo): Boolean {
+        val ladderMap = ladderInfo.ladderMap
+
+        if (isEvenColumn(ladderInfo)
+            && ladderMap.getPart(ladderInfo.row, ladderInfo.col - 1) == LadderPart.BLANK
+            && !isFirstRow(ladderInfo))
+            return true
+        return false
+    }
+
+    private fun isEvenColumn(ladderInfo: LadderInfo) = ladderInfo.col % 2 == 0
+
+    private fun createLeftLadderPart(randomNumber: Int) : LadderPart
+    {
+        if (randomNumber % 2 == 0)
+            return LadderPart.DOWN
+
+        if (randomNumber % 2 == 1)
+            return LadderPart.TURN_RIGHT
+
+        return LadderPart.BLANK
+    }
+
     fun createPart(ladderInfo: LadderInfo, randomNumber: Int = Random.nextInt()): LadderPart {
 
-        var ladderMap = ladderInfo.ladderMap
-        var prevCol = ladderInfo.col - 1
+        val ladderMap = ladderInfo.ladderMap
 
-        if(ladderInfo.col == 0 && ladderInfo.row == 0)
-            return LadderPartFactory.createDown()
+        if (isFirstRowAndEvenCol(ladderInfo))
+            return LadderPart.DOWN
+        
+        if (isTurnLeftAvailable(ladderInfo))
+            return createLeftLadderPart(randomNumber)
 
-        var prevPart = ladderMap.getPart(ladderInfo.row, prevCol)
 
-        if( 1 <= ladderInfo.row && ladderInfo.row < ladderMap.rowSize - 1 && ladderInfo.col == 0){
-            if(randomNumber % 2 == 0)
-                return LadderPartFactory.createDown()
+        val prevCol = ladderInfo.col - 1
+        val prevPart = ladderMap.getPart(ladderInfo.row, prevCol)
 
-            if(randomNumber % 2 == 1)
-                return LadderPartFactory.createTurnRight()
-        }
-
-        if(prevPart.partChar == '├')
+        if (prevPart == LadderPart.TURN_RIGHT)
             return LadderPartFactory.createHorizontal()
 
-        if(prevPart.partChar == '|')
+        if (prevPart == LadderPart.DOWN)
             return LadderPartFactory.createBlank()
 
 
-        if(ladderInfo.row == 0 && prevPart.partChar == ' ')
+        if (isFirstRow(ladderInfo) && prevPart == LadderPart.BLANK)
             return LadderPartFactory.createDown()
 
         return LadderPartFactory.createBlank()
     }
+
+    private fun isFirstRow(ladderInfo: LadderInfo) = ladderInfo.row == 0
 
 }
