@@ -1,66 +1,70 @@
 package jocatelo.tdd.ladder
 
 
+import kotlin.math.absoluteValue
 import kotlin.random.Random
 
 class LadderPartCreator {
 
-    private fun isFirstRowAndEvenCol(ladderInfo: LadderInfo): Boolean {
-        if (isFirstRow(ladderInfo) && isEvenColumn(ladderInfo))
-            return true
-        return false
-    }
-
-    private fun isTurnLeftAvailable(ladderInfo: LadderInfo): Boolean {
-        val ladderMap = ladderInfo.ladderMap
-
-        if (isEvenColumn(ladderInfo)
-            && ladderMap.getPart(ladderInfo.row, ladderInfo.col - 1) == LadderPart.BLANK
-            && !isFirstRow(ladderInfo))
-            return true
-        return false
-    }
+    var random  = Random.nextInt().absoluteValue
 
     private fun isEvenColumn(ladderInfo: LadderInfo) = ladderInfo.col % 2 == 0
 
-    private fun createLeftLadderPart(randomNumber: Int) : LadderPart
+    private fun createLeftLadderPart() : LadderPart
     {
-        if (randomNumber % 2 == 0)
-            return LadderPart.DOWN
+        var part = LadderPart.DOWN
 
-        if (randomNumber % 2 == 1)
-            return LadderPart.TURN_RIGHT
+        if (random % 2 == 1)
+            part = LadderPart.TURN_RIGHT
 
+        random = Random.nextInt().absoluteValue
+        return part
+    }
+
+    private fun getPreviousPart(info:LadderInfo) : LadderPart
+    {
+        val map = info.ladderMap
+        return map.getPart(info.row, info.col - 1)
+    }
+
+    fun createPart(ladderInfo: LadderInfo): LadderPart {
+
+        if(isEvenColumn(ladderInfo))
+            return createVerticalPart(ladderInfo)
+        return createHorizontalPart(ladderInfo)
+    }
+
+    private fun createHorizontalPart(info: LadderInfo): LadderPart {
+        val previous = getPreviousPart(info)
+        if (previous == LadderPart.TURN_RIGHT)
+            return LadderPart.HORIZONTAL
         return LadderPart.BLANK
     }
 
-    fun createPart(ladderInfo: LadderInfo, randomNumber: Int = Random.nextInt()): LadderPart {
-
-        val ladderMap = ladderInfo.ladderMap
-
-        if (isFirstRowAndEvenCol(ladderInfo))
+    private fun createVerticalPart(info: LadderInfo): LadderPart {
+        if (isFirstRow(info))
             return LadderPart.DOWN
-        
-        if (isTurnLeftAvailable(ladderInfo))
-            return createLeftLadderPart(randomNumber)
 
+        if(isLastRow(info))
+            return LadderPart.DOWN
 
-        val prevCol = ladderInfo.col - 1
-        val prevPart = ladderMap.getPart(ladderInfo.row, prevCol)
+        if(isFirstCol(info))
+            return createLeftLadderPart()
 
-        if (prevPart == LadderPart.TURN_RIGHT)
-            return LadderPartFactory.createHorizontal()
+        val previous = getPreviousPart(info)
 
-        if (prevPart == LadderPart.DOWN)
-            return LadderPartFactory.createBlank()
+        if(previous == LadderPart.HORIZONTAL)
+            return LadderPart.TURN_LEFT
 
+        if(isLastCol(info))
+            return LadderPart.DOWN
 
-        if (isFirstRow(ladderInfo) && prevPart == LadderPart.BLANK)
-            return LadderPartFactory.createDown()
-
-        return LadderPartFactory.createBlank()
+        return createLeftLadderPart()
     }
 
-    private fun isFirstRow(ladderInfo: LadderInfo) = ladderInfo.row == 0
+    private fun isLastCol(info: LadderInfo) = info.col == info.ladderMap.colSize - 1
+    private fun isFirstCol(info: LadderInfo) = info.col == 0
+    private fun isFirstRow(info: LadderInfo) = info.row == 0
+    private fun isLastRow(info: LadderInfo) = info.row == info.ladderMap.rowSize - 1
 
 }
